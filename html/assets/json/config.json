@@ -1,0 +1,155 @@
+[
+	{
+		"division" : "Digital_Media",
+		"units" : [
+			{
+				"name": "ATC",
+				"dataURI": "assets/json/mockdata1.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATC SYC",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATX",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "Dealer Site",
+				"dataURI": "assets/json/mockdata_dealer.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "Customer Care",
+				"dataURI": "assets/json/mockdata_cust.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Home",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Classifieds",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+
+	},
+	{
+		"division" : "Software",
+		"units" : [
+			{
+				"name": "HomeNet",
+				"dataURI": "assets/json/mockdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "HomeNet Login",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "VinS Login",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "VinS Dealer Site",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "vAuto Composite",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "vAuto RealDeal",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+	},
+	{
+		"division" : "Enterprise",
+		"units" : [
+			{
+				"name": "The Hub",
+				"dataURI": "assets/json/mockdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "SalesForce",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "RMB",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "EBS",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+	},
+	{
+		"division" : "Issues",
+		"units" : [
+			{
+				"name": "ATC",
+				"dataURI": "assets/json/mockdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATC SYC",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATX",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Home",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Classics",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+	}
+]

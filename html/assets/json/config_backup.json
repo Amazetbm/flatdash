@@ -1,0 +1,115 @@
+[ { 
+	"Digital_Media": {
+		"unit0" : [
+			{
+				"name": "ATC",
+				"dataURI": "mockdata.json"
+			}		
+		],
+		
+		"unit1" :[
+			{
+				"name": "ATC SYC",
+				"dataURI": "mockdata_syc.json"
+			}
+		],
+		
+		"unit2" :[
+			{
+				"name": "ATX",
+				"dataURI": "mockdata_atx.json"
+			}
+		],
+		
+		"unit3" :[
+			{
+				"name": "KBB Home",
+				"dataURI": "mockdata_kbb.json"
+			}
+		],
+		
+		"unit4" :[
+			{
+				"name": "KBB Classics",
+				"dataURI": "mockdata_kbbc.json"
+			}
+		]
+	}
+  },
+  {
+	"Software":{
+		"unit0" : [
+			{
+				"name": "ATC",
+				"dataURI": "mockdata.json"
+			}		
+		],
+		
+		"unit1" :[
+			{
+				"name": "ATC SYC",
+				"dataURI": "mockdata_syc.json"
+			}
+		],
+		
+		"unit2" :[
+			{
+				"name": "ATX",
+				"dataURI": "mockdata_atx.json"
+			}
+		],
+		
+		"unit3" :[
+			{
+				"name": "KBB Home",
+				"dataURI": "mockdata_kbb.json"
+			}
+		],
+		
+		"unit4" :[
+			{
+				"name": "KBB Classics",
+				"dataURI": "mockdata_kbbc.json"
+			}
+		]
+	}
+  },
+  {
+	"Enterprise":{
+		"unit0" : [
+			{
+				"name": "ATC",
+				"dataURI": "mockdata.json"
+			}		
+		],
+		
+		"unit1" :[
+			{
+				"name": "ATC SYC",
+				"dataURI": "mockdata_syc.json"
+			}
+		],
+		
+		"unit2" :[
+			{
+				"name": "ATX",
+				"dataURI": "mockdata_atx.json"
+			}
+		],
+		
+		"unit3" :[
+			{
+				"name": "KBB Home",
+				"dataURI": "mockdata_kbb.json"
+			}
+		],
+		
+		"unit4" :[
+			{
+				"name": "KBB Classics",
+				"dataURI": "mockdata_kbbc.json"
+			}
+		]
+	}
+  }
+]

@@ -4680,7 +4680,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
 }(jQuery));
 ;
-var jsonData = "assets/json/mockdata.json";
+//var jsonData = "assets/json/mockdata.json";
 var dasConfig = "assets/json/config.json";
 var initVars;
 var tableVars;
@@ -4768,7 +4768,7 @@ function buildTables(tableID, VarID){
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Trends</button></td></tr>');
+					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
 					loadSparkDyn(IDTag, celldataCall);
 				}
 				
@@ -4935,19 +4935,26 @@ function initTagButtons(){
 		confLoc = parseInt(confLoc);
 		jLoc = parseInt(jLoc);
 		var chartDialog;
+		var thisMarquee;
 		
 		if(thisLocal.indexOf('availtrend') > -1){
-			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-up">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-down">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
+			thisMarquee = thisLocal.split('-availtrend')[0];
+			thisMarquee = thisMarquee.split('-').join(' ');
+			thisMarquee = thisMarquee.toUpperCase();
+			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			//thisName = thisName + '  AVAILABILITY';
 		}else if(thisLocal.indexOf('perftrend') > -1){
-			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-up">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-down">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
+			thisMarquee = thisLocal.split('-perftrend')[0];
+			thisMarquee = thisMarquee.split('-').join(' ');
+			thisMarquee = thisMarquee.toUpperCase();
+			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			//thisName = thisName + '  PERFORMANCE';
 		}
 		
 		chartDialog.dialog({
-			title: thisLocal,
+			title: thisMarquee,
             resizable: false,
             modal: true,
             width: 960,
@@ -5162,46 +5169,6 @@ function bigChart(TtrendVal, trendDate){
 	$('#kpi-3 .kpi-target').text(perfTarget);
 }
 
-function bigChart2(PtrendVal, trendDate){
-	var perfPush = PtrendVal;
-	var trendDate = trendDate;
-		
-	$('#atc-perf-chart').wijlinechart({ 
-
-        header: { 
-            text: ""
-        }, 
-       
-        axis: { 
-            y: { 
-                text: "Values", 
-            }, 
-            x: { 
-                text: "Dates"
-            } 
-        }, 
-        // hide chart points values 
-        showChartLabels: false, 
-        // hide legend 
-        legend: { 
-            visible: false
-        }, 
-        seriesList: [ 
-            { 
-                //Label shown in legend 
-                label: "Performance", 
-                data: { 
-                    x: trendDate, 
-                    y: perfPush 
-                } 
-            } 
-        ],
-        seriesStyles: [{ 
-            stroke: "#1D70A7"
-        }] 
-    }); 
-}
-
 function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartType, diagID){
 	var trendPush = TrendVal;
 	var trendDate = trendDate;
@@ -5212,7 +5179,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartTy
 	var localDiagID = diagID;
 	var starter = 0;
 	var stopper = targeted.length;
-	$('#'+localDiagID).wijlinechart({ 
+	$('#'+localDiagID).wijcompositechart({ 
 		height: 270,
         header: { 
             text: ""
@@ -5232,30 +5199,27 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartTy
         }, 
         seriesList: [ 
             { 
-                //Label shown in legend 
+            	type: "area",
                 label: thisChart, 
-                data: { 
-                    //X axis values as Date objects. We are using a shared x value array for this chart with multiple y value arrays. 
+                data: {  
                     x: trendDate, 
-                    //Y axis values for 1st series 
                     y: trendPush 
                 } 
             },
             { 
-                //Label shown in legend 
+
+            	type: "line",
                 label: "Target", 
                 data: { 
-                    //X axis values as Date objects. We are using a shared x value array for this chart with multiple y value arrays. 
                     x: trendDate, 
-                    //Y axis values for 1st series 
                     y: targeted
                 } 
             },
             
         ],
         seriesStyles: [ 
-           { stroke: "#ED6412", "stroke-width": 1 }, 
-           { stroke: "#00468C", "stroke-width": 1 } 
+           { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+           { stroke: "#00468C", "stroke-width": 2 } 
        ]
     });
 	$('#kpi-1 .kpi-actual').text('99.2%');
@@ -5309,17 +5273,19 @@ function reDoChart(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcI
 	trendDate = trendDate.slice(starter, stopper);
 	thisTarget = thisTarget.slice(starter, stopper);
 
-	$('#'+thisChart).wijlinechart({
+	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
-				label: "Availability", 
+				type: "area",
+				label: "Values", 
                 data: {x: trendDate, y: trendPush}
 		    },{
+		    	type: "line",
 				label: "Target", 
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#ED6412", "stroke-width": 1 }, 
-                { stroke: "#00468C", "stroke-width": 1 } 
+                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
 }
@@ -5331,17 +5297,20 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 		case (PtrendAv <= 4.00):
 			Ptag = '#1DFF00';
 			$('#'+localID+'-perf').parent().css('background-color', Ptag);
-			$('#'+localID+'atc-perf').css('color', '#555');
+			$('#'+localID+'-perf').css('color', '#555');
+			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-check');
 			break;
 		case (PtrendAv > 4.00 && PtrendAv <= 8.00):
 			Ptag = '#F9B916';
 			$('#'+localID+'-perf').parent().css('background-color', Ptag);
 			$('#'+localID+'-perf').css('color', '#555');
+			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-circle');
 			break;
 		case (PtrendAv > 8.00):
 			Ptag = '#F72D00';
 			$('#'+localID+'-perf').css('color','#EFEFEF').parent().css('background-color', Ptag);
 			$('#'+localID+'-perf').css('color', '#EFEFEF');
+			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-warning');
 			break;
 		default:
 			// Yarp
@@ -5354,19 +5323,22 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 			Ttag = '#1DFF00';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');
+			$('#'+localID+'-avSign').addClass('fa').addClass('fa-check');
 			break;
 		case (TtrendAV >= 99.50 && TtrendAV < 99.55):
 			Ttag = '#F9B916';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');
+			$('#'+localID+'-avSign').addClass('fa').addClass('fa-circle');
 			break;
 		case (TtrendAV < 99.50):
 			Ttag = '#F72D00';
 			$('#'+localID+'-avail').css('color', '#EFEFEF').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color','#EFEFEF').next().css('color', '#EFEFEF');
+			$('#'+localID+'-avSign').addClass('fa').addClass('fa-warning');
 			break;
 		default:
-			// Yarp Too
+			// Smile and wave
 			break;
 	}
 }
@@ -5660,7 +5632,7 @@ function buildout(button){
 	<div class="table-caption">'+ tableRow +' Monthly Summary</div> \
 	<div class="DT-lf-right"><div class="DT-per-page"><label>Date Range&nbsp;</label><select name="jq-datatables-example_length" aria-controls="jq-datatables-example" class="form-control input-sm"><option value="" selected>Select</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="yearly">Yearly</option></select></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
+	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 	<tbody></tbody> \
 	</table> \
 	</div></div>';

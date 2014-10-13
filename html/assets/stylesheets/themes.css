@@ -9012,6 +9012,13 @@
   font-size: 1.2em;
   padding: 1px;
 }
+.kpi-gauge {
+  width: 30%;
+  margin: 0px 0px 0px 2px;
+  min-width: 40px;
+  min-height: 40px;
+  float: left;
+}
 .kpi-target {
   float: left;
   text-align: right;
@@ -9020,6 +9027,9 @@
   padding-right: 3px;
   padding-top: 2px;
   width: 20%;
+}
+.dater {
+  width: 6em;
 }
 .target-label {
   width: 68%;

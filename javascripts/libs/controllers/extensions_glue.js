@@ -130,9 +130,9 @@ function loadSpark(){
 		$('#atc-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
     });
 	tagCells(PtrendAv, TtrendAv);	
-	
+	/*
 	$('#atc-availtrend').click(function(){
-		var chartDialog = $('<div id="at-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-up">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-down">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="atc-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="atc-avail-full" class="full-bar"></div><div id="atc-long-chart" class="full-chart"></div></div></div>');
+		var chartDialog = $('<div id="at-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-up">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-down">.</div><div class="clear-this"></div></div><div class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="atc-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="atc-avail-full" class="full-bar"></div><div id="atc-long-chart" class="full-chart"></div></div></div>');
 		
 		chartDialog.dialog({
 			title: 'ATC Availabiliy',
@@ -163,7 +163,7 @@ function loadSpark(){
         });
 		bigChart2(PtrendVal, trendDate);
 	});
-	
+	*/
 	$('.btn-primary').click(function(){
 		var thisID = $(this).attr('id');
 		var miniWidth, miniHeight, whichType, miniDialogID;
@@ -259,14 +259,14 @@ function initTagButtons(){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			//thisName = thisName + '  AVAILABILITY';
 		}else if(thisLocal.indexOf('perftrend') > -1){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="avail-gauge" class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			//thisName = thisName + '  PERFORMANCE';
 		}
@@ -366,10 +366,12 @@ function largeData(dataChain, dialogID){
 			chartType = "Availibility";
 			bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, chartType, funcID);
 			buildButtons(altTrend, trendDate, avTar, funcID);
+			//loadPies(TtrendAv);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, chartType, funcID);
 			buildButtons(altPerf, trendDate, avPer, funcID);
+			//loadPies(TtrendAv);
 		}
 	});
 }
@@ -661,14 +663,15 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	}
 }
 
-function loadPies(){
+function loadPies(val){
+	var actual = val;
 	//Pie charts. Highly customizable
-	$('#perf-chart').wijradialgauge({ 
-        value: 90, 
+	$('#avail-gauge').wijradialgauge({ 
+        value: actual, 
         max: 100, 
         min: 0,
-        height: 150,
-        width: 150,
+        height: 100,
+        width: 100,
         startAngle: -45, 
         sweepAngle: 270, 
         radius: "auto", 
@@ -776,7 +779,7 @@ function loadPies(){
             } 
         } 
     }); 
-	
+	/*
 	$('#perf-chart2').wijradialgauge({ 
         value: 82, 
         max: 100, 
@@ -890,6 +893,7 @@ function loadPies(){
             } 
         } 
     }); 
+	*/
 }
 
 function changeGauge(){
@@ -948,7 +952,7 @@ function buildout(button){
 	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 	<div class="table-header clearfix"> \
 	<div class="table-caption">'+ tableRow +' Monthly Summary</div> \
-	<div class="DT-lf-right"><div class="DT-per-page"><label>Date Range&nbsp;</label><select name="jq-datatables-example_length" aria-controls="jq-datatables-example" class="form-control input-sm"><option value="" selected>Select</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="yearly">Yearly</option></select></div></div></div> \
+	<div class="DT-lf-right"><div class="DT-per-page"><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&mbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 	<tbody></tbody> \
@@ -957,6 +961,27 @@ function buildout(button){
 	$('#content-row-table').append(tableContent);
 	
 	selectedTab(truncTableRow);
+	dateRanger();
+}
+
+function dateRanger(){
+	$("#from").datepicker({
+	      defaultDate: "+1w",
+	      changeMonth: true,
+	      numberOfMonths: 3,
+	      onSelect: function(selectedDate) {
+	    	  $("#to").datepicker( "option", "minDate", selectedDate );
+	      }
+    });
+	
+    $("#to").datepicker({
+		  defaultDate: "+1w",
+		  changeMonth: true,
+		  numberOfMonths: 3,
+		  onSelect: function( selectedDate ) {
+			  $("#from").datepicker( "option", "maxDate", selectedDate );
+		  }
+    });
 }
 
 //Select chart range.

@@ -122,8 +122,8 @@ function loadSpark(){
 		PtrendAv = PtrendAv.toFixed(2);	
 	
 		// Plug em into the table
-		$('#atc-avail').text(TtrendAv);
-		$('#atc-perf').text(PtrendAv);
+		$('#atc-avail').text(TtrendAv+'%');
+		$('#atc-perf').text(PtrendAv+'ms');
 		$('#atc-availtrend').sparkline(TtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
 		$('#atc-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
     });
@@ -328,6 +328,7 @@ function largeData(dataChain, dialogID, longID){
 		//Round it off
 		TtrendAv = TtrendAv.toFixed(2);
 		PtrendAv = PtrendAv.toFixed(2);
+		
 		//alts
 		altTrend = TtrendVal;
 		altPerf = PtrendVal;
@@ -528,17 +529,16 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartTy
        ]
     });
 	
-	$('#kpi-1 .kpi-actual').text('99.2%');
-	$('#kpi-2 .kpi-actual').text('99.5%');
-	$('#kpi-3 .kpi-actual').text('4.3ms');
+	$('#kpi-1 .kpi-actual').text(availAv+'%');
+	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(availTarget);
-	$('#kpi-2 .kpi-target').text(availTarget);
 	$('#kpi-3 .kpi-target').text(perfTarget);
 	makeSlider(starter, stopper, trendPush, trendDate, targeted, localDiagID);
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
 }
+
 function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcID){
 	var thisID = funcID;
 	var thisStart = startNum;
@@ -649,6 +649,7 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	}
 }
 
+// Loading gauges.
 function loadPies(val, perf){
 	var actual = val;
 	var thePerf = perf;
@@ -769,7 +770,7 @@ function loadPies(val, perf){
 	
 	$('#perf-gauge').wijradialgauge({ 
         value: thePerf, 
-        max: 8, 
+        max: 12, 
         min: 0,
         height: 100,
         width: 100,
@@ -881,7 +882,7 @@ function loadPies(val, perf){
         } 
     }); 
 }
-
+/*
 function changeGauge(){
 	//Update the value of the gauge based on live data.
 	var newVal1 = Math.random() * (100 - 70) + 70;
@@ -893,7 +894,7 @@ function changeGauge(){
 	$('#perf-chart').wijradialgauge('option', 'value', newVal1);
 	$('#perf-chart2').wijradialgauge('option', 'value', newVal2);
 }
-
+*/
 
 //Navigation
 function buildout(button){
@@ -1004,8 +1005,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 	}).hover(function(){
 			$(this).addClass('bttnSelected');
 		}, function(){
-			$(this).removeClass('bttnSelected');
-		
+			$(this).removeClass('bttnSelected');		
 	});
 }
 

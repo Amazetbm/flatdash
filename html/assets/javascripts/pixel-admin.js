@@ -5049,7 +5049,7 @@ function tableBuild(dataType, whichID, typeID, thisSeq){
 	var thisID = whichID;
 	var thisTypeID = typeID;
 	var curSeq = thisSeq;
-	var numberNudge, theName;
+	var numberNudge, theName, atarget, ptarget;
 	var confLoc = curSeq.split(',')[0];
 	var jLoc = curSeq.split(',')[1];
 	confLoc = parseInt(confLoc);
@@ -5074,29 +5074,45 @@ function tableBuild(dataType, whichID, typeID, thisSeq){
 		trendDataCall = thisDiv[jLoc].trendingURI;
 		notesDataCall = thisDiv[jLoc].notesURI;
 		theName = thisDiv[jLoc].name;
-		buildMiniTables(theName, thisTableType, trendDataCall, notesDataCall );
+		atarget = thisDiv[jLoc].availTarget;
+		ptarget = thisDiv[jLoc].perfTarget;
+		
+		buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, notesDataCall);
 	});
-	
-	for(var i = 0; i < 4; i++){
-		if(thisTableType == 'notes-table'){
-			$('#'+thisTableType+' tbody').append('<tr><td>9-30-2014</td><td>'+thisTypeID+'</td><td>A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... </td></tr>');
-		}else{
-			numberNudge = i + 1;
-			$('#'+thisTableType+' tbody').append('<tr><td>Q'+numberNudge +'</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>');
-		}
-	}
 }	
 
-function buildMiniTables(theName, tableType, trending, notes){
+function buildMiniTables(theName, tableType, availtarget, perftarget, trending, notes){
 	var currName = theName;
 	var theTable = tableType;
 	var theTrend = trending;
 	var theNotes = notes;
+	var atarget = availtarget;
+	var ptarget = perftarget;
 	
 	if(theTable == 'notes-table'){
-		console.log('notes');
+		$.getJSON(theNotes, function(jdata){
+			for (var i=0, len=jdata.length; i < len; i++) {
+				var theUnit = jdata[i].unit;
+				var theDate = jdata[i].modified_date;
+				var theNote = jdata[i].message;
+				$('#'+theTable+' tbody').append('<tr><td>'+theDate+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+			}
+		}).fail(function(){
+			console.log('error');
+		});
 	}else{
-		console.log('trends');
+		$.getJSON(theTrend, function(jdata){
+			for (var i=0, len=jdata.length; i < len; i++) {
+				var numberNudge = i + 1;
+				var avail = jdata[i].availability; 
+				var perf = jdata[i].performance; 
+				avail = avail.toFixed(2);
+				perf = perf.toFixed(2);
+				$('#'+theTable+' tbody').append('<tr><td>Q'+numberNudge +'</td><td>'+atarget+'</td><td>'+avail+'</td><td>'+ptarget+'</td><td>'+perf+'</td></tr>');
+			}
+		}).fail(function(){
+			console.log('error');
+		});
 	}
 }
 

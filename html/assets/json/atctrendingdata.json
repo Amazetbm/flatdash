@@ -4,7 +4,7 @@
         "page_id": 1207915,
         "performance": 5.566,
         "availability": 99.95,
-        "unit": "ATC",
+        "unit": "ATC"
     },
     {
         "_id": "53fcaa123638c96ae7f7d8bd",
@@ -27,3 +27,4 @@
         "availability": 99.55,
         "unit": "ATC"
     }
+]

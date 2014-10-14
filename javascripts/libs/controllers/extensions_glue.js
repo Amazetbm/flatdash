@@ -2,6 +2,7 @@
 var dasConfig = "assets/json/config.json";
 var initVars;
 var tableVars;
+var buttonVars;
 var TtrendVal = [];
 var PtrendVal = [];
 var trendDate = [];
@@ -60,8 +61,6 @@ function selectedTab(tabID){
 		tableVars = 'Issues';
 		buildTables(thisID, tableVars);
 	}
-
-
 }
 
 function buildTables(tableID, VarID){
@@ -86,15 +85,14 @@ function buildTables(tableID, VarID){
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
+					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
 					loadSparkDyn(IDTag, celldataCall);
 				}
 				
 			}
 		}
 		initTagButtons();
-	});
-	
+	});	
 }
 
 // Do stuff more stuff
@@ -130,47 +128,14 @@ function loadSpark(){
 		$('#atc-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
     });
 	tagCells(PtrendAv, TtrendAv);	
-	/*
-	$('#atc-availtrend').click(function(){
-		var chartDialog = $('<div id="at-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-up">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-actual">.</div><div class="target-label">Target</div><div class="kpi-target fa fa-arrow-down">.</div><div class="clear-this"></div></div><div class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="atc-avail-chart"></div><div class="chart-button-row" id="chart-buttons"></div><div class="full-box"><div id="atc-avail-full" class="full-bar"></div><div id="atc-long-chart" class="full-chart"></div></div></div>');
-		
-		chartDialog.dialog({
-			title: 'ATC Availabiliy',
-            resizable: false,
-            modal: true,
-            width: 960,
-            height: 560,
-            close: function(click){
-            	$(this).dialog('destroy');
-            },
-        });
-		bigChart(TtrendVal, trendDate);
-		buildButtons(TtrendVal, trendDate);
-	});
-	
-	$('#atc-perftrend').click(function(){
-		var chartDialog2 = $('<div id="at-perf-diag"><div id="atc-perf-chart"></div></div>');
-		
-		chartDialog2.dialog({
-			title: 'ATC Performance',
-            resizable: false,
-            modal: true,
-            width: 960,
-            height: 560,
-            close: function(click){
-            	$(this).dialog('destroy');
-            },
-        });
-		bigChart2(PtrendVal, trendDate);
-	});
-	*/
+
 	$('.btn-primary').click(function(){
 		var thisID = $(this).attr('id');
 		var miniWidth, miniHeight, whichType, miniDialogID;
 		var miniDiag = $('<div id="'+thisID+'-diag"><div id="'+thisID+'-smallBox"></div></div>');
 		var prettyStr = thisID.split('-').join(' ');
 		if (thisID.search('notes') > -1){
-			miniWidth = 480;
+			miniWidth = 760;
 			miniHeight = 420;
 			whichType = 'notes';
 		}else{
@@ -247,7 +212,7 @@ function initTagButtons(){
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
-		var thisDiv, celldataCall, dialogID;
+		var thisDiv, celldataCall, trendDataCall, notesDataCall, dialogID;
 		var confLoc = thisSeq.split(',')[0];
 		var jLoc = thisSeq.split(',')[1];
 		confLoc = parseInt(confLoc);
@@ -291,12 +256,13 @@ function initTagButtons(){
 	
 	$('.btn-primary').click(function(){
 		var thisID = $(this).attr('id');
+		var thisSeq = $(this).attr('seq-loc');
 		var miniWidth, miniHeight, whichType, miniDialogID;
 		var miniDiag = $('<div id="'+thisID+'-diag"><div id="'+thisID+'-smallBox"></div></div>');
 		var prettyStr = thisID.split('-').join(' ');
 		prettyStr = prettyStr.toUpperCase();
 		if (thisID.search('notes') > -1){
-			miniWidth = 480;
+			miniWidth = 680;
 			miniHeight = 420;
 			whichType = 'notes';
 		}else{
@@ -317,7 +283,7 @@ function initTagButtons(){
         });
 		
 		miniDialogID = $(miniDiag).attr('ID');
-		miniDialogs(miniDialogID, whichType);
+		miniDialogs(miniDialogID, whichType, thisID, thisSeq);
 	});
 	
 }
@@ -376,10 +342,12 @@ function largeData(dataChain, dialogID){
 	});
 }
 
-function miniDialogs(miniDialogID, whichType){
+function miniDialogs(miniDialogID, whichType, typeID, thisSeq){
 	var thisType = whichType;
 	var thisID = miniDialogID;
 	var thisContent, tableType;
+	var thisTypeID = typeID;
+	var sequence = thisSeq;
 	if(thisType == 'notes'){
 		thisContent = $('<div class="table-warning"><div class="table-header"><div class="table-caption">Notes</div></div><table class="table table-bordered" id="notes-table"><thead><tr><th>Date</th><th>Unit</th><th>Notes</th></tr></thead><tbody></tbody></table></div>');
 		tableType = thisType+'-table';
@@ -391,15 +359,45 @@ function miniDialogs(miniDialogID, whichType){
 	
 	$('#'+thisID).append(thisContent);
 	
-	tableBuild(tableType);
+	tableBuild(tableType, thisID, thisTypeID, sequence);
 }
 
-function tableBuild(dataType){
+function tableBuild(dataType, whichID, typeID, thisSeq){
 	var thisTableType = dataType;
-	var numberNudge;
+	var thisID = whichID;
+	var thisTypeID = typeID;
+	var curSeq = thisSeq;
+	var numberNudge, theName;
+	var confLoc = curSeq.split(',')[0];
+	var jLoc = curSeq.split(',')[1];
+	confLoc = parseInt(confLoc);
+	jLoc = parseInt(jLoc);
+	thisTypeID = thisTypeID.split('-notes')[0];
+
+	//Checks strings from the table ID
+	if (typeof String.prototype.startsWith != 'function') {
+	    String.prototype.startsWith = function(prefix) {
+	        return this.slice(0, prefix.length) == prefix;
+	    };
+	}
+	 
+	if (typeof String.prototype.endsWith != 'function') {
+	    String.prototype.endsWith = function(suffix) {
+	        return this.slice(-suffix.length) == suffix;
+	    };
+	}
+	
+	$.getJSON(dasConfig, function(confdata){
+		thisDiv = confdata[confLoc].units;
+		trendDataCall = thisDiv[jLoc].trendingURI;
+		notesDataCall = thisDiv[jLoc].notesURI;
+		theName = thisDiv[jLoc].name;
+		buildMiniTables(theName, thisTableType, trendDataCall, notesDataCall );
+	});
+	
 	for(var i = 0; i < 4; i++){
 		if(thisTableType == 'notes-table'){
-			$('#'+thisTableType+' tbody').append('<tr><td>9-30-2014</td><td>ATC</td><td>A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... </td></tr>');
+			$('#'+thisTableType+' tbody').append('<tr><td>9-30-2014</td><td>'+thisTypeID+'</td><td>A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... A Bunch of happy notes... </td></tr>');
 		}else{
 			numberNudge = i + 1;
 			$('#'+thisTableType+' tbody').append('<tr><td>Q'+numberNudge +'</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>');
@@ -407,86 +405,17 @@ function tableBuild(dataType){
 	}
 }	
 
-
-function bigChart(TtrendVal, trendDate){
-	var trendPush = TtrendVal;
-	var trendDate = trendDate;
-	$('#atc-avail-chart').wijlinechart({ 
-		height: 270,
-        header: { 
-            text: ""
-        }, 
-       
-        axis: { 
-            y: { 
-                text: "Percentages", 
-            }, 
-            x: { 
-                text: ""
-            } 
-        }, 
-        showChartLabels: false, 
-        legend: { 
-            visible: false
-        }, 
-        seriesList: [ 
-            { 
-                //Label shown in legend 
-                label: "Availability", 
-                data: { 
-                    //X axis values as Date objects. We are using a shared x value array for this chart with multiple y value arrays. 
-                    x: trendDate, 
-                    //Y axis values for 1st series 
-                    y: trendPush 
-                } 
-            } 
-        ],
-        seriesStyles: [ 
-             { stroke: "#ED6412", "stroke-width": 1 }, 
-             { stroke: "#00468C", "stroke-width": 1 } 
-         ]
-    });
+function buildMiniTables(theName, tableType, trending, notes){
+	var currName = theName;
+	var theTable = tableType;
+	var theTrend = trending;
+	var theNotes = notes;
 	
-	$('#atc-long-chart').wijlinechart({ 
-
-        header: { 
-            text: ""
-        }, 
-        showChartLabels: false,
-        height: 40,
-        axis: { 
-            y: {
-            	textVisible: false,
-                text: "", 
-            }, 
-            x: {
-            	textVisible: false,
-                text: ""
-            } 
-        }, 
-        showChartLabels: false, 
-        legend: { 
-            visible: false
-        }, 
-        seriesList: [ 
-            { 
-                label: "", 
-                data: { 
-                    x: trendDate, 
-                    y: trendPush 
-                } 
-            } 
-        ]
-    });
-
-	makeSlider(startNum, stopNum);
-	
-	$('#kpi-1 .kpi-actual').text('99.2%');
-	$('#kpi-2 .kpi-actual').text('99.5%');
-	$('#kpi-3 .kpi-actual').text('4.3ms');
-	$('#kpi-1 .kpi-target').text(availTarget);
-	$('#kpi-2 .kpi-target').text(availTarget);
-	$('#kpi-3 .kpi-target').text(perfTarget);
+	if(theTable == 'notes-table'){
+		console.log('notes');
+	}else{
+		console.log('trends');
+	}
 }
 
 function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartType, diagID){
@@ -952,7 +881,7 @@ function buildout(button){
 	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 	<div class="table-header clearfix"> \
 	<div class="table-caption">'+ tableRow +' Monthly Summary</div> \
-	<div class="DT-lf-right"><div class="DT-per-page"><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&mbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
+	<div class="DT-lf-right"><div class="DT-per-page"><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 	<tbody></tbody> \
@@ -965,25 +894,23 @@ function buildout(button){
 }
 
 function dateRanger(){
-	$("#from").datepicker({
-	      defaultDate: "+1w",
-	      changeMonth: true,
-	      numberOfMonths: 3,
-	      onSelect: function(selectedDate) {
-	    	  $("#to").datepicker( "option", "minDate", selectedDate );
-	      }
+	$('#from').datepicker({
+		showButtonPanel: true,
+		dateFormat: 'mm/dd/yyyy',
+	}).on('changeDate', function(selectedDate){
+		$(this).datepicker( "option", "minDate", selectedDate );
+        $(this).blur();
+        $('.datepicker').hide();
     });
 	
-    $("#to").datepicker({
-		  defaultDate: "+1w",
-		  changeMonth: true,
-		  numberOfMonths: 3,
-		  onSelect: function( selectedDate ) {
-			  $("#from").datepicker( "option", "maxDate", selectedDate );
-		  }
+    $('#to').datepicker({
+    	dateFormat: 'yy-mm-dd'
+    }).on('changeDate', function(selectedDate){
+    	$(this).datepicker( "option", "maxDate", selectedDate );
+        $(this).blur();
+        $('.datepicker').hide();
     });
 }
-
 //Select chart range.
 function chartRanger(Tval, trendDate, trendTarget, funcID){
 	$('#chart-buttons li').click(function(){

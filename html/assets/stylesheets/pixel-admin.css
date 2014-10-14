@@ -19206,7 +19206,7 @@ body:not(.right-to-left) .no-border-l {
   width: 20%;
 }
 .dater {
-  width: 6em;
+  /*width: 6em;	*/
 }
 .target-label {
   width: 68%;
@@ -19251,7 +19251,7 @@ body:not(.right-to-left) .no-border-l {
   margin: 1px;
   list-style-type: none;
   float: left;
-  width: 9.5em;
+  width: 7.5em;
   height: 2.8em;
   line-height: 2.3em;
   padding-top: 3px;
@@ -19278,13 +19278,13 @@ body:not(.right-to-left) .no-border-l {
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 50px !important;
+  height: 10px !important;
   z-index: 10;
 }
 .full-box {
   margin-top: 3px;
   position: relative;
-  height: 50px;
+  height: 10px;
 }
 .clear-this {
   clear: both;

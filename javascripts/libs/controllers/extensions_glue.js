@@ -938,7 +938,7 @@ function buildout(button){
 	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 	<div class="table-header clearfix"> \
 	<div class="table-caption">'+ tableRow +' Monthly Summary</div> \
-	<div class="DT-lf-right"><div class="DT-per-page"><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
+	<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText"></div><div id="toText"></div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 	<tbody></tbody> \
@@ -952,22 +952,27 @@ function buildout(button){
 
 function dateRanger(){
 	$('#from').datepicker({
-		showButtonPanel: true,
 		dateFormat: 'mm/dd/yyyy',
+		autoclose: true
 	}).on('changeDate', function(selectedDate){
 		var theDater = new Date(selectedDate.date);
-		console.log(theDater);
-		$('#from').val(selectedDate);
-		$(this).datepicker( "option", "minDate", selectedDate );
+		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();	
+		$('#fromText').text(targetDate);
+		$(this).datepicker( "option", "minDate", selectedDate);
+		$(this).datepicker('setDate', selectedDate);
         $(this).blur();
         $('.datepicker').hide();
     });
 	
     $('#to').datepicker({
-    	dateFormat: 'yy-mm-dd'
+    	dateFormat: 'mm/dd/yyyy',
+    	autoclose: true
     }).on('changeDate', function(selectedDate){
-    	$('#to').val(selectedDate);
-    	$(this).datepicker( "option", "maxDate", selectedDate );
+    	var theDater = new Date(selectedDate.date);
+		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();
+		$('#toText').text(targetDate);
+    	$(this).datepicker( "option", "maxDate", selectedDate);
+    	$(this).datepicker('setDate', selectedDate);
         $(this).blur();
         $('.datepicker').hide();
     });

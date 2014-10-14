@@ -19325,13 +19325,26 @@ body:not(.right-to-left) .no-border-l {
 }
 #content-row-table .DT-per-page {
   border-right: 0;
+  position: relative;
+}
+#content-row-table .DT-per-page #fromText {
+  position: absolute;
+  color: #000;
+  left: 120px;
+  top: 3px;
+}
+#content-row-table .DT-per-page #toText {
+  position: absolute;
+  color: #000;
+  left: 310px;
+  top: 3px;
 }
 #page-header-title {
   font-weight: bold;
 }
 #content-row-table .table-caption {
   float: left;
-  width: 400px;
+  width: 40%;
 }
 .tempSpace {
   height: 100px;

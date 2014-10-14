@@ -1,115 +1,199 @@
-[ { 
-	"Digital_Media": {
-		"unit0" : [
+[
+	{
+		"division" : "Digital_Media",
+		"units" : [
 			{
 				"name": "ATC",
-				"dataURI": "mockdata.json"
-			}		
-		],
-		
-		"unit1" :[
+				"dataURI": "assets/json/mockdata1.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
 			{
 				"name": "ATC SYC",
-				"dataURI": "mockdata_syc.json"
-			}
-		],
-		
-		"unit2" :[
+				"dataURI": "assets/json/mockdata_syc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
 			{
 				"name": "ATX",
-				"dataURI": "mockdata_atx.json"
-			}
-		],
-		
-		"unit3" :[
+				"dataURI": "assets/json/mockdata_atx.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "Dealer Site",
+				"dataURI": "assets/json/mockdata_dealer.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "Customer Care",
+				"dataURI": "assets/json/mockdata_cust.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
 			{
 				"name": "KBB Home",
-				"dataURI": "mockdata_kbb.json"
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Classifieds",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
 			}
-		],
-		
-		"unit4" :[
+		]
+
+	},
+	{
+		"division" : "Software",
+		"units" : [
+			{
+				"name": "HomeNet",
+				"dataURI": "assets/json/mockdata.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "HomeNet Login",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "VinS Login",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "VinS Dealer Site",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "vAuto Composite",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "vAuto RealDeal",
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+	},
+	{
+		"division" : "Enterprise",
+		"units" : [
+			{
+				"name": "The Hub",
+				"dataURI": "assets/json/mockdata.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "SalesForce",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "RMB",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "EBS",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			}
+		]
+	},
+	{
+		"division" : "Issues",
+		"units" : [
+			{
+				"name": "ATC",
+				"dataURI": "assets/json/mockdata.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATC SYC",
+				"dataURI": "assets/json/mockdata_syc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "ATX",
+				"dataURI": "assets/json/mockdata_atx.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
+			{
+				"name": "KBB Home",
+				"dataURI": "assets/json/mockdata_kbbh.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
+			},
 			{
 				"name": "KBB Classics",
-				"dataURI": "mockdata_kbbc.json"
+				"dataURI": "assets/json/mockdata_kbbc.json",
+				"notesURI": "assets/json/atcnotesdata.json",
+				"trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.50",
+				"perfTarget" : "4.00"
 			}
 		]
 	}
-  },
-  {
-	"Software":{
-		"unit0" : [
-			{
-				"name": "ATC",
-				"dataURI": "mockdata.json"
-			}		
-		],
-		
-		"unit1" :[
-			{
-				"name": "ATC SYC",
-				"dataURI": "mockdata_syc.json"
-			}
-		],
-		
-		"unit2" :[
-			{
-				"name": "ATX",
-				"dataURI": "mockdata_atx.json"
-			}
-		],
-		
-		"unit3" :[
-			{
-				"name": "KBB Home",
-				"dataURI": "mockdata_kbb.json"
-			}
-		],
-		
-		"unit4" :[
-			{
-				"name": "KBB Classics",
-				"dataURI": "mockdata_kbbc.json"
-			}
-		]
-	}
-  },
-  {
-	"Enterprise":{
-		"unit0" : [
-			{
-				"name": "ATC",
-				"dataURI": "mockdata.json"
-			}		
-		],
-		
-		"unit1" :[
-			{
-				"name": "ATC SYC",
-				"dataURI": "mockdata_syc.json"
-			}
-		],
-		
-		"unit2" :[
-			{
-				"name": "ATX",
-				"dataURI": "mockdata_atx.json"
-			}
-		],
-		
-		"unit3" :[
-			{
-				"name": "KBB Home",
-				"dataURI": "mockdata_kbb.json"
-			}
-		],
-		
-		"unit4" :[
-			{
-				"name": "KBB Classics",
-				"dataURI": "mockdata_kbbc.json"
-			}
-		]
-	}
-  }
 ]

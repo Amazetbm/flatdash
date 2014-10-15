@@ -23,11 +23,6 @@ var availLine =[];
 var perfLine = [];
 
 function initApp(){
-	/*$.getJSON(dasConfig, function(confdata){
-		initVars = confdata;
-		cacheVars(initVars);
-	});
-	*/
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
 }
@@ -87,8 +82,7 @@ function buildTables(tableID, VarID){
 					IDTag = IDTag.split(' ').join('-');
 					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
 					loadSparkDyn(IDTag, celldataCall);
-				}
-				
+				}				
 			}
 		}
 		initTagButtons();
@@ -826,7 +820,7 @@ function loadPies(val, perf){
             startWidth: 3, 
             endWidth: 3, 
             startValue: 5, 
-            endValue: 8, 
+            endValue: 12, 
             startDistance: 0.6, 
             endDistance: 0.58, 
             style: { 

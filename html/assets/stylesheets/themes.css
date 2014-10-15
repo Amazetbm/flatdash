@@ -9091,10 +9091,13 @@
 }
 /* Chart Suff */
 .full-chart {
-  width: 90px;
+  width: 890px;
   height: 94px;
+  margin-left: 34px;
 }
 .full-bar {
+  width: 890px;
+  margin-left: 34px;
   height: 10px !important;
 }
 .full-box {

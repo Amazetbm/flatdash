@@ -4710,7 +4710,7 @@ function initApp(){
 }
 
 
-function selectedTab(tabID){
+function selectedTab(tabID, queryFrom, queryTo){
 	//Checks strings from the table ID
 	if (typeof String.prototype.startsWith != 'function') {
 	    String.prototype.startsWith = function(prefix) {
@@ -4724,23 +4724,24 @@ function selectedTab(tabID){
 	    };
 	}
 	var thisID = tabID+'-table';
-	
+	var fromThis = queryFrom;
+	var toThis = queryTo;
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
-		buildTables(thisID, tableVars);
+		buildTables(thisID, tableVars, fromThis, toThis);
 	}else if(thisID.startsWith('Software')){
 		tableVars = 'Software';
-		buildTables(thisID, tableVars);
+		buildTables(thisID, tableVars, fromThis, toThis);
 	}else if(thisID.startsWith('Enterprise')){
 		tableVars = 'Enterprise';
-		buildTables(thisID, tableVars);
+		buildTables(thisID, tableVars, fromThis, toThis);
 	}else if(thisID.startsWith('Issues')){
 		tableVars = 'Issues';
-		buildTables(thisID, tableVars);
+		buildTables(thisID, tableVars, fromThis, toThis);
 	}
 }
 
-function buildTables(tableID, VarID){
+function buildTables(tableID, VarID, queryFrom, queryTo){
 	var currentID = tableID;
 	var currentTable = VarID;
 	var divVar, thisDiv;
@@ -4749,6 +4750,9 @@ function buildTables(tableID, VarID){
 	var cellPTarget;
 	var IDTag;
 	var celldataCall;
+	var fromThis = queryFrom;
+	var toThis = queryTo;
+
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
 			divVar = confdata[i].division;
@@ -4759,15 +4763,17 @@ function buildTables(tableID, VarID){
 					cellTTarget = thisDiv[j].availTarget;
 					cellPTarget = thisDiv[j].perfTarget;
 					celldataCall = thisDiv[j].dataURI;
+					celldataCall = celldataCall.replace('fromThis', fromThis);
+					celldataCall = celldataCall.replace('toThis', toThis);
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
 					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
-					loadSparkDyn(IDTag, celldataCall);
+					loadSparkDyn(IDTag, celldataCall);					
 				}				
 			}
 		}
-		initTagButtons();
+		initTagButtons(fromThis, toThis);
 	});	
 }
 
@@ -4891,7 +4897,7 @@ function loadSparkDyn(IDChain, chainData){
     });		
 }
 
-function initTagButtons(){
+function initTagButtons(fromQuery, toQuery){
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
@@ -4902,6 +4908,8 @@ function initTagButtons(){
 		jLoc = parseInt(jLoc);
 		var chartDialog;
 		var thisMarquee;
+		var fromThis = fromQuery;
+		var toThis = toQuery;
 		
 		if(thisLocal.indexOf('availtrend') > -1){
 			thisMarquee = thisLocal.split('-availtrend')[0];
@@ -4935,6 +4943,8 @@ function initTagButtons(){
 		$.getJSON(dasConfig, function(confdata){
 			thisDiv = confdata[confLoc].units;
 			celldataCall = thisDiv[jLoc].dataURI;
+			celldataCall = celldataCall.replace('fromThis', fromThis);
+			celldataCall = celldataCall.replace('toThis', toThis);
 			largeData(celldataCall, dialogID, longID);
 		});
 	});	
@@ -5565,19 +5575,6 @@ function loadPies(val, perf){
         } 
     }); 
 }
-/*
-function changeGauge(){
-	//Update the value of the gauge based on live data.
-	var newVal1 = Math.random() * (100 - 70) + 70;
-	var newVal2 = Math.random() * (100 - 60) + 60;
-	var newVal3 = Math.random() * (4.5 - 4) + 4;
-	newVal1 = newVal1.toFixed(2);
-	newVal2 = newVal2.toFixed(2);
-	newVal3 = newVal3.toFixed(2);
-	$('#perf-chart').wijradialgauge('option', 'value', newVal1);
-	$('#perf-chart2').wijradialgauge('option', 'value', newVal2);
-}
-*/
 
 //Navigation
 function buildout(button){
@@ -5586,7 +5583,39 @@ function buildout(button){
 	var truncTableRow;
 	var tableContent;
 	var colSize;
+	var today = new Date();
+	var past = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+	past = past.setDate(past.getDate()-30);
+	var pastMonth = new Date(past);
+	var p_dd = pastMonth.getDate();
+	var p_mm = pastMonth.getMonth()+1;
+	var p_yyyy = pastMonth.getFullYear();
+	var queryTo, queryFrom;
+	if(dd<10) {
+	    dd='0'+dd;
+	} 
+
+	if(mm<10) {
+	    mm='0'+mm;
+	} 
 	
+	if(p_dd<10) {
+	    p_dd='0'+p_dd;
+	} 
+
+	if(p_mm<10) {
+	    p_mm='0'+p_mm;
+	} 
+	
+	today = mm+'/'+dd+'/'+yyyy;
+	pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
+	queryTo = yyyy+'-'+mm+'-'+dd;
+	queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
+	
+
 	$('#content-row-table').empty();
 	$('#main-menu-buttons').children().removeClass('active');
 	
@@ -5617,12 +5646,17 @@ function buildout(button){
 			break;
 	}
 	
-	truncTableRow = tableRow.split(' ').join('');
 	//Build table
+	
+	truncTableRow = tableRow.split(' ').join('');
+	if (thisBttn == 'menu-link-issues'){
+		console.log('issues page');
+	}
+	
 	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 	<div class="table-header clearfix"> \
 	<div class="table-caption">'+ tableRow +' Summary</div> \
-	<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText"></div><div id="toText"></div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
+	<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 	<tbody></tbody> \
@@ -5630,13 +5664,14 @@ function buildout(button){
 	</div></div>';
 	$('#content-row-table').append(tableContent);
 	
-	selectedTab(truncTableRow);
+	selectedTab(truncTableRow, queryFrom, queryTo);
 	dateRanger();
 }
-
+//Range
 function dateRanger(){
 	$('#from').datepicker({
 		dateFormat: 'mm/dd/yyyy',
+		maxDate: '0',
 		autoclose: true
 	}).on('changeDate', function(selectedDate){
 		var theDater = new Date(selectedDate.date);
@@ -5650,6 +5685,7 @@ function dateRanger(){
 	
     $('#to').datepicker({
     	dateFormat: 'mm/dd/yyyy',
+    	maxDate: '0',
     	autoclose: true
     }).on('changeDate', function(selectedDate){
     	var theDater = new Date(selectedDate.date);

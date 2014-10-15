@@ -4872,16 +4872,23 @@ function loadSparkDyn(IDChain, chainData){
 		//Round it off
 		TtrendAv = TtrendAv.toFixed(2);
 		PtrendAv = PtrendAv.toFixed(2);	
-
+		
 		// Plug em into the table
-		$('#'+localID+'-avail').text(TtrendAv);
-		$('#'+localID+'-perf').text(PtrendAv);
-		$('#'+localID+'-availtrend').sparkline(TtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
-		$('#'+localID+'-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
-		tagCells(localID, PtrendAv, TtrendAv);
-		TtrendVal = [];
-		PtrendVal = [];
-		trendDate = [];
+		if(TtrendVal == '' || TtrendVal == null){
+			$('#'+localID+'-avail').text('No Data').css('font-size','0.8em').css('color','#F72D00');
+			$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+			$('#'+localID+'-availtrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+			$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+		}else{
+			$('#'+localID+'-avail').text(TtrendAv);
+			$('#'+localID+'-perf').text(PtrendAv);
+			$('#'+localID+'-availtrend').sparkline(TtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
+			$('#'+localID+'-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
+			tagCells(localID, PtrendAv, TtrendAv);
+			TtrendVal = [];
+			PtrendVal = [];
+			trendDate = [];
+		}
     }).fail(function(){
     	$('#'+localID+'-avail').text('No Data').css('font-size','0.8em').css('color','#F72D00');
 		$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
@@ -5620,7 +5627,7 @@ function buildout(button){
 	//Build table
 	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 	<div class="table-header clearfix"> \
-	<div class="table-caption">'+ tableRow +' Monthly Summary</div> \
+	<div class="table-caption">'+ tableRow +' Summary</div> \
 	<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText"></div><div id="toText"></div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to"></div></div></div> \
 	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \

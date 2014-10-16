@@ -4726,6 +4726,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	var thisID = tabID+'-table';
 	var fromThis = queryFrom;
 	var toThis = queryTo;
+	console.log(thisID+'is selected '+fromThis+' '+toThis);
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
 		buildTables(thisID, tableVars, fromThis, toThis);
@@ -4752,30 +4753,74 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	var celldataCall;
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-
+	//Checks strings from the current ID
+	if (typeof String.prototype.startsWith != 'function') {
+	    String.prototype.startsWith = function(prefix) {
+	        return this.slice(0, prefix.length) == prefix;
+	    };
+	}
+	 
+	if (typeof String.prototype.endsWith != 'function') {
+	    String.prototype.endsWith = function(suffix) {
+	        return this.slice(-suffix.length) == suffix;
+	    };
+	}
+	
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
 			divVar = confdata[i].division;
 			if (divVar == currentTable){
 				thisDiv = confdata[i].units;
 				for(var j=0, jlen=thisDiv.length; j < jlen; j++){
-					cellName = thisDiv[j].name;
-					cellTTarget = thisDiv[j].availTarget;
-					cellPTarget = thisDiv[j].perfTarget;
-					celldataCall = thisDiv[j].dataURI;
-					celldataCall = celldataCall.replace('fromThis', fromThis);
-					celldataCall = celldataCall.replace('toThis', toThis);
-					//Make it happen
-					IDTag = cellName.toLowerCase();
-					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
-					loadSparkDyn(IDTag, celldataCall);					
+					if(currentID.startsWith('Issues')){
+						cellName = thisDiv[j].name;
+						celldataCall = thisDiv[j].notesURI;
+						celldataCall = celldataCall.replace('fromThis', fromThis);
+						celldataCall = celldataCall.replace('toThis', toThis);
+						//Make it happen
+						IDTag = cellName.toLowerCase();
+						IDTag = IDTag.split(' ').join('-');
+						stuffNotes(currentID, celldataCall, fromThis, toThis)
+					}else{
+						cellName = thisDiv[j].name;
+						cellTTarget = thisDiv[j].availTarget;
+						cellPTarget = thisDiv[j].perfTarget;
+						celldataCall = thisDiv[j].dataURI;
+						celldataCall = celldataCall.replace('fromThis', fromThis);
+						celldataCall = celldataCall.replace('toThis', toThis);
+						//Make it happen
+						IDTag = cellName.toLowerCase();
+						IDTag = IDTag.split(' ').join('-');
+						$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
+						loadSparkDyn(IDTag, celldataCall);
+					}
 				}				
 			}
 		}
 		initTagButtons(fromThis, toThis);
 	});	
 }
+
+function stuffNotes(dataID, theURI, fromQuery, toQuery){
+	var currentID = dataID;
+	var notesURI = theURI;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
+	
+	$.getJSON(notesURI, function(jdata){
+		for (var i=0, len=jdata.length; i < len; i++) {
+			var theUnit = jdata[i].unit;
+			var theDate = jdata[i].modified_date;
+			var theNote = jdata[i].message;
+			var dateTimer = new Date(theDate);
+
+			$('#'+currentID+' tbody').append('<tr><td>'+theDate+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+		}
+	}).fail(function(){
+		console.log('error');
+	});
+}
+
 
 // Do stuff more stuff
 function loadSpark(){
@@ -4898,6 +4943,8 @@ function loadSparkDyn(IDChain, chainData){
 }
 
 function initTagButtons(fromQuery, toQuery){
+	var fromThis = fromQuery;
+	var toThis = toQuery;
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
@@ -4978,7 +5025,7 @@ function initTagButtons(fromQuery, toQuery){
         });
 		
 		miniDialogID = $(miniDiag).attr('ID');
-		miniDialogs(miniDialogID, whichType, thisID, thisSeq);
+		miniDialogs(miniDialogID, whichType, thisID, thisSeq, fromThis, toThis);
 	});
 	
 }
@@ -5039,12 +5086,15 @@ function largeData(dataChain, dialogID, longID){
 	});
 }
 
-function miniDialogs(miniDialogID, whichType, typeID, thisSeq){
+function miniDialogs(miniDialogID, whichType, typeID, thisSeq, fromQuery, toQuery){
 	var thisType = whichType;
 	var thisID = miniDialogID;
 	var thisContent, tableType;
 	var thisTypeID = typeID;
 	var sequence = thisSeq;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
+	
 	if(thisType == 'notes'){
 		thisContent = $('<div class="table-warning"><div class="table-header"><div class="table-caption">Notes</div></div><table class="table table-bordered" id="notes-table"><thead><tr><th>Date</th><th>Unit</th><th>Notes</th></tr></thead><tbody></tbody></table></div>');
 		tableType = thisType+'-table';
@@ -5056,14 +5106,16 @@ function miniDialogs(miniDialogID, whichType, typeID, thisSeq){
 	
 	$('#'+thisID).append(thisContent);
 	
-	tableBuild(tableType, thisID, thisTypeID, sequence);
+	tableBuild(tableType, thisID, thisTypeID, sequence, fromThis, toThis);
 }
 
-function tableBuild(dataType, whichID, typeID, thisSeq){
+function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 	var thisTableType = dataType;
 	var thisID = whichID;
 	var thisTypeID = typeID;
 	var curSeq = thisSeq;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
 	var numberNudge, theName, atarget, ptarget;
 	var confLoc = curSeq.split(',')[0];
 	var jLoc = curSeq.split(',')[1];
@@ -5088,6 +5140,8 @@ function tableBuild(dataType, whichID, typeID, thisSeq){
 		thisDiv = confdata[confLoc].units;
 		trendDataCall = thisDiv[jLoc].trendingURI;
 		notesDataCall = thisDiv[jLoc].notesURI;
+		notesDataCall = notesDataCall.replace('fromThis', fromThis);
+		notesDataCall = notesDataCall.replace('toThis', toThis);
 		theName = thisDiv[jLoc].name;
 		atarget = thisDiv[jLoc].availTarget;
 		ptarget = thisDiv[jLoc].perfTarget;
@@ -5650,32 +5704,42 @@ function buildout(button){
 	
 	truncTableRow = tableRow.split(' ').join('');
 	if (thisBttn == 'menu-link-issues'){
-		console.log('issues page');
+		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
+		<div class="table-header clearfix"> \
+		<div class="table-caption">'+ tableRow +'</div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
+		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
+		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
+		<tbody></tbody> \
+		</table> \
+		</div></div>';
+	}else{
+		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
+		<div class="table-header clearfix"> \
+		<div class="table-caption">'+ tableRow +' Summary</div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
+		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
+		<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
+		<tbody></tbody> \
+		</table> \
+		</div></div>';
 	}
-	
-	tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
-	<div class="table-header clearfix"> \
-	<div class="table-caption">'+ tableRow +' Summary</div> \
-	<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div></div></div> \
-	<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-	<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
-	<tbody></tbody> \
-	</table> \
-	</div></div>';
+
 	$('#content-row-table').append(tableContent);
 	
 	selectedTab(truncTableRow, queryFrom, queryTo);
-	dateRanger();
+	dateRanger(truncTableRow);
 }
 //Range
-function dateRanger(){
+function dateRanger(tabID){
+	var currentID = tabID;
 	$('#from').datepicker({
-		dateFormat: 'mm/dd/yyyy',
+		dateFormat: 'yyyy-mm-dd',
 		maxDate: '0',
 		autoclose: true
 	}).on('changeDate', function(selectedDate){
 		var theDater = new Date(selectedDate.date);
-		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();	
+		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();
 		$('#fromText').text(targetDate);
 		$(this).datepicker( "option", "minDate", selectedDate);
 		$(this).datepicker('setDate', selectedDate);
@@ -5684,7 +5748,7 @@ function dateRanger(){
     });
 	
     $('#to').datepicker({
-    	dateFormat: 'mm/dd/yyyy',
+    	dateFormat: 'yyyy-mm-dd',
     	maxDate: '0',
     	autoclose: true
     }).on('changeDate', function(selectedDate){
@@ -5695,6 +5759,25 @@ function dateRanger(){
     	$(this).datepicker('setDate', selectedDate);
         $(this).blur();
         $('.datepicker').hide();
+    });
+    
+    $('#newRanger').click(function(){
+    	var prefromThis = $('#from').val();
+    	var pretoThis = $('#to').val();
+    	var fromThis, toThis;
+    	var mmF = prefromThis.split('/')[0];
+    	var ddF = prefromThis.split('/')[1];
+    	var yyyyF = prefromThis.split('/')[2];
+    	var mmT = pretoThis.split('/')[0];
+    	var ddT = pretoThis.split('/')[1];
+    	var yyyyT = pretoThis.split('/')[2];
+    	fromThis = yyyyF+'-'+mmF+'-'+ddF;
+    	toThis = yyyyT+'-'+mmT+'-'+ddT;
+    	
+    	//Reformate date range for database query
+    	$('#'+currentID+'-table tbody').empty();
+    	selectedTab(currentID, fromThis, toThis);
+    	
     });
 }
 //Select chart range.

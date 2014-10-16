@@ -19291,6 +19291,12 @@ body:not(.right-to-left) .no-border-l {
 #IssuesSummary-table tbody {
   font-weight: bold;
 }
+#IssuesSummary-table .issueDate {
+  width: 15%;
+}
+#IssuesSummary-table .issueUnit {
+  width: 10%;
+}
 .sparkCell {
   width: 152px;
 }
@@ -19367,6 +19373,10 @@ body:not(.right-to-left) .no-border-l {
   font-size: 1.2em;
   font-weight: bold;
   text-align: center;
+}
+/* misc */
+#breadcrumbs {
+  display: none !important;
 }
 #main-navbar .navbar-brand {
   font-size: 13px;

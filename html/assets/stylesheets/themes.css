@@ -9040,6 +9040,10 @@
   padding-top: 2px;
   width: 20%;
 }
+.wijmo-wijslider-incbutton,
+.wijmo-wijslider-decbutton {
+  display: none;
+}
 .dater {
   /*width: 6em;	*/
 }

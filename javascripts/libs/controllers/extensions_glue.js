@@ -44,7 +44,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	var thisID = tabID+'-table';
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-	console.log(thisID+'is selected '+fromThis+' '+toThis);
+	
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
 		buildTables(thisID, tableVars, fromThis, toThis);
@@ -98,7 +98,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 						//Make it happen
 						IDTag = cellName.toLowerCase();
 						IDTag = IDTag.split(' ').join('-');
-						stuffNotes(currentID, celldataCall, fromThis, toThis)
+						stuffNotes(currentID, celldataCall, fromThis, toThis);
 					}else{
 						cellName = thisDiv[j].name;
 						cellTTarget = thisDiv[j].availTarget;
@@ -280,7 +280,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="avail-gauge"class="kpi-gauge">.</div><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="kpi-gauge-label">Availability</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="kpi-gauge-label">Performance</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  AVAILABILITY';
@@ -288,7 +288,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="avail-gauge" class="kpi-gauge">.</div><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="kpi-gauge-label">Availability</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="kpi-gauge-label">Performance</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  PERFORMANCE';
@@ -1048,6 +1048,7 @@ function buildout(button){
 	selectedTab(truncTableRow, queryFrom, queryTo);
 	dateRanger(truncTableRow);
 }
+
 //Range
 function dateRanger(tabID){
 	var currentID = tabID;
@@ -1098,6 +1099,7 @@ function dateRanger(tabID){
     	
     });
 }
+
 //Select chart range.
 function chartRanger(Tval, trendDate, trendTarget, funcID){
 	$('#chart-buttons li').click(function(){

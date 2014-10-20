@@ -19255,6 +19255,14 @@ body:not(.right-to-left) .no-border-l {
   padding-top: 5px;
   width: 20%;
 }
+.chart-date-row {
+  width: 100%;
+  min-height: 1.6em;
+  color: #333;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+}
 .chart-button-row {
   width: 56%;
   height: 2.8em;

@@ -4900,7 +4900,7 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 }
 
 
-// Do stuff more stuff
+/* Do stuff more stuff
 function loadSpark(){
 	var Tval = 0;
 	var Pval = 0;
@@ -4908,7 +4908,7 @@ function loadSpark(){
 	var PtrendAv = 0;
 	$.getJSON(jsonData, function(jdata) {
 		//Parse data from the json values
-		for (var i=0, len=jdata.length; i < len; i++) {
+		for (var i=0, len=jdata.length + 1; i < len; i++) {
 			TtrendVal.push(jdata[i].availability);
 			PtrendVal.push(jdata[i].performance);
 			trendDate.push(jdata[i].date);
@@ -4964,7 +4964,7 @@ function loadSpark(){
 		miniDialogs(miniDialogID, whichType);
 	});
 }
-
+*/
 function loadSparkDyn(IDChain, chainData){
 	var localID = IDChain;
 	var localData = chainData;
@@ -5164,7 +5164,7 @@ function largeData(dataChain, dialogID, longID){
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
-			trendDate.push(jldata[i].date);
+			trendDate.push(new Date(jldata[i].date));
 			avTar.push(tTarget);
 			avPer.push(pTarget);
 			Tval = Tval + jldata[i].availability;
@@ -5773,7 +5773,7 @@ function buildout(button){
 	if(p_mm<10) {
 	    p_mm='0'+p_mm;
 	} 
-	
+
 	today = mm+'/'+dd+'/'+yyyy;
 	pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 	queryTo = yyyy+'-'+mm+'-'+dd;
@@ -5901,17 +5901,38 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 		var thisDate = trendDate;
 		var thisTarget = trendTarget;
 		var thisChart = funcID;
+		console.log('records = '+thisDate.length);
+		//Buttns switching
 		switch (thisCartButton){
 			case 'chart-weekly':
-				startNum = 0;
-				stopNum = 7;
+				startNum = thisTrend.length - 7;
+				stopNum = thisTrend.length;
+				console.log(startNum);
 				reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
 				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
 				break;
 			case 'chart-daily':
-				startNum = 0;
+				startNum = thisTrend.length - 30;
 				stopNum = thisTrend.length;
+				console.log(startNum);
 				reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				break;
+			case 'chart-quaterly':
+				startNum = thisTrend.length - 90;
+				stopNum = thisTrend.length;
+				if (startNum > 0){
+					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				}
+				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				break;
+			case 'chart-simi':
+				startNum = thisTrend.length - 180;
+				stopNum = thisTrend.length;
+				console.log(startNum);
+				if(startNum > 0){
+					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				}
 				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
 				break;
 		
@@ -5929,7 +5950,8 @@ function buildButtons(newTrend, trendDate, newTarget, funcID){
 	var thisDate = trendDate;
 	var thisTarget = newTarget;
 	var thisChart = funcID;
-	$('#chart-buttons').append('<ul><li id="chart-weekly">1 w</li><li id="chart-daily">1 m</li><li id="chart-quaterly">3 m</li><li id="chart-simi">6 m</li><li id="chart-year">1 y</li></ul>');
+	console.log('build records'+thisDate);
+	$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	chartRanger(thisVal, thisDate, thisTarget, thisChart);
 }
 

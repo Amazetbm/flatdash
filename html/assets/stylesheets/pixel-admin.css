@@ -19181,13 +19181,17 @@ body:not(.right-to-left) .no-border-l {
   margin: 3px auto;
 }
 .kpi-box {
-  width: 30%;
+  width: 42%;
   margin: 0px;
   min-height: 40px;
   border: 1px solid #777;
   float: left;
   font-size: 1.2em;
   padding: 1px;
+}
+.kpi-data-wrap {
+  float: left;
+  width: 65%;
 }
 .kpi-gauge {
   min-width: 40px;
@@ -19200,10 +19204,11 @@ body:not(.right-to-left) .no-border-l {
   font-weight: bold;
   text-align: center;
   width: 100%;
+  display: none;
 }
 .kpi-gauge-wrap {
-  width: 15%;
-  margin: 0px 0px 0px 5px;
+  width: 30%;
+  margin: 8px 0px 0px 5px;
   min-width: 40px;
   min-height: 40px;
   float: left;

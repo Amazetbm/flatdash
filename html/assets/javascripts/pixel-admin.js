@@ -5501,6 +5501,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
 }
 
+//Tag cells based on performance
 function tagCells(chainedID, PtrendAv, TtrendAV){
 	var localID = chainedID;
 	//Tag the Perf cell

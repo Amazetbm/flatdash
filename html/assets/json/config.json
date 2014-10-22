@@ -16,7 +16,7 @@
                 "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999003,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
-				"perfTarget" : "7.61"
+				"perfTarget" : "7.60"
 			},
 			{
 				"name": "ATX",

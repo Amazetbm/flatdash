@@ -4787,7 +4787,6 @@ function initApp(){
 	buildout(initButton);
 }
 
-
 function selectedTab(tabID, queryFrom, queryTo){
 	//Checks strings from the table ID
 	if (typeof String.prototype.startsWith != 'function') {
@@ -5019,7 +5018,11 @@ function initTagButtons(fromQuery, toQuery){
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  PERFORMANCE';
 		}
-		
+		$('#content-row-table').css('display','none');
+		$('#content-row-incident').css('display','none');
+		$('#content-row-chart').css('display','block');
+		$('#chart-col').append(chartDialog);
+		/*
 		chartDialog.dialog({
 			title: thisMarquee,
             resizable: false,
@@ -5030,7 +5033,7 @@ function initTagButtons(fromQuery, toQuery){
             	$(this).dialog('destroy');
             },
         });
-		
+		*/
 		$.getJSON(dasConfig, function(confdata){
 			thisDiv = confdata[confLoc].units;
 			celldataCall = thisDiv[jLoc].dataURI;
@@ -5458,7 +5461,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
-	console.log(stopper);
+
 	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
 				type: "area",
@@ -5865,6 +5868,10 @@ function buildout(button){
 	
 
 	$('#content-row-table').empty();
+	$('#content-row-table').css('display','block');
+	$('#content-row-incident').css('display','block');
+	$('#content-row-chart').css('display','none');
+	$('#chart-col').empty();
 	$('#main-menu-buttons').children().removeClass('active');
 	
 	switch (thisBttn){

@@ -4975,7 +4975,7 @@ function initTagButtons(fromQuery, toQuery){
 		var dd = today.getDate();
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
-		past = past.setDate(past.getDate()-30);
+		past = past.setDate(past.getDate());
 		var pastMonth = new Date(past);
 		var p_dd = pastMonth.getDate();
 		var p_mm = pastMonth.getMonth()+1;
@@ -5105,7 +5105,7 @@ function largeData(dataChain, dialogID, longID){
 			Pval = Pval + jldata[i].performance;
 		}
 		
-		//get the average of values vs dates
+		//get the average of values vs dates 
 		TtrendAv = Tval / jldata.length;
 		PtrendAv = Pval / jldata.length;
 		
@@ -5160,7 +5160,6 @@ function redoTheData(dataChain, dialogID, longID){
 			Tval = Tval + jldata[i].availability;
 			Pval = Pval + jldata[i].performance;
 		}
-		
 		//get the average of values vs dates
 		TtrendAv = Tval / jldata.length;
 		PtrendAv = Pval / jldata.length;
@@ -5408,7 +5407,7 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 			thisStart = ui.values[0];
 			thisStop = ui.values[1];
 			//reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
-			reDoTheChart(thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID);
+			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID);
 		},
 		buttonClick: function(event, ui){
 			thisStart = ui.values[0];
@@ -5459,7 +5458,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
-
+	console.log(stopper);
 	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
 				type: "area",
@@ -5499,6 +5498,42 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	
 	//makeSlider(starter, stopper, trendPush, trendDate, thisTarget, funcID);
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
+}
+
+function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID){
+	var starter = startNum;
+	var stopper = stopNum;
+	var trendPush = TrendVal;
+	var trendDate = trendDater;
+	var availAv = TtrendAv;
+	var perAv = PtrendAv;
+	var thisChart = funcID;
+	var longChart = barID;
+	var thisTarget = theTarget;
+	trendPush = trendPush.slice(starter, stopper);
+	trendDate = trendDate.slice(starter, stopper);
+	thisTarget = thisTarget.slice(starter, stopper);
+	$('#'+thisChart).wijcompositechart({
+			seriesList: [{
+				type: "area",
+				label: "Values", 
+                data: {x: trendDate, y: trendPush}
+		    },{
+		    	type: "line",
+				label: "Target", 
+                data: {x: trendDate, y: thisTarget}
+		    }],
+		    seriesStyles: [ 
+                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#00468C", "stroke-width": 2 } 
+            ] 
+	});
+
+	$('#kpi-1 .kpi-actual').text(availAv+'%');
+	$('#kpi-3 .kpi-actual').text(perAv+'ms');
+	$('#kpi-1 .kpi-target').text(availTarget);
+	$('#kpi-3 .kpi-target').text(perfTarget);
+
 }
 
 //Tag cells based on performance

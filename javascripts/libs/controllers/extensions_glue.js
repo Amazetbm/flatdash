@@ -256,8 +256,8 @@ function loadSparkDyn(IDChain, chainData){
 		}else{
 			$('#'+localID+'-avail').text(TtrendAv);
 			$('#'+localID+'-perf').text(PtrendAv);
-			$('#'+localID+'-availtrend').sparkline(TtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
-			$('#'+localID+'-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
+			$('#'+localID+'-availtrend').sparkline(TtrendVal, {width: 130, lineColor: '#238C00', fillColor: '#B3FF99'});
+			$('#'+localID+'-perftrend').sparkline(PtrendVal, {width: 130, lineColor: '#238C00', fillColor: '#B3FF99'});
 			tagCells(localID, PtrendAv, TtrendAv);
 			TtrendVal = [];
 			PtrendVal = [];
@@ -323,7 +323,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+'</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  AVAILABILITY';
@@ -331,7 +331,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+'</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  PERFORMANCE';
@@ -448,6 +448,13 @@ function largeData(dataChain, dialogID, longID){
 			buildButtons(altPerf, trendDate, avPer, funcID);
 			loadPies(TtrendAv, PtrendAv);
 		}
+	});
+	
+	$('#closeChart').click(function(){
+		$('#content-row-table').css('display','block');
+		$('#content-row-incident').css('display','block');
+		$('#content-row-chart').css('display','none');
+		$('#chart-col').empty();
 	});
 }
 
@@ -887,19 +894,19 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	
 	//Tag the Availabilty cell
 	switch (true) {
-		case (TtrendAV >= 99.55):
+		case (TtrendAV >= 99.50):
 			Ttag = '#1DFF00';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');
 			$('#'+localID+'-avSign').addClass('fa').addClass('fa-check');
 			break;
-		case (TtrendAV >= 99.50 && TtrendAV < 99.55):
+		case (TtrendAV >= 98.00 && TtrendAV < 99.50):
 			Ttag = '#F9B916';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');
 			$('#'+localID+'-avSign').addClass('fa').addClass('fa-circle');
 			break;
-		case (TtrendAV < 99.50):
+		case (TtrendAV < 98.00):
 			Ttag = '#F72D00';
 			$('#'+localID+'-avail').css('color', '#EFEFEF').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color','#EFEFEF').next().css('color', '#EFEFEF');
@@ -1216,6 +1223,7 @@ function buildout(button){
 			colSize = 12;
 			$('#'+thisBttn).parent().addClass('active');
 			$('#page-header-title').text(tableRow);
+			$('#content-row-incident').css('display','none');
 			break;
 	}
 	

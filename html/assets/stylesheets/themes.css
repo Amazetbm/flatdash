@@ -9229,6 +9229,10 @@
   font-weight: bold;
   text-align: center;
 }
+/* Chart Page */
+#content-row-chart {
+  display: none;
+}
 /* misc */
 #breadcrumbs {
   display: none !important;

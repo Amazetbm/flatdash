@@ -217,72 +217,6 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	});
 }
 
-
-/* Do stuff more stuff
-function loadSpark(){
-	var Tval = 0;
-	var Pval = 0;
-	var TtrendAv = 0;
-	var PtrendAv = 0;
-	$.getJSON(jsonData, function(jdata) {
-		//Parse data from the json values
-		for (var i=0, len=jdata.length + 1; i < len; i++) {
-			TtrendVal.push(jdata[i].availability);
-			PtrendVal.push(jdata[i].performance);
-			trendDate.push(jdata[i].date);
-			Tval = Tval + jdata[i].availability;
-			Pval = Pval + jdata[i].performance;
-		}
-		
-		stopNum = TtrendVal.length;
-		
-		//get the average of values vs dates
-		TtrendAv = Tval / jdata.length;
-		PtrendAv = Pval / jdata.length;
-		
-		//Round it off
-		TtrendAv = TtrendAv.toFixed(2);
-		PtrendAv = PtrendAv.toFixed(2);	
-	
-		// Plug em into the table
-		$('#atc-avail').text(TtrendAv+'%');
-		$('#atc-perf').text(PtrendAv+'ms');
-		$('#atc-availtrend').sparkline(TtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
-		$('#atc-perftrend').sparkline(PtrendVal, {width: 150, lineColor: '#238C00', fillColor: '#B3FF99'});
-    });
-	tagCells(PtrendAv, TtrendAv);	
-
-	$('.btn-primary').click(function(){
-		var thisID = $(this).attr('id');
-		var miniWidth, miniHeight, whichType, miniDialogID;
-		var miniDiag = $('<div id="'+thisID+'-diag"><div id="'+thisID+'-smallBox"></div></div>');
-		var prettyStr = thisID.split('-').join(' ');
-		if (thisID.search('notes') > -1){
-			miniWidth = 760;
-			miniHeight = 420;
-			whichType = 'notes';
-		}else{
-			miniWidth = 760;
-			miniHeight = 420;
-			whichType= 'trending';
-		}
-		
-		miniDiag.dialog({
-			title: prettyStr,
-            resizable: false,
-            modal: true,
-            width: miniWidth,
-            height: miniHeight,
-            close: function(click){
-            	$(this).dialog('destroy');
-            },
-        });
-		
-		miniDialogID = $(miniDiag).attr('ID');
-		miniDialogs(miniDialogID, whichType);
-	});
-}
-*/
 function loadSparkDyn(IDChain, chainData){
 	var localID = IDChain;
 	var localData = chainData;
@@ -390,7 +324,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  AVAILABILITY';
@@ -398,7 +332,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  PERFORMANCE';
@@ -476,7 +410,7 @@ function largeData(dataChain, dialogID, longID){
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
-	
+
 	$.getJSON(celldataCall, function(jldata) {
 		//Parse data from the json values
 		for (var i=0, len=jldata.length; i < len; i++) {
@@ -492,14 +426,14 @@ function largeData(dataChain, dialogID, longID){
 		//get the average of values vs dates
 		TtrendAv = Tval / jldata.length;
 		PtrendAv = Pval / jldata.length;
-	
+		
 		//Round it off
 		TtrendAv = TtrendAv.toFixed(2);
 		PtrendAv = PtrendAv.toFixed(2);
 		
 		//alts
 		altTrend = TtrendVal;
-		altPerf = PtrendVal;
+		altPerf = PtrendVal; 
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
 			bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, chartType, funcID, barID);
@@ -508,6 +442,62 @@ function largeData(dataChain, dialogID, longID){
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, chartType, funcID, barID);
+			buildButtons(altPerf, trendDate, avPer, funcID);
+			loadPies(TtrendAv, PtrendAv);
+		}
+	});
+}
+
+function redoTheData(dataChain, dialogID, longID){
+	var celldataCall = dataChain;
+	var funcID = dialogID;
+	var barID = longID;
+	var Tval = 0;
+	var Pval = 0;
+	var TtrendAv = 0;
+	var PtrendAv = 0;
+	var avTar = [];
+	var avPer = [];
+	var tTarget = 99.50;
+	var pTarget = 4.00;
+	var chartType;
+	var altTrend;
+	var altPerf;
+	TtrendVal = [];
+	PtrendVal = [];
+	trendDate = [];
+
+	$.getJSON(celldataCall, function(jldata) {
+		//Parse data from the json values
+		for (var i=0, len=jldata.length; i < len; i++) {
+			TtrendVal.push(jldata[i].availability);
+			PtrendVal.push(jldata[i].performance);
+			trendDate.push(new Date(jldata[i].date));
+			avTar.push(tTarget);
+			avPer.push(pTarget);
+			Tval = Tval + jldata[i].availability;
+			Pval = Pval + jldata[i].performance;
+		}
+		
+		//get the average of values vs dates
+		TtrendAv = Tval / jldata.length;
+		PtrendAv = Pval / jldata.length;
+		
+		//Round it off
+		TtrendAv = TtrendAv.toFixed(2);
+		PtrendAv = PtrendAv.toFixed(2);
+		
+		//alts
+		altTrend = TtrendVal;
+		altPerf = PtrendVal; 
+		if(funcID.indexOf('avail') > -1){
+			chartType = "Availibility";
+			reDoTheChart(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID);
+			buildButtons(altTrend, trendDate, avTar, funcID);
+			loadPies(TtrendAv, PtrendAv);
+		}else if(funcID.indexOf('perf') > -1){
+			chartType = "Performance";
+			reDoTheChart(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID);
 			buildButtons(altPerf, trendDate, avPer, funcID);
 			loadPies(TtrendAv, PtrendAv);
 		}
@@ -708,17 +698,20 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, chartTy
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(availTarget);
 	$('#kpi-3 .kpi-target').text(perfTarget);
-	makeSlider(starter, stopper, trendPush, trendDate, targeted, localDiagID);
+	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID);
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
 }
 
-function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcID){
-	var thisID = funcID;
+function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID){
+	var thisID = thefuncID;
+	var barID = thebarID;
 	var thisStart = startNum;
 	var thisStop = stopNum;
 	var thisVal = ATCtrendVal;
+	var thisAvilav = availAv;
+	var thisPerav = perAv;
 	var thisDate = trendDate;
 	var targeted = trendTarget;
 	$('#'+thisID+'-slide').wijslider({
@@ -732,7 +725,8 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, func
 		stop: function(event, ui){
 			thisStart = ui.values[0];
 			thisStop = ui.values[1];
-			reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
+			//reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
+			reDoTheChart(thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID);
 		},
 		buttonClick: function(event, ui){
 			thisStart = ui.values[0];
@@ -769,6 +763,60 @@ function reDoChart(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcI
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
+}
+
+function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID){
+
+	var trendPush = TrendVal;
+	var trendDate = trendDater;
+	var availAv = TtrendAv;
+	var perAv = PtrendAv;
+	var thisChart = funcID;
+	var longChart = barID;
+	//var slideID =
+	var thisTarget = theTarget;
+	var starter = 0;
+	var stopper = trendPush.length;
+	console.log('start = '+starter+' stop = '+stopper+' id = '+thisChart);
+	$('#'+thisChart).wijcompositechart({
+			seriesList: [{
+				type: "area",
+				label: "Values", 
+                data: {x: trendDate, y: trendPush}
+		    },{
+		    	type: "line",
+				label: "Target", 
+                data: {x: trendDate, y: thisTarget}
+		    }],
+		    seriesStyles: [ 
+                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#00468C", "stroke-width": 2 } 
+            ] 
+	});
+	
+	$('#'+longChart).wijlinechart({ 
+        seriesList: [ 
+            { 
+            	type: "area",
+                label: "", 
+                data: {  
+                    x: trendDate, 
+                    y: trendPush 
+                } 
+            }
+        ],
+        seriesStyles: [ 
+           { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}
+       ]
+    });
+	
+	$('#kpi-1 .kpi-actual').text(availAv+'%');
+	$('#kpi-3 .kpi-actual').text(perAv+'ms');
+	$('#kpi-1 .kpi-target').text(availTarget);
+	$('#kpi-3 .kpi-target').text(perfTarget);
+	
+	//makeSlider(starter, stopper, trendPush, trendDate, thisTarget, funcID);
+	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
 }
 
 function tagCells(chainedID, PtrendAv, TtrendAV){
@@ -1219,57 +1267,102 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 		var thisDate = trendDate;
 		var thisTarget = trendTarget;
 		var thisChart = funcID;
+		var thisSeq = $('#'+thisChart).attr('ctseq');
+		var confLoc = thisSeq.split(',')[0];
+		var jLoc = thisSeq.split(',')[1];
+		confLoc = parseInt(confLoc);
+		jLoc = parseInt(jLoc);
+		var longChart;
 		var currentStart = thisDate[0];
-		console.log(currentStart);
+		var fromThisTxt = $('#fromThis').text();
+		var toThisTxt =  $('#toThis').text();
+		var past = new Date(fromThisTxt);
+		var today = new Date(toThisTxt);
+		var notCurrent, thePast;
+		var celldataCall, thisDiv;
+		var pastText, todayText;
+		todayText = today.format('M d, Y');
+		today = today.format('Y-m-d');
+		
+		if(thisChart.indexOf('-avail-') > -1){
+			longChart = thisChart.replace('-avail-', '-long-');
+		}else if(thisChart.indexOf('-perf-') > -1){
+			longChart = thisChart.replace('-perf-', '-long-');
+		}else{
+			console.log('I fart in your general direction');
+		}
+		$('.kpi-actual').empty();
+		$('.kpi-gauge').empty();
+		$('#chart-buttons').empty();
 		//Buttns switching
 		switch (thisCartButton){
 			case 'chart-weekly':
-				startNum = thisTrend.length - 7;
-				stopNum = thisTrend.length;
-				console.log('starting at'+startNum+' ending at '+stopNum);
-				if (startNum > 0){
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}else{
-					startNum = 0;
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}
-				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				notCurrent = new Date(today);
+				notCurrent.setDate(notCurrent.getDate()-7);
+				thePast = new Date(notCurrent);
+				pastText = thePast.format('M d, Y');
+				thePast = thePast.format('Y-m-d');
+				$('#fromThis').text(pastText);
+				$('#toThis').text(todayText);
+				$.getJSON(dasConfig, function(confdata){
+					thisDiv = confdata[confLoc].units;
+					celldataCall = thisDiv[jLoc].dataURI;
+					celldataCall = celldataCall.replace('fromThis', thePast);
+					celldataCall = celldataCall.replace('toThis', today);
+					redoTheData(celldataCall, thisChart, longChart);
+				});
+				
 				break;
 			case 'chart-daily':
-				startNum = thisTrend.length - 30;
-				stopNum = thisTrend.length;
-				console.log('starting at'+startNum+' ending at '+stopNum);
-				if (startNum > 0){
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}else{
-					startNum = 0;
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}
-				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				notCurrent = new Date(today);
+				notCurrent.setDate(notCurrent.getDate()-30);
+				thePast = new Date(notCurrent);
+				pastText = thePast.format('M d, Y');
+				thePast = thePast.format('Y-m-d');
+				$('#fromThis').text(pastText);
+				$('#toThis').text(todayText);
+				$.getJSON(dasConfig, function(confdata){
+					thisDiv = confdata[confLoc].units;
+					celldataCall = thisDiv[jLoc].dataURI;
+					celldataCall = celldataCall.replace('fromThis', thePast);
+					celldataCall = celldataCall.replace('toThis', today);
+					redoTheData(celldataCall, thisChart, longChart);
+				});
+
 				break;
 			case 'chart-quaterly':
-				startNum = thisTrend.length - 90;
-				stopNum = thisTrend.length;
-				console.log('starting at'+startNum+' ending at '+stopNum);
-				if (startNum > 0){
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}else{
-					startNum = 0;
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}
-				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+				notCurrent = new Date(today);
+				notCurrent.setDate(notCurrent.getDate()-90);
+				thePast = new Date(notCurrent);
+				pastText = thePast.format('M d, Y');
+				thePast = thePast.format('Y-m-d');
+				$('#fromThis').text(pastText);
+				$('#toThis').text(todayText);
+				$.getJSON(dasConfig, function(confdata){
+					thisDiv = confdata[confLoc].units;
+					celldataCall = thisDiv[jLoc].dataURI;
+					celldataCall = celldataCall.replace('fromThis', thePast);
+					celldataCall = celldataCall.replace('toThis', today);
+					redoTheData(celldataCall, thisChart, longChart);
+				});
+
 				break;
-			case 'chart-simi':
-				startNum = thisTrend.length - 180;
-				stopNum = thisTrend.length;
-				console.log('starting at'+startNum+' ending at '+stopNum);
-				if(startNum > 0){
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}else{
-					startNum = 0;
-					reDoChart(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
-				}
-				//makeSlider(startNum, stopNum, thisTrend, thisDate, thisTarget, thisChart);
+			case 'chart-simi':	
+				notCurrent = new Date(today);
+				notCurrent.setDate(notCurrent.getDate()-180);
+				thePast = new Date(notCurrent);
+				pastText = thePast.format('M d, Y');
+				thePast = thePast.format('Y-m-d');
+				$('#fromThis').text(pastText);
+				$('#toThis').text(todayText);
+				$.getJSON(dasConfig, function(confdata){
+					thisDiv = confdata[confLoc].units;
+					celldataCall = thisDiv[jLoc].dataURI;
+					celldataCall = celldataCall.replace('fromThis', thePast);
+					celldataCall = celldataCall.replace('toThis', today);
+					redoTheData(celldataCall, thisChart, longChart);
+				});
+
 				break;
 		
 		}
@@ -1286,7 +1379,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID){
 	var thisDate = trendDate;
 	var thisTarget = newTarget;
 	var thisChart = funcID;
-	console.log('built records='+thisDate.length);
+	
 	$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	chartRanger(thisVal, thisDate, thisTarget, thisChart);
 }

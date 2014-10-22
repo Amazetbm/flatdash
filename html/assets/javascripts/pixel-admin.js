@@ -5459,7 +5459,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
-	console.log('start = '+starter+' stop = '+stopper+' id = '+thisChart);
+
 	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
 				type: "area",
@@ -6047,7 +6047,23 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 				});
 
 				break;
-		
+			case 'chart-year':	
+				notCurrent = new Date(today);
+				notCurrent.setDate(notCurrent.getDate()-365);
+				thePast = new Date(notCurrent);
+				pastText = thePast.format('M d, Y');
+				thePast = thePast.format('Y-m-d');
+				$('#fromThis').text(pastText);
+				$('#toThis').text(todayText);
+				$.getJSON(dasConfig, function(confdata){
+					thisDiv = confdata[confLoc].units;
+					celldataCall = thisDiv[jLoc].dataURI;
+					celldataCall = celldataCall.replace('fromThis', thePast);
+					celldataCall = celldataCall.replace('toThis', today);
+					redoTheData(celldataCall, thisChart, longChart);
+				});
+
+				break;
 		}
 	}).hover(function(){
 			$(this).addClass('bttnSelected');

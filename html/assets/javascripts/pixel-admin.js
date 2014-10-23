@@ -5396,6 +5396,12 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID);
+	
+	$(window).resize(function () {
+		$('#'+localDiagID).wijcompositechart("redraw");
+		$('#'+localBarID).wijlinechart("redraw");
+    });
+	
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -5430,7 +5436,11 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 			thisStop = ui.values[1];
 			reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
 		}
-	});	
+	});
+	
+	$(window).resize(function () {
+		$('#'+thisID+'-slide').wijslider("refresh");
+    });
 }
 
 

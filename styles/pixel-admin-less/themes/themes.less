@@ -37,6 +37,7 @@
 }
 
 .kpi-box{
+	position: relative;
 	width: 42%;
 	margin: 0px;
 	min-height: 40px;
@@ -47,9 +48,29 @@
 	padding: 1px;
 }
 
+#kpi-avail-overlay{
+	position:absolute;
+    height:100%;
+    width:100%;
+    background-color:#EEE;
+    opacity: 0;
+    z-index:0;
+}
+
+#kpi-perf-overlay{
+	position:absolute;
+    height:100%;
+    width:100%;
+    background-color:#EEE;
+    opacity: 0;
+    z-index:0;
+}
+
 .kpi-data-wrap{
+	position: relative;
 	float:left;
 	width: 65%;
+	z-index: 1;
 }
 
 .kpi-gauge{
@@ -68,6 +89,8 @@
 }
 
 .kpi-gauge-wrap{
+	position: relative;
+	z-index: 1;
 	width: 30%;
 	margin: 8px 0px 0px 5px;
 	min-width: 40px;

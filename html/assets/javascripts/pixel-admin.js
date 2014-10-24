@@ -4886,7 +4886,7 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 
 	$.getJSON(notesURI, function(jdata){
 		for (var i=0, len=jdata.length; i < len; i++) {
-			var theUnit = jdata[i].u_category;
+			var theUnit = jdata[i].company;
 			var theDate = jdata[i].opened_at;
 			var theNote = jdata[i].description;
 			var dateTimer = new Date(theDate);
@@ -5114,6 +5114,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		//alts
 		altTrend = TtrendVal;
 		altPerf = PtrendVal; 
+		console.log(altTrend);
 		if(funcID.indexOf('avail') > -1){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
@@ -5268,7 +5269,7 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 	if(theTable == 'notes-table'){
 		$.getJSON(theNotes, function(jdata){
 			for (var i=0, len=jdata.length; i < len; i++) {
-				var theUnit = jdata[i].u_category;
+				var theUnit = jdata[i].company;
 				var theDate = jdata[i].opened_at;
 				var theNote = jdata[i].description;
 				var dateTimer = new Date(theDate);
@@ -5950,7 +5951,7 @@ function buildout(button){
 		<div class="table-caption">'+ tableRow +'</div> \
 		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Type&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
+		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
 		<tbody></tbody> \
 		</table> \
 		</div></div>';

@@ -5102,7 +5102,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			Tval = Tval + jldata[i].availability;
 			Pval = Pval + jldata[i].performance;
 		}
-
+		
 		//get the average of values vs dates 
 		TtrendAv = Tval / jldata.length;
 		PtrendAv = Pval / jldata.length;
@@ -5114,7 +5114,8 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		//alts
 		altTrend = TtrendVal;
 		altPerf = PtrendVal; 
-		console.log(altTrend);
+
+		//console.log(altTrend[0]);
 		if(funcID.indexOf('avail') > -1){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
@@ -5138,7 +5139,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 	});
 }
 
-function redoTheData(dataChain, dialogID, longID){
+function redoTheData(dataChain, dialogID, longID, active){
 	var celldataCall = dataChain;
 	var funcID = dialogID;
 	var barID = longID;
@@ -5153,6 +5154,7 @@ function redoTheData(dataChain, dialogID, longID){
 	var chartType;
 	var altTrend;
 	var altPerf;
+	var bttnAct = active;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -5182,12 +5184,12 @@ function redoTheData(dataChain, dialogID, longID){
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
 			reDoTheChart(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID);
-			buildButtons(altTrend, trendDate, avTar, funcID);
+			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct);
 			loadPies(TtrendAv, PtrendAv);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChart(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID);
-			buildButtons(altPerf, trendDate, avPer, funcID);
+			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct);
 			loadPies(TtrendAv, PtrendAv);
 		}
 	});
@@ -5346,7 +5348,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
                 data: {  
                     x: trendDate, 
                     y: trendPush 
-                } 
+                },
+                offset: 0
             },
             { 
 
@@ -5355,7 +5358,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
                 data: { 
                     x: trendDate, 
                     y: targetType
-                } 
+                }, 
+            	offset: 0
             },
             
         ],
@@ -5984,6 +5988,7 @@ function dateRanger(tabID){
 		var theDater = new Date(selectedDate.date);
 		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();
 		$('#fromText').text(targetDate);
+		console.log('target = '+targetDate+' selected = '+selectedDate);
 		$(this).datepicker( "option", "minDate", selectedDate);
 		$(this).datepicker('setDate', selectedDate);
         $(this).blur();
@@ -6047,6 +6052,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 		var notCurrent, thePast;
 		var celldataCall, thisDiv;
 		var pastText, todayText;
+
 		todayText = today.format('M d, Y');
 		today = today.format('Y-m-d');
 		
@@ -6075,7 +6081,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
 				});
 				
 				break;
@@ -6092,7 +6098,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
 				});
 
 				break;
@@ -6109,11 +6115,11 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
 				});
 
 				break;
-			case 'chart-simi':	
+			case 'chart-simi':
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-180);
 				thePast = new Date(notCurrent);
@@ -6126,11 +6132,11 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
 				});
 
 				break;
-			case 'chart-year':	
+			case 'chart-year':
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-365);
 				thePast = new Date(notCurrent);
@@ -6143,7 +6149,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
 				});
 
 				break;
@@ -6156,13 +6162,33 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 }
 
 //Chart Buttons
-function buildButtons(newTrend, trendDate, newTarget, funcID){
+function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress){
 	var thisVal = newTrend;
 	var thisDate = trendDate;
 	var thisTarget = newTarget;
 	var thisChart = funcID;
-	
-	$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+	var active = bttnPress;
+
+	switch (active){
+	case 'chart-weekly':
+		$('#chart-buttons').append('<ul><li id="chart-weekly" class="bttnActive">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+		break;
+	case 'chart-daily':
+		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily" class="bttnActive">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+		break;
+	case 'chart-quaterly':
+		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly" class="bttnActive">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+		break;
+	case 'chart-simi':
+		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi" class="bttnActive">180 Days</li><li id="chart-year">1 y</li></ul>');
+		break;
+	case 'chart-year':
+		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year"  class="bttnActive">1 y</li></ul>');
+		break;
+		default:
+			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily" class="bttnActive">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+	}
+
 	chartRanger(thisVal, thisDate, thisTarget, thisChart);
 }
 

@@ -9142,6 +9142,10 @@
   color: #FFFFFF;
   background-color: #7d9aab;
 }
+.bttnActive {
+  color: #222;
+  background-color: #FFFF73;
+}
 /* Chart Suff */
 .full-chart {
   /*width:890px; */

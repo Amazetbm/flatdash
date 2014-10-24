@@ -5,7 +5,7 @@
 			{
 				"name": "ATC",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1163980,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1163980,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1163980,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
 				"perfTarget" : "4.00"
@@ -13,7 +13,7 @@
 			{
 				"name": "ATC SYC",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999003,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999003,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999003,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
 				"perfTarget" : "7.60"
@@ -21,7 +21,7 @@
 			{
 				"name": "ATX",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1171430,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1171430,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1171430,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
 				"perfTarget" : "6.00"
@@ -29,7 +29,7 @@
 			{
 				"name": "Dealer Site",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999005,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999005,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999005,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
 				"perfTarget" : "6.25"
@@ -37,7 +37,7 @@
 			{
 				"name": "Customer Care",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999004,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999004,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999004,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.90",
 				"perfTarget" : "7.50"
@@ -45,7 +45,7 @@
 			{
 				"name": "KBB Home",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:831929,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:831929,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:831929,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "5.50"
@@ -53,7 +53,7 @@
 			{
 				"name": "KBB Classifieds",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1079961,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1079961,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1079961,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "6.00"
@@ -67,7 +67,7 @@
 			{
 				"name": "HomeNet",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1136342,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136342,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136342,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "3.00"
@@ -75,7 +75,7 @@
 			{
 				"name": "HomeNet Login",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127484,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127484,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127484,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "6.00"
@@ -83,7 +83,7 @@
 			{
 				"name": "VinS Login",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127491,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127491,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127491,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "3.00"
@@ -91,7 +91,7 @@
 			{
 				"name": "VinS Dealer Site",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127489,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127489,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127489,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "2.00"
@@ -99,7 +99,7 @@
 			{
 				"name": "vAuto Composite",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999006,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999006,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999006,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -107,7 +107,7 @@
 			{
 				"name": "vAuto RealDeal",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1136831,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136831,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136831,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "3.00"
@@ -120,7 +120,7 @@
 			{
 				"name": "The Hub",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1610000,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1610000,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1610000,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "8.00"
@@ -128,7 +128,7 @@
 			{
 				"name": "SalesForce",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1653530,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1653530,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1653530,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "9.50"
@@ -136,7 +136,7 @@
 			{
 				"name": "RMB",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:2222001,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222001,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222001,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "5.00"
@@ -144,7 +144,7 @@
 			{
 				"name": "EBS",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:2222002,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222002,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222002,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "5.00"
@@ -157,7 +157,7 @@
 			{
 				"name": "ATC",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1163980,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1163980,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1163980,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -165,7 +165,7 @@
 			{
 				"name": "ATC SYC",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999003,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999003,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999003,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -173,7 +173,7 @@
 			{
 				"name": "ATX",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1171430,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1171430,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1171430,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -181,7 +181,7 @@
 			{
 				"name": "Dealer Site",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999005,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999005,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999005,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -189,7 +189,7 @@
 			{
 				"name": "Customer Care",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999004,%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999004,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999004,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -197,7 +197,7 @@
 			{
 				"name": "KBB Home",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:831929,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:831929,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:831929,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -205,7 +205,7 @@
 			{
 				"name": "KBB Classifieds",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1079961,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1079961,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1079961,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -213,7 +213,7 @@
 			{
 				"name": "HomeNet",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1136342,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136342,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136342,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -221,7 +221,7 @@
 			{
 				"name": "HomeNet Login",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127484,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127484,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127484,%22opened_ate%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -229,7 +229,7 @@
 			{
 				"name": "VinS Login",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127491,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127491,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127491,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -237,7 +237,7 @@
 			{
 				"name": "VinS Dealer Site",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1127489,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127489,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1127489,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -245,7 +245,7 @@
 			{
 				"name": "vAuto Composite",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily_composite?query={%22page_id%22:9999006,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999006,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999006,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -253,7 +253,7 @@
 			{
 				"name": "vAuto RealDeal",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1136831,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136831,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1136831,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -261,7 +261,7 @@
 			{
 				"name": "The Hub",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1610000,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1610000,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1610000,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -269,7 +269,7 @@
 			{
 				"name": "SalesForce",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:1653530,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1653530,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:1653530,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -277,7 +277,7 @@
 			{
 				"name": "RMB",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:2222001,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222001,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222001,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
@@ -285,7 +285,7 @@
 			{
 				"name": "EBS",
 				"dataURI": "https://itsc.autotrader.com:3000/scorecard/daily?query={%22page_id%22:2222002,%22date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222002,%22incident_date%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:2222002,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lt%22:%22toThis%22}}&sort=date",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"

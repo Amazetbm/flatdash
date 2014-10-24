@@ -186,7 +186,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 						//Make it happen
 						IDTag = cellName.toLowerCase();
 						IDTag = IDTag.split(' ').join('-');
-						$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td>'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td>'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
+						$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td><span id="'+IDTag+'-avSign"></span></td><td class="sparkCell"><span id="'+IDTag+'-availtrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td><span id="'+IDTag+'-prfSign"></span></td><td class="sparkCel"><span id="'+IDTag+'-perftrend" class="theme-global-spark-link"  seq-loc="'+i+','+j+'"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-trends"><span class="btn-label icon fa fa-bar-chart-o"></span>Qtr View</button></td></tr>');
 						loadSparkDyn(IDTag, celldataCall);
 					}
 				}				
@@ -201,15 +201,18 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	var notesURI = theURI;
 	var fromThis = fromQuery;
 	var toThis = toQuery;
-	
+
 	$.getJSON(notesURI, function(jdata){
 		for (var i=0, len=jdata.length; i < len; i++) {
-			var theUnit = jdata[i].unit;
-			var theDate = jdata[i].modified_date;
-			var theNote = jdata[i].message;
+			var theUnit = jdata[i].u_category;
+			var theDate = jdata[i].opened_at;
+			var theNote = jdata[i].description;
 			var dateTimer = new Date(theDate);
-
-			$('#'+currentID+' tbody').append('<tr><td>'+theDate+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+			if(!theUnit){
+				theUnit = 'General';
+			}
+			dateTimer = dateTimer.format('M d, Y');
+			$('#'+currentID+' tbody').append('<tr><td>'+dateTimer+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
 		}
 	}).fail(function(){
 		console.log('error');
@@ -517,7 +520,7 @@ function miniDialogs(miniDialogID, whichType, typeID, thisSeq, fromQuery, toQuer
 	var toThis = toQuery;
 	
 	if(thisType == 'notes'){
-		thisContent = $('<div class="table-warning"><div class="table-header"><div class="table-caption">Notes</div></div><table class="table table-bordered" id="notes-table"><thead><tr><th>Date</th><th>Unit</th><th>Notes</th></tr></thead><tbody></tbody></table></div>');
+		thisContent = $('<div class="table-warning"><div class="table-header"><div class="table-caption">Notes</div></div><table class="table table-bordered" id="notes-table"><thead><tr><th class="notesDate">Date</th><th>Unit</th><th>Notes</th></tr></thead><tbody></tbody></table></div>');
 		tableType = thisType+'-table';
 	}
 	else{
@@ -566,26 +569,32 @@ function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 		theName = thisDiv[jLoc].name;
 		atarget = thisDiv[jLoc].availTarget;
 		ptarget = thisDiv[jLoc].perfTarget;
-		
-		buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, notesDataCall);
+		buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromThis, toThis, notesDataCall);
 	});
 }	
 
-function buildMiniTables(theName, tableType, availtarget, perftarget, trending, notes){
+function buildMiniTables(theName, tableType, availtarget, perftarget, trending, fromQuery, toQuery, notes){
 	var currName = theName;
 	var theTable = tableType;
 	var theTrend = trending;
 	var theNotes = notes;
 	var atarget = availtarget;
 	var ptarget = perftarget;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
 	
 	if(theTable == 'notes-table'){
 		$.getJSON(theNotes, function(jdata){
 			for (var i=0, len=jdata.length; i < len; i++) {
-				var theUnit = jdata[i].unit;
-				var theDate = jdata[i].modified_date;
-				var theNote = jdata[i].message;
-				$('#'+theTable+' tbody').append('<tr><td>'+theDate+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+				var theUnit = jdata[i].u_category;
+				var theDate = jdata[i].opened_at;
+				var theNote = jdata[i].description;
+				var dateTimer = new Date(theDate);
+				if(!theUnit){
+					theUnit = 'General';
+				}
+				dateTimer = dateTimer.format('M d, Y');
+				$('#'+theTable+' tbody').append('<tr><td>'+dateTimer+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
 			}
 		}).fail(function(){
 			console.log('error');
@@ -883,9 +892,13 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 //Tag cells based on performance
 function tagCells(chainedID, PtrendAv, TtrendAV){
 	var localID = chainedID;
-	var pAv = PtrendAv;
+	var pAv = parseFloat(PtrendAv);
 	var tAv = TtrendAV;
-	
+	var pTargetText = $('#'+localID+'-perf-target').text();
+	var pTarget = parseFloat(pTargetText);
+	pAv = pAv.toFixed(2);
+	pTarget = pTarget.toFixed(2);
+
 	//Tag the Perf cell
 	switch (true) {
 		case (pAv <= 4.00):
@@ -1255,7 +1268,7 @@ function buildout(button){
 		<div class="table-caption">'+ tableRow +'</div> \
 		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
+		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Type&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
 		<tbody></tbody> \
 		</table> \
 		</div></div>';

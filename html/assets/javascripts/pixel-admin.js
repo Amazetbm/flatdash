@@ -5086,6 +5086,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 	var chartType;
 	var altTrend;
 	var altPerf;
+	var tempdate;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -5095,7 +5096,9 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
-			trendDate.push(new Date(jldata[i].date));
+			tempdate = new Date(jldata[i].date);
+			tempdate.setDate(tempdate.getDate() + 1);
+			trendDate.push(tempdate);
 			avTar.push(tTarget);
 			avPer.push(pTarget);
 			Tval = Tval + jldata[i].availability;
@@ -5320,7 +5323,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	}else if(localDiagID.indexOf('-perf') > -1){
 		targetType = pertargeted;
 	}
-
+	console.log('yerp');
 	$('#'+localDiagID).wijcompositechart({ 
 		height: 270,
         header: { 
@@ -5333,7 +5336,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }, 
             x: { 
                 text: "",
-                labels: {textAlign: 'far'},
+                labels: {textAlign: 'near'},
                 tickMajor: {
                     position: "outside",
                     style: {
@@ -5506,7 +5509,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
-
+    
 	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
 				type: "area",

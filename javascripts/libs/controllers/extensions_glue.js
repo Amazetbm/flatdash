@@ -121,7 +121,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	var thisID = tabID+'-table';
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-	
+
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
 		buildTables(thisID, tableVars, fromThis, toThis);
@@ -292,15 +292,13 @@ function initTagButtons(fromQuery, toQuery){
 		var toThis = toQuery;
 		var past = new Date(fromThis);
 		var today = new Date(toThis);
-		var dd = today.getDate();
+		var dd = today.getDate()+1;
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
-		past = past.setDate(past.getDate());
-		var pastMonth = new Date(past);
-		var p_dd = pastMonth.getDate();
-		var p_mm = pastMonth.getMonth()+1;
-		var p_yyyy = pastMonth.getFullYear();
-		var queryTo, queryFrom;
+		var p_dd = past.getDate()+1;
+		var p_mm = past.getMonth()+1;
+		var p_yyyy = past.getFullYear();
+		var queryTo, queryFrom, thisMonth, pastMonth;
 		var availTar, perfTar;
 		if(dd<10) {
 		    dd='0'+dd;
@@ -308,8 +306,7 @@ function initTagButtons(fromQuery, toQuery){
 
 		if(mm<10) {
 		    mm='0'+mm;
-		} 
-		
+		}
 		if(p_dd<10) {
 		    p_dd='0'+p_dd;
 		} 
@@ -318,16 +315,18 @@ function initTagButtons(fromQuery, toQuery){
 		    p_mm='0'+p_mm;
 		} 
 		
-		//today = mm+'/'+dd+'/'+yyyy;
-		//pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
-		today = today.format('M d, Y');
-		pastMonth = pastMonth.format('M d, Y');
+		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
+		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
 		
+		thisMonth = todayRe.format('M d, Y');
+		pastMonth = pastRe.format('M d, Y');
+		queryFrom = pastRe.format('yyyy-mm-dd');
+		queryTo = todayRe.format('yyyy-mm-dd');
 		if(thisLocal.indexOf('availtrend') > -1){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 			//thisName = thisName + '  AVAILABILITY';
@@ -433,7 +432,6 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		altTrend = TtrendVal;
 		altPerf = PtrendVal; 
 
-		//console.log(altTrend[0]);
 		if(funcID.indexOf('avail') > -1){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
@@ -652,7 +650,14 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
                 text: thisChart, 
             }, 
             x: { 
-                text: ""
+                text: "",
+                labels: {textAlign: 'far'},
+                tickMajor: {
+                    position: "outside",
+                    style: {
+                        stroke: "#999999"
+                    }
+                }
             } 
         }, 
         showChartLabels: false, 
@@ -701,7 +706,10 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             	textVisible:false
             }, 
             x: {
-            	textVisible:false
+            	textVisible:false,
+            	text: "",
+                alignment: "near", 
+                labels: { textAlign: "near" }
             } 
         }, 
         showChartLabels: false, 
@@ -1306,7 +1314,6 @@ function dateRanger(tabID){
 		var theDater = new Date(selectedDate.date);
 		var targetDate = (theDater.getMonth() + 1) + '/' + theDater.getDate() + '/' +  theDater.getFullYear();
 		$('#fromText').text(targetDate);
-		console.log('target = '+targetDate+' selected = '+selectedDate);
 		$(this).datepicker( "option", "minDate", selectedDate);
 		$(this).datepicker('setDate', selectedDate);
         $(this).blur();
@@ -1339,7 +1346,6 @@ function dateRanger(tabID){
     	var yyyyT = pretoThis.split('/')[2];
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
-    	
     	//Reformate date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);
@@ -1504,7 +1510,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress){
 		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year"  class="bttnActive">1 y</li></ul>');
 		break;
 		default:
-			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily" class="bttnActive">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	}
 
 	chartRanger(thisVal, thisDate, thisTarget, thisChart);

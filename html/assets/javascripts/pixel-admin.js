@@ -5122,13 +5122,13 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			chartType = "Availibility";
 			bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
 			buildButtons(altTrend, trendDate, avTar, funcID);
-			loadPies(TtrendAv, PtrendAv);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Performance";
 			bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
 			buildButtons(altPerf, trendDate, avPer, funcID);
-			loadPies(TtrendAv, PtrendAv);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
 	
@@ -5323,7 +5323,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	}else if(localDiagID.indexOf('-perf') > -1){
 		targetType = pertargeted;
 	}
-	console.log('yerp');
+
 	$('#'+localDiagID).wijcompositechart({ 
 		height: 270,
         header: { 
@@ -5453,7 +5453,6 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 		stop: function(event, ui){
 			thisStart = ui.values[0];
 			thisStop = ui.values[1];
-			//reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
 			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID);
 		},
 		buttonClick: function(event, ui){
@@ -5596,22 +5595,25 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	var pTarget = parseFloat(pTargetText);
 	pAv = pAv.toFixed(2);
 	pTarget = pTarget.toFixed(2);
-
+    var perRedline = pTarget * 2;
+	var pMax = pTarget *2.5;
+	perRedline = perRedline.toFixed(2);
+	pMax = pMax.toFixed(2);
 	//Tag the Perf cell
 	switch (true) {
-		case (pAv <= 4.00):
+		case (pAv <= pTarget):
 			Ptag = '#1DFF00';
 			$('#'+localID+'-perf').parent().css('background-color', Ptag);
 			$('#'+localID+'-perf').css('color', '#555');
 			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-check');
 			break;
-		case (pAv > 4.00 && pAv <= 8.00):
+		case (pAv > pTarget && pAv <= perRedline):
 			Ptag = '#F9B916';
 			$('#'+localID+'-perf').parent().css('background-color', Ptag);
 			$('#'+localID+'-perf').css('color', '#555');
 			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-circle');
 			break;
-		case (pAv > 8.00):
+		case (pAv > perRedline):
 			Ptag = '#F72D00';
 			$('#'+localID+'-perf').css('color','#EFEFEF').parent().css('background-color', Ptag);
 			$('#'+localID+'-perf').css('color', '#EFEFEF');
@@ -5649,9 +5651,18 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 }
 
 // Loading gauges.
-function loadPies(val, perf){
+function loadPies(val, perf, avTarg, perTarg){
 	var actual = val;
 	var thePerf = perf;
+	var aTarget = avTarg;
+	var pTarget = perTarg;
+	aTarget = aTarget.toFixed(2);
+	pTarget = pTarget.toFixed(2);
+	var pRedline = pTarget * 2;
+	var pMax = pTarget * 2.5;
+	pRedline = parseInt(pRedline);
+	pMax = parseInt(pMax);
+;
 	//Pie charts. Highly customizable
 	$('#avail-gauge').wijradialgauge({ 
         value: actual, 
@@ -5769,7 +5780,7 @@ function loadPies(val, perf){
 	
 	$('#perf-gauge').wijradialgauge({ 
         value: thePerf, 
-        max: 12, 
+        max: pMax, 
         min: 0,
         height: 100,
         width: 100,
@@ -5817,10 +5828,10 @@ function loadPies(val, perf){
         { 
             startWidth: 3, 
             endWidth: 3, 
-            startValue: 5, 
-            endValue: 12, 
-            startDistance: 0.6, 
-            endDistance: 0.58, 
+            startValue: pRedline, 
+            endValue: pMax, 
+            startDistance: 0.54, 
+            endDistance: 0.54, 
             style: { 
                 fill: "#F72D00", 
                 stroke: "#F72D00C", 
@@ -5830,9 +5841,9 @@ function loadPies(val, perf){
         { 
             startWidth: 3, 
             endWidth: 3, 
-            startValue: 3, 
-            endValue: 5, 
-            startDistance: 0.58, 
+            startValue: pTarget, 
+            endValue: pRedline, 
+            startDistance: 0.54, 
             endDistance: 0.54, 
             style: { 
                 fill: "0-#EBF700-#F79C00", 
@@ -5844,9 +5855,9 @@ function loadPies(val, perf){
             startWidth: 3, 
             endWidth: 3, 
             startValue: 0, 
-            endValue: 3, 
+            endValue: pTarget, 
             startDistance: 0.54, 
-            endDistance: 0.5, 
+            endDistance: 0.54, 
             style: { 
                 fill: "#1DE100", 
                 stroke: "#1DE100", 

@@ -5568,10 +5568,11 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	pAv = pAv.toFixed(2);
 	pTarget = pTarget.toFixed(2);
     var perRedline = pTarget * 2;
-	var pMax = pTarget *2.5;
+	var pMax = pTarget * 2.5;
 	perRedline = perRedline.toFixed(2);
 	pMax = pMax.toFixed(2);
 	//Tag the Perf cell
+
 	switch (true) {
 		case (pAv <= pTarget):
 			Ptag = '#1DFF00';

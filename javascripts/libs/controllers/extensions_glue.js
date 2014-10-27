@@ -654,6 +654,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }, 
             x: { 
                 text: "",
+                annoMethod: 'valueLabels',
+				valueLabels: trendDate,
                 labels: {textAlign: 'near'},
                 tickMajor: {
                     position: "outside",
@@ -799,6 +801,20 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	avTar = avTar.toFixed(2);
 	perTar = perTar.toFixed(2);
 	$('#'+thisChart).wijcompositechart({
+			axis: { 
+	            x: { 
+	                text: "",
+					annoMethod: 'valueLabels',
+					valueLabels: trendDate,
+	                labels: {textAlign: 'near'},
+	                tickMajor: {
+	                    position: "outside",
+	                    style: {
+	                        stroke: "#999999"
+	                    }
+	                }
+	            } 
+	        },
 			seriesList: [{
 				type: "area",
 				label: "Values", 
@@ -854,6 +870,20 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 	trendDate = trendDate.slice(starter, stopper);
 	thisTarget = thisTarget.slice(starter, stopper);
 	$('#'+thisChart).wijcompositechart({
+			axis: { 
+	            x: { 
+	                text: "",
+					annoMethod: 'valueLabels',
+					valueLabels: trendDate,
+	                labels: {textAlign: 'near'},
+	                tickMajor: {
+	                    position: "outside",
+	                    style: {
+	                        stroke: "#999999"
+	                    }
+	                }
+	            } 
+	        },
 			seriesList: [{
 				type: "area",
 				label: "Values", 
@@ -883,10 +913,10 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	var tAv = TtrendAV;
 	var pTargetText = $('#'+localID+'-perf-target').text();
 	var pTarget = parseFloat(pTargetText);
-	pAv = pAv.toFixed(2);
-	pTarget = pTarget.toFixed(2);
     var perRedline = pTarget * 2;
-	var pMax = pTarget * 2.5;
+	var pMax = pTarget * 3;
+	pTarget = pTarget.toFixed(2);
+	pAv = pAv.toFixed(2);
 	perRedline = perRedline.toFixed(2);
 	pMax = pMax.toFixed(2);
 	//Tag the Perf cell

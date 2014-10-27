@@ -367,8 +367,8 @@ function initTagButtons(fromQuery, toQuery){
 			miniHeight = 420;
 			whichType = 'notes';
 		}else{
-			miniWidth = 760;
-			miniHeight = 420;
+			miniWidth = 680;
+			miniHeight = 320;
 			whichType= 'trending';
 		}
 		
@@ -547,6 +547,8 @@ function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 	var numberNudge, theName, atarget, ptarget;
 	var confLoc = curSeq.split(',')[0];
 	var jLoc = curSeq.split(',')[1];
+	var quarter = 0;
+	var fromQ, toQ;
 	confLoc = parseInt(confLoc);
 	jLoc = parseInt(jLoc);
 	thisTypeID = thisTypeID.split('-notes')[0];
@@ -564,20 +566,102 @@ function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 	    };
 	}
 	
-	$.getJSON(dasConfig, function(confdata){
-		thisDiv = confdata[confLoc].units;
-		trendDataCall = thisDiv[jLoc].trendingURI;
-		notesDataCall = thisDiv[jLoc].notesURI;
-		notesDataCall = notesDataCall.replace('fromThis', fromThis);
-		notesDataCall = notesDataCall.replace('toThis', toThis);
-		theName = thisDiv[jLoc].name;
-		atarget = thisDiv[jLoc].availTarget;
-		ptarget = thisDiv[jLoc].perfTarget;
-		buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromThis, toThis, notesDataCall);
-	});
+	if(thisID.indexOf('-notes-diag') > -1){
+		$.getJSON(dasConfig, function(confdata){
+			thisDiv = confdata[confLoc].units;
+			trendDataCall = thisDiv[jLoc].trendingURI;
+			notesDataCall = thisDiv[jLoc].notesURI;
+			notesDataCall = notesDataCall.replace('fromThis', fromThis);
+			notesDataCall = notesDataCall.replace('toThis', toThis);
+			theName = thisDiv[jLoc].name;
+			atarget = thisDiv[jLoc].availTarget;
+			ptarget = thisDiv[jLoc].perfTarget;
+			buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromThis, toThis, notesDataCall, '');
+		});
+	}else if(thisID.indexOf('-trends-diag') > -1){
+		for (var j=0, len=4; j < len; j++){
+			quarter = j+1;
+			if (quarter == 1){
+				$.getJSON(dasConfig, function(confdata){
+					fromQ = '2014-01-01';
+					toQ = '2014-03-31';
+					thisDiv = confdata[confLoc].units;
+					trendDataCall = '';
+					notesDataCall = thisDiv[jLoc].dataURI;
+					notesDataCall = notesDataCall.replace('fromThis', fromQ);
+					notesDataCall = notesDataCall.replace('toThis', toQ);
+					theName = thisDiv[jLoc].name;
+					atarget = thisDiv[jLoc].availTarget;
+					ptarget = thisDiv[jLoc].perfTarget;
+					buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromQ, toQ, notesDataCall, 1);
+				});
+			}else if(quarter == 2){
+				$.getJSON(dasConfig, function(confdata){
+					fromQ = '2014-04-01';
+					toQ = '2014-06-30';
+					thisDiv = confdata[confLoc].units;
+					trendDataCall = '';
+					notesDataCall = thisDiv[jLoc].dataURI;
+					notesDataCall = notesDataCall.replace('fromThis', fromQ);
+					notesDataCall = notesDataCall.replace('toThis', toQ);
+					theName = thisDiv[jLoc].name;
+					atarget = thisDiv[jLoc].availTarget;
+					ptarget = thisDiv[jLoc].perfTarget;
+					buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromQ, toQ, notesDataCall, 2);
+				});
+			}else if(quarter == 3){
+				$.getJSON(dasConfig, function(confdata){
+					fromQ = '2014-07-01';
+					toQ = '2014-09-30';
+					thisDiv = confdata[confLoc].units;
+					trendDataCall = '';
+					notesDataCall = thisDiv[jLoc].dataURI;
+					notesDataCall = notesDataCall.replace('fromThis', fromQ);
+					notesDataCall = notesDataCall.replace('toThis', toQ);
+					theName = thisDiv[jLoc].name;
+					atarget = thisDiv[jLoc].availTarget;
+					ptarget = thisDiv[jLoc].perfTarget;
+					buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromQ, toQ, notesDataCall, 3);
+				});
+			}else if(quarter == 4){
+				$.getJSON(dasConfig, function(confdata){
+					fromQ = '2014-10-01';
+					toQ = '2014-12-31';
+					thisDiv = confdata[confLoc].units;
+					trendDataCall = '';
+					notesDataCall = thisDiv[jLoc].dataURI;
+					notesDataCall = notesDataCall.replace('fromThis', fromQ);
+					notesDataCall = notesDataCall.replace('toThis', toQ);
+					theName = thisDiv[jLoc].name;
+					atarget = thisDiv[jLoc].availTarget;
+					ptarget = thisDiv[jLoc].perfTarget;
+					buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromQ, toQ, notesDataCall, 4);
+				});
+				
+			}
+			
+		}
+	}
 }	
 
-function buildMiniTables(theName, tableType, availtarget, perftarget, trending, fromQuery, toQuery, notes){
+function sortTable(){
+    var tbl = document.getElementById("trending-table").tBodies[0];
+    var store = [];
+    for(var i=0, len=tbl.rows.length; i<len; i++){
+        var row = tbl.rows[i];
+        var sortnr = parseFloat(row.cells[0].textContent || row.cells[0].innerText);
+        if(!isNaN(sortnr)) store.push([sortnr, row]);
+    }
+    store.sort(function(x,y){
+        return x[0] - y[0];
+    });
+    for(var i=0, len=store.length; i<len; i++){
+        tbl.appendChild(store[i][1]);
+    }
+    store = null;
+}
+
+function buildMiniTables(theName, tableType, availtarget, perftarget, trending, fromQuery, toQuery, notes, counter){
 	var currName = theName;
 	var theTable = tableType;
 	var theTrend = trending;
@@ -586,7 +670,9 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 	var ptarget = perftarget;
 	var fromThis = fromQuery;
 	var toThis = toQuery;
-	
+	var avail = 0;
+	var perf = 0;
+	var count = counter;
 	if(theTable == 'notes-table'){
 		$.getJSON(theNotes, function(jdata){
 			for (var i=0, len=jdata.length; i < len; i++) {
@@ -604,19 +690,31 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 			console.log('error');
 		});
 	}else{
-		$.getJSON(theTrend, function(jdata){
+		var availAver;
+		var perfAver;
+		$.getJSON(theNotes, function(jdata){
 			for (var i=0, len=jdata.length; i < len; i++) {
-				var numberNudge = i + 1;
-				var avail = jdata[i].availability; 
-				var perf = jdata[i].performance; 
-				avail = avail.toFixed(2);
-				perf = perf.toFixed(2);
-				$('#'+theTable+' tbody').append('<tr><td>Q'+numberNudge +'</td><td>'+atarget+'</td><td>'+avail+'</td><td>'+ptarget+'</td><td>'+perf+'</td></tr>');
+				avail = avail + jdata[i].availability; 
+				perf =  perf + jdata[i].performance; 
 			}
+			availAver = avail / jdata.length;
+			perfAver = perf / jdata.length;
+			availAver = availAver.toFixed(2);
+			perfAver = perfAver.toFixed(2);
+			console.log(availAver);
+            if (availAver == '' || availAver == null || availAver == NaN){
+            	availAVer = 'No data';
+            }
+            
+            if (perfAver == '' || perfAver == null || perfAver == 'NaN'){
+            	perfAver = 'No data';
+            }
+			$('#'+theTable+' tbody').append('<tr id="Q_'+count+'"><td>Q'+count +'</td><td>'+atarget+'</td><td>'+availAver+'</td><td>'+ptarget+'</td><td>'+perfAver+'</td></tr>');
 		}).fail(function(){
 			console.log('error');
 		});
 	}
+	sortTable();
 }
 
 function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID){
@@ -654,8 +752,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }, 
             x: { 
                 text: "",
-                annoMethod: 'valueLabels',
-				valueLabels: trendDate,
+                //annoMethod: 'valueLabels',
+				//valueLabels: trendDate,
                 labels: {textAlign: 'near'},
                 tickMajor: {
                     position: "outside",
@@ -741,6 +839,9 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID, avTar, perTar);
+	//setTimeout(function(){
+	//	nudgeChart(trendPush, trendDate, availAv, perAv, targeted, pertargeted, localDiagID, localBarID, avTar, perTar);
+	//}, 3000);
 	
 	$(window).resize(function () {
 		$('#'+localDiagID).wijcompositechart("redraw");
@@ -804,8 +905,8 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 			axis: { 
 	            x: { 
 	                text: "",
-					annoMethod: 'valueLabels',
-					valueLabels: trendDate,
+					//annoMethod: 'valueLabels',
+					//valueLabels: trendDate,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -853,6 +954,68 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart, avTar, perTar);
 }
+/*
+function nudgeChartShort(nudgeID){
+	var localDiagID = nudgeID;
+	console.log(localDiagID);
+	$('#'+localDiagID).wijcompositechart("redraw");
+}
+*/
+function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarget, funcID, barID, avTarg, perTarg){
+	
+	var trendPush = TrendVal;
+	var trendDate = trendDater;
+	var availAv = TtrendAv;
+	var perAv = PtrendAv;
+	var thisChart = funcID;
+	var longChart = barID;
+	var shortAv = theTarget;
+	var shortPer = perTarget;
+	var thisTarget;
+	var starter = 0;
+	var stopper = trendPush.length;
+    var avTar = avTarg;
+	var perTar = perTarg;
+	//avTar = avTar.toFixed(2);
+	//perTar = perTar.toFixed(2);
+	if(thisChart.indexOf('-avail') > -1){
+		thisTarget = shortAv;
+	}else if(thisChart.indexOf('-perf') > -1){
+		thisTarget = shortPer;
+	}
+
+	$('#'+thisChart).wijcompositechart({
+			axis: { 
+	            x: { 
+	                text: "",
+					//annoMethod: 'valueLabels',
+					//valueLabels: trendDate,
+	                labels: {textAlign: 'near'},
+	                tickMajor: {
+	                    position: "outside",
+	                    style: {
+	                        stroke: "#999999"
+	                    }
+	                }
+	            } 
+	        },
+			seriesList: [{
+				type: "area",
+				label: "Values", 
+                data: {x: trendDate, y: trendPush}
+		    },{
+		    	type: "line",
+				label: "Target", 
+                data: {x: trendDate, y: thisTarget}
+		    }],
+		    seriesStyles: [ 
+                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#00468C", "stroke-width": 2 } 
+            ] 
+	});
+	
+	$('#'+thisChart).wijcompositechart("redraw");
+}
 
 function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
 	var starter = startNum;
@@ -873,8 +1036,8 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 			axis: { 
 	            x: { 
 	                text: "",
-					annoMethod: 'valueLabels',
-					valueLabels: trendDate,
+					// annoMethod: 'valueLabels',
+					// valueLabels: trendDate,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -935,10 +1098,10 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-circle');
 			break;
 		case (pAv > perRedline):
-			Ptag = '#F72D00';
-			$('#'+localID+'-perf').css('color','#EFEFEF').parent().css('background-color', Ptag);
-			$('#'+localID+'-perf').css('color', '#EFEFEF');
-			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-warning');
+			Ptag = '#F9B916';
+			$('#'+localID+'-perf').parent().css('background-color', Ptag);
+			$('#'+localID+'-perf').css('color', '#555');
+			$('#'+localID+'-prfSign').addClass('fa').addClass('fa-circle');
 			break;
 		default:
 			// Yarp

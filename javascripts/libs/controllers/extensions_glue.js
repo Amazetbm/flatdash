@@ -458,7 +458,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 	});
 }
 
-function redoTheData(dataChain, dialogID, longID, active){
+function redoTheData(dataChain, dialogID, longID, active, avTarg, perTarg){
 	var celldataCall = dataChain;
 	var funcID = dialogID;
 	var barID = longID;
@@ -468,8 +468,8 @@ function redoTheData(dataChain, dialogID, longID, active){
 	var PtrendAv = 0;
 	var avTar = [];
 	var avPer = [];
-	var tTarget = 99.50;
-	var pTarget = 4.00;
+	var tTarget = avTarg;
+	var pTarget = perTarg;
 	var chartType;
 	var altTrend;
 	var altPerf;
@@ -502,13 +502,13 @@ function redoTheData(dataChain, dialogID, longID, active){
 		altPerf = PtrendVal; 
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
-			reDoTheChart(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID);
-			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct);
+			reDoTheChart(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget);
+			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
-			reDoTheChart(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID);
-			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct);
+			reDoTheChart(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget);
+			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
@@ -775,11 +775,6 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 			thisStart = ui.values[0];
 			thisStop = ui.values[1];
 			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID, avTar, perTar);
-		},
-		buttonClick: function(event, ui){
-			thisStart = ui.values[0];
-			thisStop = ui.values[1];
-			reDoChart(thisStart, thisStop, thisVal, thisDate, targeted, thisID);
 		}
 	});
 	
@@ -788,36 +783,7 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
     });
 }
 
-
-function reDoChart(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcID){
-	var starter = startNum;
-	var stopper = stopNum;
-	var trendPush = ATCtrendVal;
-	var trendDate = trendDate;
-	var thisChart = funcID;
-	var thisTarget = trendTarget;
-	trendPush = trendPush.slice(starter, stopper);
-	trendDate = trendDate.slice(starter, stopper);
-	thisTarget = thisTarget.slice(starter, stopper);
-
-	$('#'+thisChart).wijcompositechart({
-			seriesList: [{
-				type: "area",
-				label: "Values", 
-                data: {x: trendDate, y: trendPush}
-		    },{
-		    	type: "line",
-				label: "Target", 
-                data: {x: trendDate, y: thisTarget}
-		    }],
-		    seriesStyles: [ 
-                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
-                { stroke: "#00468C", "stroke-width": 2 } 
-            ] 
-	});
-}
-
-function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID){
+function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
 
 	var trendPush = TrendVal;
 	var trendDate = trendDater;
@@ -825,11 +791,13 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var perAv = PtrendAv;
 	var thisChart = funcID;
 	var longChart = barID;
-	//var slideID =
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
-    
+    var avTar = avTarg;
+	var perTar = perTarg;
+	avTar = avTar.toFixed(2);
+	perTar = perTar.toFixed(2);
 	$('#'+thisChart).wijcompositechart({
 			seriesList: [{
 				type: "area",
@@ -864,11 +832,10 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	
 	$('#kpi-1 .kpi-actual').text(availAv+'%');
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
-	$('#kpi-1 .kpi-target').text(availTarget);
-	$('#kpi-3 .kpi-target').text(perfTarget);
+	$('#kpi-1 .kpi-target').text(avTar);
+	$('#kpi-3 .kpi-target').text(perTar);
 	
-	//makeSlider(starter, stopper, trendPush, trendDate, thisTarget, funcID);
-	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
+	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart, avTar, perTar);
 }
 
 function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
@@ -1373,7 +1340,7 @@ function dateRanger(tabID){
 }
 
 //Select chart range.
-function chartRanger(Tval, trendDate, trendTarget, funcID){
+function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('#chart-buttons li').click(function(){
 		var thisCartButton = $(this).attr('id');
 		var startNum, stopNum;
@@ -1395,6 +1362,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 		var notCurrent, thePast;
 		var celldataCall, thisDiv;
 		var pastText, todayText;
+		var avTar = avTarg;
+		var perTar = perTarg;
 
 		todayText = today.format('M d, Y');
 		today = today.format('Y-m-d');
@@ -1424,7 +1393,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 				
 				break;
@@ -1441,7 +1410,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1458,7 +1427,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1475,7 +1444,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1492,7 +1461,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton);
+					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1513,6 +1482,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 	var active = bttnPress;
 	var tTarget = avTarget;
 	var pTarget = perTarget;
+
 	switch (active){
 	case 'chart-weekly':
 		$('#chart-buttons').append('<ul><li id="chart-weekly" class="bttnActive">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
@@ -1533,7 +1503,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	}
 
-	chartRanger(thisVal, thisDate, thisTarget, thisChart);
+	chartRanger(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
 }
 
 $('.navigation li a').click(function(){

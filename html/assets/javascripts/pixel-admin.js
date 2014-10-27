@@ -5121,13 +5121,13 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
 			bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
-			buildButtons(altTrend, trendDate, avTar, funcID);
+			buildButtons(altTrend, trendDate, avTar, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Performance";
 			bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
-			buildButtons(altPerf, trendDate, avPer, funcID);
+			buildButtons(altPerf, trendDate, avPer, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
@@ -5186,12 +5186,12 @@ function redoTheData(dataChain, dialogID, longID, active){
 			chartType = "Availibility";
 			reDoTheChart(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID);
 			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct);
-			loadPies(TtrendAv, PtrendAv);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChart(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID);
 			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct);
-			loadPies(TtrendAv, PtrendAv);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
 }
@@ -5420,7 +5420,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
-	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID);
+	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID, avTar, perTar);
 	
 	$(window).resize(function () {
 		$('#'+localDiagID).wijcompositechart("redraw");
@@ -5432,7 +5432,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	trendDate = [];
 }
 
-function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID){
+function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID, avTarg, perTarg){
 	var thisID = thefuncID;
 	var barID = thebarID;
 	var thisStart = startNum;
@@ -5442,6 +5442,9 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 	var thisPerav = perAv;
 	var thisDate = trendDate;
 	var targeted = trendTarget;
+	var avTar = avTarg;
+	var perTar = perTarg;
+	
 	$('#'+thisID+'-slide').wijslider({
 		orientation: "horizontal",
 		dragFill: true,
@@ -5453,7 +5456,7 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 		stop: function(event, ui){
 			thisStart = ui.values[0];
 			thisStop = ui.values[1];
-			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID);
+			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID, avTar, perTar);
 		},
 		buttonClick: function(event, ui){
 			thisStart = ui.values[0];
@@ -5550,7 +5553,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
 }
 
-function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID){
+function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
 	var starter = startNum;
 	var stopper = stopNum;
 	var trendPush = TrendVal;
@@ -5560,6 +5563,8 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 	var thisChart = funcID;
 	var longChart = barID;
 	var thisTarget = theTarget;
+	var avTar = avTarg;
+	var perTar = perTarg;
 	trendPush = trendPush.slice(starter, stopper);
 	trendDate = trendDate.slice(starter, stopper);
 	thisTarget = thisTarget.slice(starter, stopper);
@@ -5581,8 +5586,8 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 
 	$('#kpi-1 .kpi-actual').text(availAv+'%');
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
-	$('#kpi-1 .kpi-target').text(availTarget);
-	$('#kpi-3 .kpi-target').text(perfTarget);
+	$('#kpi-1 .kpi-target').text(avTar);
+	$('#kpi-3 .kpi-target').text(perTar);
 
 }
 
@@ -5662,7 +5667,7 @@ function loadPies(val, perf, avTarg, perTarg){
 	var pMax = pTarget * 2.5;
 	pRedline = parseInt(pRedline);
 	pMax = parseInt(pMax);
-;
+
 	//Pie charts. Highly customizable
 	$('#avail-gauge').wijradialgauge({ 
         value: actual, 
@@ -6182,13 +6187,14 @@ function chartRanger(Tval, trendDate, trendTarget, funcID){
 }
 
 //Chart Buttons
-function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress){
+function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarget, perTarget){
 	var thisVal = newTrend;
 	var thisDate = trendDate;
 	var thisTarget = newTarget;
 	var thisChart = funcID;
 	var active = bttnPress;
-
+	var tTarget = avTarget;
+	var pTarget = perTarget;
 	switch (active){
 	case 'chart-weekly':
 		$('#chart-buttons').append('<ul><li id="chart-weekly" class="bttnActive">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');

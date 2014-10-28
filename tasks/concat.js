@@ -66,6 +66,7 @@ module.exports = function (js_src, js_dest) {
             'libs/jquery-ui-1.10.4/jquery.ui.draggable.js',
             'libs/jquery-ui-1.10.4/jquery.ui.droppable.js',
             'libs/jquery-ui-1.10.4/jquery.ui.resizable.js',
+            //'libs/jquery-table-sorter/jquery.tablesorter.pager.js',
             
             // Cumstom JQuery Plugins
             //'libs/jqueryREgEx/jquery.removeClassRegEx.js',

@@ -208,16 +208,19 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 			var theDate = jdata[i].opened_at;
 			var theNote = jdata[i].description;
 			var dateTimer = new Date(theDate);
+			var dateUnformated = new Date(theDate).getTime();
+			console.log(dateUnformated);
 			if(!theUnit){
 				theUnit = 'General';
 			}
 			dateTimer = dateTimer.format('M d, Y');
-			$('#'+currentID+' tbody').append('<tr><td>'+dateTimer+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+			$('#'+currentID+' tbody').append('<tr rowdate="'+dateUnformated+'"><td>'+dateTimer+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
 		}
+		sortIssues(currentID);
 	}).fail(function(){
 		console.log('error');
 	});
-	//makeItSortable(currentID);
+	
 }
 
 function makeItSortable(tableID){
@@ -661,6 +664,22 @@ function sortTable(){
 		$.each(rows, function(index, row) {
 			$table.children('tbody').append(row);
 		});
+}
+
+function sortIssues(currentID){
+	var thisID = currentID;
+	var $table=$('#'+thisID);
+	var rows = $table.find('tbody tr').get();
+	rows.sort(function(a, b) {
+		var keyA = $(a).attr('rowdate');
+		var keyB = $(b).attr('rowdate');
+		if (keyA < keyB) return -1;
+		if (keyA > keyB) return 1;
+		return 0;
+	});
+	$.each(rows, function(index, row) {
+		$table.children('tbody').append(row);
+	});
 }
 
 function buildMiniTables(theName, tableType, availtarget, perftarget, trending, fromQuery, toQuery, notes, counter){

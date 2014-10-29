@@ -13,7 +13,7 @@
 			{
 				"name": "ATC Mobile",
 				"dataURI": "https://itsc-preprod.autotrader.com:3000/scorecard/daily?query={%22page_id%22:{%22$in%22:[1134837,1587155,1587160]},%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
-                "notesURI": "https://itsc-preprod.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999004,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=opened_at",
+                "notesURI": "https://itsc-preprod.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999002,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=opened_at",
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.95",
 				"perfTarget" : "3.00"
@@ -169,6 +169,14 @@
                 "trendingURI" : "assets/json/atctrendingdata.json",
 				"availTarget" : "99.50",
 				"perfTarget" : "4.00"
+			},
+				{
+				"name": "ATC Mobile",
+				"dataURI": "https://itsc-preprod.autotrader.com:3000/scorecard/daily?query={%22page_id%22:{%22$in%22:[1134837,1587155,1587160]},%22date%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=date",
+                "notesURI": "https://itsc-preprod.autotrader.com:3000/scorecard/daily_notes?query={%22page_id%22:9999002,%22opened_at%22:{%22$gte%22:%22fromThis%22,%22$lte%22:%22toThis%22}}&sort=opened_at",
+                "trendingURI" : "assets/json/atctrendingdata.json",
+				"availTarget" : "99.95",
+				"perfTarget" : "3.00"
 			},
 			{
 				"name": "ATC SYC",

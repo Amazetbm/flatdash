@@ -4891,7 +4891,6 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 			var theNote = jdata[i].description;
 			var dateTimer = new Date(theDate);
 			var dateUnformated = new Date(theDate).getTime();
-			console.log(dateUnformated);
 			if(!theUnit){
 				theUnit = 'General';
 			}

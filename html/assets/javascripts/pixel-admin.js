@@ -5550,7 +5550,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
-	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targeted, localDiagID, localBarID, avTar, perTar);
+	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targetType, localDiagID, localBarID, avTar, perTar);
 	//setTimeout(function(){
 	//	nudgeChart(trendPush, trendDate, availAv, perAv, targeted, pertargeted, localDiagID, localBarID, avTar, perTar);
 	//}, 3000);
@@ -5577,7 +5577,7 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 	var targeted = trendTarget;
 	var avTar = avTarg;
 	var perTar = perTarg;
-	
+	console.log()
 	$('#'+thisID+'-slide').wijslider({
 		orientation: "horizontal",
 		dragFill: true,

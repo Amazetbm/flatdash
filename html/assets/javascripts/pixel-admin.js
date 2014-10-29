@@ -5375,6 +5375,8 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 	var avail = 0;
 	var perf = 0;
 	var count = counter;
+	var rightNow = new Date().getTime();
+	var quarterLimit = new Date(toQuery).getTime();
 
 	if(theTable == 'notes-table'){
 		$.getJSON(theNotes, function(jdata){
@@ -5405,15 +5407,20 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 			perfAver = perf / jdata.length;
 			availAver = availAver.toFixed(2);
 			perfAver = perfAver.toFixed(2);
-            if (availAver == '' || availAver == null || availAver == 'NaN'){
-            	availAVer = 'No data';
-            }
-            
-            if (perfAver == '' || perfAver == null || perfAver == 'NaN'){
-            	perfAver = 'No data';
-            }
-			$('#'+theTable+' tbody').append('<tr class="items" roworder="'+count+'"><td>Q'+count +'</td><td>'+atarget+'</td><td>'+availAver+'</td><td>'+ptarget+'</td><td>'+perfAver+'</td></tr>');
-		
+			if(quarterLimit < rightNow){
+	            if (availAver == '' || availAver == null || availAver == 'NaN'){
+	            	availAVer = 'No data';
+	            }
+	            
+	            if (perfAver == '' || perfAver == null || perfAver == 'NaN'){
+	            	perfAver = 'No data';
+	            }
+				$('#'+theTable+' tbody').append('<tr class="items" roworder="'+count+'"><td>Q'+count +'</td><td>'+atarget+'</td><td>'+availAver+'</td><td>'+ptarget+'</td><td>'+perfAver+'</td></tr>');
+			}else{
+				availAver = 'No data';
+				perfAver = 'No data ';
+				$('#'+theTable+' tbody').append('<tr class="items" roworder="'+count+'"><td>Q'+count +'</td><td>'+atarget+'</td><td>'+availAver+'</td><td>'+ptarget+'</td><td>'+perfAver+'</td></tr>');
+			}
 			sortTable();
 		}).fail(function(){
 			console.log('error');
@@ -5851,12 +5858,17 @@ function loadPies(val, perf, avTarg, perTarg){
 	var pMax = pTarget * 2.5;
 	pRedline = parseInt(pRedline);
 	pMax = parseInt(pMax);
+	var lowLimit = actual - 30;
+	if (lowLimit < 0){
+		lowLimit = 0;
+	}
+	lowLimit = parseInt(lowLimit);
 
 	//Pie charts. Highly customizable
 	$('#avail-gauge').wijradialgauge({ 
         value: actual, 
         max: 100, 
-        min: 0,
+        min: lowLimit,
         height: 100,
         width: 100,
         startAngle: -45, 

@@ -820,7 +820,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             
         ],
         seriesStyles: [ 
-           { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
            { stroke: "#00468C", "stroke-width": 2 } 
        ], 
        
@@ -860,7 +860,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }
         ],
         seriesStyles: [ 
-           { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}
        ]
     });
 	
@@ -872,7 +872,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	//setTimeout(function(){
 	//	nudgeChart(trendPush, trendDate, availAv, perAv, targeted, pertargeted, localDiagID, localBarID, avTar, perTar);
 	//}, 3000);
-	
+	//var chartObject = $('#'+thisChart);
+	//console.log(chartObject);
 	$(window).resize(function () {
 		$('#'+localDiagID).wijcompositechart("redraw");
 		$('#'+localBarID).wijlinechart("redraw");
@@ -956,7 +957,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -973,7 +974,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
             }
         ],
         seriesStyles: [ 
-           { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}
        ]
     });
 	
@@ -1039,7 +1040,7 @@ function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarg
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -1067,7 +1068,7 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 	            x: { 
 	                text: "",
 					// annoMethod: 'valueLabels',
-					// valueLabels: trendDate,
+				    //valueLabels: trendDate,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -1087,7 +1088,7 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#ED6412", "stroke-width": 1, fill: "#ED6412", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -1104,16 +1105,19 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	var localID = chainedID;
 	var pAv = parseFloat(PtrendAv);
 	var tAv = TtrendAV;
+	var tTargetText = $('#'+localID+'-avail-target').text();
 	var pTargetText = $('#'+localID+'-perf-target').text();
+	var tTarget = parseFloat(tTargetText);
 	var pTarget = parseFloat(pTargetText);
     var perRedline = pTarget * 2;
 	var pMax = pTarget * 3;
+	tTarget = tTarget.toFixed(2);
 	pTarget = pTarget.toFixed(2);
 	pAv = pAv.toFixed(2);
 	perRedline = perRedline.toFixed(2);
 	pMax = pMax.toFixed(2);
 	//Tag the Perf cell
-
+	console.log('target = '+tTarget+' actual = '+tAv);
 	switch (true) {
 		case (pAv <= pTarget):
 			Ptag = '#1DFF00';
@@ -1137,16 +1141,15 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 			// Yarp
 			break;
 	}
-	
 	//Tag the Availabilty cell
 	switch (true) {
-		case (tAv >= 99.50):
+		case (tAv >= tTarget || tAv == 100.00):
 			Ttag = '#1DFF00';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');
 			$('#'+localID+'-avSign').addClass('fa').addClass('fa-check');
 			break;
-		case (tAv >= 98.00 && tAv < 99.50):
+		case (tAv >= 98.00 && tAv < tTarget):
 			Ttag = '#F9B916';
 			$('#'+localID+'-avail').parent().css('background-color', Ttag);
 			$('#'+localID+'-avail').css('color', '#555');

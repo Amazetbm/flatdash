@@ -5329,6 +5329,7 @@ function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 	}
 }	
 
+
 //sort Quaterly table
 function sortTable(){
 		var $table=$('#trending-table');

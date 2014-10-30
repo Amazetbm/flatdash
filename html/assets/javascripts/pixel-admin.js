@@ -4964,8 +4964,8 @@ function loadSparkDyn(IDChain, chainData){
 }
 
 function initTagButtons(fromQuery, toQuery){
-	var fromThis = fromQuery;
-	var toThis = toQuery;
+	//var fromThis = fromQuery;
+	//var toThis = toQuery;
 	
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');
@@ -4979,16 +4979,21 @@ function initTagButtons(fromQuery, toQuery){
 		var thisMarquee;
 		var fromThis = fromQuery;
 		var toThis = toQuery;
+
 		var past = new Date(fromThis);
 		var today = new Date(toThis);
+		
 		var dd = today.getDate()+1;
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
+		
 		var p_dd = past.getDate()+1;
 		var p_mm = past.getMonth()+1;
 		var p_yyyy = past.getFullYear();
+		
 		var queryTo, queryFrom, thisMonth, pastMonth;
 		var availTar, perfTar;
+
 		if(dd<10) {
 		    dd='0'+dd;
 		} 
@@ -5003,14 +5008,15 @@ function initTagButtons(fromQuery, toQuery){
 		if(p_mm<10) {
 		    p_mm='0'+p_mm;
 		} 
-		
+
 		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
 		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
-		
+
 		thisMonth = todayRe.format('M d, Y');
 		pastMonth = pastRe.format('M d, Y');
 		queryFrom = pastRe.format('yyyy-mm-dd');
 		queryTo = todayRe.format('yyyy-mm-dd');
+
 		if(thisLocal.indexOf('availtrend') > -1){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
@@ -5502,7 +5508,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             
         ],
         seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
            { stroke: "#00468C", "stroke-width": 2 } 
        ], 
        
@@ -5542,7 +5548,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }
         ],
         seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}
        ]
     });
 	
@@ -5578,7 +5584,7 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 	var targeted = trendTarget;
 	var avTar = avTarg;
 	var perTar = perTarg;
-	console.log()
+	
 	$('#'+thisID+'-slide').wijslider({
 		orientation: "horizontal",
 		dragFill: true,
@@ -5639,7 +5645,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -5656,7 +5662,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
             }
         ],
         seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}
+           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}
        ]
     });
 	
@@ -5722,7 +5728,7 @@ function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarg
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -5770,7 +5776,7 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
                 data: {x: trendDate, y: thisTarget}
 		    }],
 		    seriesStyles: [ 
-                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.2}, 
+                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
                 { stroke: "#00468C", "stroke-width": 2 } 
             ] 
 	});
@@ -5799,7 +5805,7 @@ function tagCells(chainedID, PtrendAv, TtrendAV){
 	perRedline = perRedline.toFixed(2);
 	pMax = pMax.toFixed(2);
 	//Tag the Perf cell
-	console.log('target = '+tTarget+' actual = '+tAv);
+
 	switch (true) {
 		case (pAv <= pTarget):
 			Ptag = '#1DFF00';
@@ -5857,21 +5863,20 @@ function loadPies(val, perf, avTarg, perTarg){
 	var pTarget = perTarg;
 	aTarget = aTarget.toFixed(2);
 	pTarget = pTarget.toFixed(2);
+	var intTarget = parseInt(aTarget);
 	var pRedline = pTarget * 2;
 	var pMax = pTarget * 2.5;
 	pRedline = parseInt(pRedline);
 	pMax = parseInt(pMax);
-	var lowLimit = actual - 30;
-	if (lowLimit < 0){
-		lowLimit = 0;
+	if (actual < 90){
+		actual = 90;
 	}
-	lowLimit = parseInt(lowLimit);
 
 	//Pie charts. Highly customizable
 	$('#avail-gauge').wijradialgauge({ 
         value: actual, 
         max: 100, 
-        min: lowLimit,
+        min: 90,
         height: 100,
         width: 100,
         startAngle: -45, 
@@ -5898,7 +5903,7 @@ function loadPies(val, perf, avTarg, perTarg){
                 fill: "#1E395B", 
                 stroke: "#E7EFF8"
             }, 
-            interval: 5, 
+            interval: 1, 
             visible: true
         }, 
         tickMajor: { 
@@ -5911,7 +5916,7 @@ function loadPies(val, perf, avTarg, perTarg){
                 stroke: "#E7EFF8", 
                 "stroke-width": 1.5 
             }, 
-            interval: 25, 
+            interval: 5, 
             visible: true
         }, 
         ranges: [ 
@@ -5919,7 +5924,7 @@ function loadPies(val, perf, avTarg, perTarg){
             startWidth: 2, 
             endWidth: 5, 
             startValue: 0, 
-            endValue: 10, 
+            endValue: 98, 
             startDistance: 0.6, 
             endDistance: 0.58, 
             style: { 
@@ -5930,9 +5935,9 @@ function loadPies(val, perf, avTarg, perTarg){
         }, 
         { 
             startWidth: 5, 
-            endWidth: 20, 
-            startValue: 10, 
-            endValue: 90, 
+            endWidth: 5, 
+            startValue: 98, 
+            endValue: intTarget, 
             startDistance: 0.58, 
             endDistance: 0.54, 
             style: { 
@@ -5942,10 +5947,10 @@ function loadPies(val, perf, avTarg, perTarg){
             } 
         }, 
         { 
-            startWidth: 20, 
-            endWidth: 25, 
-            startValue: 90, 
-            endValue: 100, 
+            startWidth: 5, 
+            endWidth: 5, 
+            startValue: intTarget, 
+            endValue: 110, 
             startDistance: 0.54, 
             endDistance: 0.5, 
             style: { 
@@ -6246,10 +6251,10 @@ function dateRanger(tabID){
     	var yyyyT = pretoThis.split('/')[2];
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
+
     	//Reformate date range for database query
     	$('#'+currentID+'-table tbody').empty();
-    	selectedTab(currentID, fromThis, toThis);
-    	
+    	selectedTab(currentID, fromThis, toThis);	
     });
 }
 

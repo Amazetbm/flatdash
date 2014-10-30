@@ -788,8 +788,11 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
             }, 
             x: { 
                 text: "",
-                //annoMethod: 'valueLabels',
-				//valueLabels: trendDate,
+                annoMethod: 'valueLabels',
+				valueLabels: trendDate,
+				unitMajor: 5,
+				autoMajor : false,
+				autoMinor :false,
                 labels: {textAlign: 'near'},
                 tickMajor: {
                     position: "outside",
@@ -938,12 +941,30 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	var perTar = perTarg;
 	avTar = avTar.toFixed(2);
 	perTar = perTar.toFixed(2);
+	var theInterval = trendDate.length;
+	var theUnit;
+	console.log('Interval = '+theInterval);
+	if(theInterval == 7){
+		theUnit = 1;
+	}else if(theInterval == 30){
+		theUnit = 7;
+	}else if(theInterval == 90){
+		theUnit = 30;
+	}else if(theInterval == 180){
+		theUnit = 30;
+	}else if(theInterval == 365 || theInterval == 366){
+		theUnit = 90;
+	}
+	console.log(theUnit);
 	$('#'+thisChart).wijcompositechart({
 			axis: { 
 	            x: { 
 	                text: "",
-					//annoMethod: 'valueLabels',
-					//valueLabels: trendDate,
+					annoMethod: 'valueLabels',
+					valueLabels: trendDate,
+	                unitMajor: theUnit,
+					autoMajor : false,
+					autoMinor :false,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -1025,8 +1046,11 @@ function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarg
 			axis: { 
 	            x: { 
 	                text: "",
-					//annoMethod: 'valueLabels',
-					//valueLabels: trendDate,
+					annoMethod: 'valueLabels',
+					valueLabels: trendDate,
+					unitMajor: 5,
+					autoMajor : false,
+					autoMinor :false,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -1073,8 +1097,11 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 			axis: { 
 	            x: { 
 	                text: "",
-					// annoMethod: 'valueLabels',
-				    //valueLabels: trendDate,
+					annoMethod: 'valueLabels',
+				    alueLabels: trendDate,
+				    unitMajor: 5,
+					autoMajor : false,
+					autoMinor :false,
 	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
@@ -1619,7 +1646,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		switch (thisCartButton){
 			case 'chart-weekly':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-7);
+				notCurrent.setDate(notCurrent.getDate()-6);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -1636,7 +1663,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-daily':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-30);
+				notCurrent.setDate(notCurrent.getDate()-29);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -1653,7 +1680,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-quaterly':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-90);
+				notCurrent.setDate(notCurrent.getDate()-89);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -1670,7 +1697,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-simi':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-180);
+				notCurrent.setDate(notCurrent.getDate()-179);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -1687,7 +1714,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-year':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-365);
+				notCurrent.setDate(notCurrent.getDate()-364);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');

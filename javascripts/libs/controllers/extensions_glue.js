@@ -793,9 +793,8 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 				//unitMajor: 5,
 				//autoMajor : true,
 				//autoMinor : true,
-                alignment: 'near',
                 labels: {
-                	textAlign: 'far'
+                	textAlign: 'near'
         		},
                 tickMajor: {
                     position: "outside",
@@ -896,6 +895,10 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	trendDate = [];
 }
 
+function bigChartDyn2(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID){
+	
+}
+
 function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID, avTarg, perTarg){
 	var thisID = thefuncID;
 	var barID = thebarID;
@@ -975,9 +978,8 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	                //unitMajor: theUnit,
 					//autoMajor : true,
 					//autoMinor :true,
-	                alignment: 'near',
 	                labels: {
-	                	textAlign: 'far'
+	                	textAlign: 'near'
             		},
 	                tickMajor: {
 	                    position: "outside",
@@ -1026,13 +1028,8 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart, avTar, perTar);
 }
-/*
-function nudgeChartShort(nudgeID){
-	var localDiagID = nudgeID;
-	console.log(localDiagID);
-	$('#'+localDiagID).wijcompositechart("redraw");
-}
-*/
+
+
 function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarget, funcID, barID, avTarg, perTarg){
 	//ToDo
 }
@@ -1061,8 +1058,7 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 				    //unitMajor: 5,
 					//autoMajor : false,
 					//autoMinor :false,
-	                alignment: 'near',
-	                labels: {textAlign: 'far'},
+	                labels: {textAlign: 'near'},
 	                tickMajor: {
 	                    position: "outside",
 	                    style: {

@@ -5021,14 +5021,14 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 		}else if(thisLocal.indexOf('perftrend') > -1){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart">></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
 		}
@@ -5098,24 +5098,29 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 	var altTrend;
 	var altPerf;
 	var tempdate;
+	var tempEpoc;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
-
+	var availPair = [];
+	var perfPair = [];
 	$.getJSON(celldataCall, function(jldata) {
 		//Parse data from the json values
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
 			tempdate = new Date(jldata[i].date);
+			tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
+			availPair.push([tempEpoc, jldata[i].availability]);
+			perfPair.push([tempEpoc, jldata[i].performance]);
 			avTar.push(tTarget);
 			avPer.push(pTarget);
 			Tval = Tval + jldata[i].availability;
 			Pval = Pval + jldata[i].performance;
 		}
-		
+
 		//get the average of values vs dates 
 		TtrendAv = Tval / jldata.length;
 		PtrendAv = Pval / jldata.length;
@@ -5131,13 +5136,15 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		if(funcID.indexOf('avail') > -1){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
-			bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
+			//bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, availPair);
 			buildButtons(altTrend, trendDate, avTar, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Performance";
-			bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
+			//bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, perfPair);
 			buildButtons(altPerf, trendDate, avPer, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
@@ -5577,8 +5584,135 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	trendDate = [];
 }
 
-function bigChartDyn2(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID){
+function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID, pairedSet, targetPair){
+	//var trendPush = TrendVal;
+	var trendDate = trendDate;
+	var thisChart = chartType;
+	var availAv = TtrendAv;
+	var perAv = PtrendAv;
+	var pushSet = pairedSet;
+	var targeted = theTarget;
+	var pertargeted = perTarget;
+	var avTar = theTarget[0];
+	var perTar = perTarget[0];
+	avTar = avTar.toFixed(2);
+	perTar = perTar.toFixed(2);
+	var localDiagID = diagID;
+	var localBarID = longID;
+	var starter = 0;
+	var stopper = targeted.length;
+	var targetType;
+	if(localDiagID.indexOf('-avail') > -1){
+		targetType = targeted;
+	}else if(localDiagID.indexOf('-perf') > -1){
+		targetType = pertargeted;
+	}
+	//new plotter
+	var d = pushSet;
+	//var d = [[1196463600000, 0], [1196550000000, 0], [1196636400000, 0], [1196722800000, 77], [1196809200000, 3636], [1196895600000, 3575], [1196982000000, 2736], [1197068400000, 1086], [1197154800000, 676], [1197241200000, 1205], [1197327600000, 906], [1197414000000, 710], [1197500400000, 639], [1197586800000, 540], [1197673200000, 435], [1197759600000, 301], [1197846000000, 575], [1197932400000, 481], [1198018800000, 591], [1198105200000, 608], [1198191600000, 459], [1198278000000, 234], [1198364400000, 1352], [1198450800000, 686], [1198537200000, 279], [1198623600000, 449], [1198710000000, 468], [1198796400000, 392], [1198882800000, 282], [1198969200000, 208], [1199055600000, 229], [1199142000000, 177], [1199228400000, 374], [1199314800000, 436], [1199401200000, 404], [1199487600000, 253], [1199574000000, 218], [1199660400000, 476], [1199746800000, 462], [1199833200000, 448], [1199919600000, 442], [1200006000000, 403], [1200092400000, 204], [1200178800000, 194], [1200265200000, 327], [1200351600000, 374], [1200438000000, 507], [1200524400000, 546], [1200610800000, 482], [1200697200000, 283], [1200783600000, 221], [1200870000000, 483], [1200956400000, 523], [1201042800000, 528], [1201129200000, 483], [1201215600000, 452], [1201302000000, 270], [1201388400000, 222], [1201474800000, 439], [1201561200000, 559], [1201647600000, 521], [1201734000000, 477], [1201820400000, 442], [1201906800000, 252], [1201993200000, 236], [1202079600000, 525], [1202166000000, 477], [1202252400000, 386], [1202338800000, 409], [1202425200000, 408], [1202511600000, 237], [1202598000000, 193], [1202684400000, 357], [1202770800000, 414], [1202857200000, 393], [1202943600000, 353], [1203030000000, 364], [1203116400000, 215], [1203202800000, 214], [1203289200000, 356], [1203375600000, 399], [1203462000000, 334], [1203548400000, 348], [1203634800000, 243], [1203721200000, 126], [1203807600000, 157], [1203894000000, 288]];
+
+	// first correct the timestamps - they are recorded as the daily
+	// midnights in UTC+0100, but Flot always displays dates in UTC
+	// so we have to add one hour to hit the midnights in the plot
+
+	for (var i = 0; i < d.length; ++i) {
+		d[i][0] += 60 * 60 * 1000;
+	}
+
+	// helper for returning the weekends in a period
+
+	function weekendAreas(axes) {
+
+		var markings = [],
+			d = new Date(axes.xaxis.min);
+
+		// go to the first Saturday
+
+		d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7));
+		d.setUTCSeconds(0);
+		d.setUTCMinutes(0);
+		d.setUTCHours(0);
+
+		var i = d.getTime();
+
+		// when we don't set yaxis, the rectangle automatically
+		// extends to infinity upwards and downwards
+
+		do {
+			markings.push({ xaxis: { from: i, to: i + 2 * 24 * 60 * 60 * 1000 } });
+			i += 7 * 24 * 60 * 60 * 1000;
+		} while (i < axes.xaxis.max);
+
+		return markings;
+	}
+
+	var options = {
+		xaxis: {
+			mode: "time",
+			tickLength: 5,
+			color: '#175E00'
+		},
+		selection: {
+			mode: "x"
+		},
+		grid: {
+			markings: weekendAreas
+		}
+	};
+
+	var plot = $.plot("#"+localDiagID, [d], options);
+
+	var overview = $.plot("#"+localBarID, [d], {
+		series: {
+			lines: {
+				show: true,
+				lineWidth: 1
+			},
+			shadowSize: 0
+		},
+		colors: ['#175E00'],
+		
+		xaxis: {
+			ticks: [],
+			mode: "time"
+		},
+		yaxis: {
+			ticks: [],
+			min: 0,
+			autoscaleMargin: 0.1
+		},
+		selection: {
+			mode: "x"
+		}
+	});
+
+	// now connect the two
+
+	$("#"+localDiagID).bind("plotselected", function (event, ranges) {
+
+		// do the zooming
+		$.each(plot.getXAxes(), function(_, axis) {
+			var opts = axis.options;
+			opts.min = ranges.xaxis.from;
+			opts.max = ranges.xaxis.to;
+		});
+		plot.setupGrid();
+		plot.draw();
+		plot.clearSelection();
+
+		// don't fire event on the overview to prevent eternal loop
+
+		overview.setSelection(ranges, true);
+	});
+
+	$("#"+localBarID).bind("plotselected", function (event, ranges) {
+		plot.setSelection(ranges);
+	});
 	
+	$('#kpi-1 .kpi-actual').text(availAv+'%');
+	$('#kpi-3 .kpi-actual').text(perAv+'ms');
+	$('#kpi-1 .kpi-target').text(avTar);
+	$('#kpi-3 .kpi-target').text(perTar);
 }
 
 function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID, avTarg, perTarg){
@@ -5709,11 +5843,6 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	$('#kpi-3 .kpi-target').text(perTar);
 	
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart, avTar, perTar);
-}
-
-
-function nudgeChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, perTarget, funcID, barID, avTarg, perTarg){
-	//ToDo
 }
 
 function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
@@ -6284,7 +6413,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		switch (thisCartButton){
 			case 'chart-weekly':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-7);
+				notCurrent.setDate(notCurrent.getDate()-6);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -6301,7 +6430,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-daily':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-30);
+				notCurrent.setDate(notCurrent.getDate()-29);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -6318,7 +6447,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-quaterly':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-90);
+				notCurrent.setDate(notCurrent.getDate()-89);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -6335,7 +6464,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-simi':
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-180);
+				notCurrent.setDate(notCurrent.getDate()-179);
 				thePast = new Date(notCurrent);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
@@ -67283,6 +67412,438 @@ More detail and specific examples can be found in the included HTML file.
 		name: "pie",
 		version: "1.1"
 	});
+
+})(jQuery);
+;
+/* Pretty handling of time axes.
+
+Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Licensed under the MIT license.
+
+Set axis.mode to "time" to enable. See the section "Time series data" in
+API.txt for details.
+
+*/
+
+(function($) {
+
+	var options = {
+		xaxis: {
+			timezone: null,		// "browser" for local to the client or timezone for timezone-js
+			timeformat: null,	// format string to use
+			twelveHourClock: false,	// 12 or 24 time in time mode
+			monthNames: null	// list of names of months
+		}
+	};
+
+	// round to nearby lower multiple of base
+
+	function floorInBase(n, base) {
+		return base * Math.floor(n / base);
+	}
+
+	// Returns a string with the date d formatted according to fmt.
+	// A subset of the Open Group's strftime format is supported.
+
+	function formatDate(d, fmt, monthNames, dayNames) {
+
+		if (typeof d.strftime == "function") {
+			return d.strftime(fmt);
+		}
+
+		var leftPad = function(n, pad) {
+			n = "" + n;
+			pad = "" + (pad == null ? "0" : pad);
+			return n.length == 1 ? pad + n : n;
+		};
+
+		var r = [];
+		var escape = false;
+		var hours = d.getHours();
+		var isAM = hours < 12;
+
+		if (monthNames == null) {
+			monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		}
+
+		if (dayNames == null) {
+			dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		}
+
+		var hours12;
+
+		if (hours > 12) {
+			hours12 = hours - 12;
+		} else if (hours == 0) {
+			hours12 = 12;
+		} else {
+			hours12 = hours;
+		}
+
+		for (var i = 0; i < fmt.length; ++i) {
+
+			var c = fmt.charAt(i);
+
+			if (escape) {
+				switch (c) {
+					case 'a': c = "" + dayNames[d.getDay()]; break;
+					case 'b': c = "" + monthNames[d.getMonth()]; break;
+					case 'd': c = leftPad(d.getDate()); break;
+					case 'e': c = leftPad(d.getDate(), " "); break;
+					case 'h':	// For back-compat with 0.7; remove in 1.0
+					case 'H': c = leftPad(hours); break;
+					case 'I': c = leftPad(hours12); break;
+					case 'l': c = leftPad(hours12, " "); break;
+					case 'm': c = leftPad(d.getMonth() + 1); break;
+					case 'M': c = leftPad(d.getMinutes()); break;
+					// quarters not in Open Group's strftime specification
+					case 'q':
+						c = "" + (Math.floor(d.getMonth() / 3) + 1); break;
+					case 'S': c = leftPad(d.getSeconds()); break;
+					case 'y': c = leftPad(d.getFullYear() % 100); break;
+					case 'Y': c = "" + d.getFullYear(); break;
+					case 'p': c = (isAM) ? ("" + "am") : ("" + "pm"); break;
+					case 'P': c = (isAM) ? ("" + "AM") : ("" + "PM"); break;
+					case 'w': c = "" + d.getDay(); break;
+				}
+				r.push(c);
+				escape = false;
+			} else {
+				if (c == "%") {
+					escape = true;
+				} else {
+					r.push(c);
+				}
+			}
+		}
+
+		return r.join("");
+	}
+
+	// To have a consistent view of time-based data independent of which time
+	// zone the client happens to be in we need a date-like object independent
+	// of time zones.  This is done through a wrapper that only calls the UTC
+	// versions of the accessor methods.
+
+	function makeUtcWrapper(d) {
+
+		function addProxyMethod(sourceObj, sourceMethod, targetObj, targetMethod) {
+			sourceObj[sourceMethod] = function() {
+				return targetObj[targetMethod].apply(targetObj, arguments);
+			};
+		};
+
+		var utc = {
+			date: d
+		};
+
+		// support strftime, if found
+
+		if (d.strftime != undefined) {
+			addProxyMethod(utc, "strftime", d, "strftime");
+		}
+
+		addProxyMethod(utc, "getTime", d, "getTime");
+		addProxyMethod(utc, "setTime", d, "setTime");
+
+		var props = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
+
+		for (var p = 0; p < props.length; p++) {
+			addProxyMethod(utc, "get" + props[p], d, "getUTC" + props[p]);
+			addProxyMethod(utc, "set" + props[p], d, "setUTC" + props[p]);
+		}
+
+		return utc;
+	};
+
+	// select time zone strategy.  This returns a date-like object tied to the
+	// desired timezone
+
+	function dateGenerator(ts, opts) {
+		if (opts.timezone == "browser") {
+			return new Date(ts);
+		} else if (!opts.timezone || opts.timezone == "utc") {
+			return makeUtcWrapper(new Date(ts));
+		} else if (typeof timezoneJS != "undefined" && typeof timezoneJS.Date != "undefined") {
+			var d = new timezoneJS.Date();
+			// timezone-js is fickle, so be sure to set the time zone before
+			// setting the time.
+			d.setTimezone(opts.timezone);
+			d.setTime(ts);
+			return d;
+		} else {
+			return makeUtcWrapper(new Date(ts));
+		}
+	}
+	
+	// map of app. size of time units in milliseconds
+
+	var timeUnitSize = {
+		"second": 1000,
+		"minute": 60 * 1000,
+		"hour": 60 * 60 * 1000,
+		"day": 24 * 60 * 60 * 1000,
+		"month": 30 * 24 * 60 * 60 * 1000,
+		"quarter": 3 * 30 * 24 * 60 * 60 * 1000,
+		"year": 365.2425 * 24 * 60 * 60 * 1000
+	};
+
+	// the allowed tick sizes, after 1 year we use
+	// an integer algorithm
+
+	var baseSpec = [
+		[1, "second"], [2, "second"], [5, "second"], [10, "second"],
+		[30, "second"], 
+		[1, "minute"], [2, "minute"], [5, "minute"], [10, "minute"],
+		[30, "minute"], 
+		[1, "hour"], [2, "hour"], [4, "hour"],
+		[8, "hour"], [12, "hour"],
+		[1, "day"], [2, "day"], [3, "day"],
+		[0.25, "month"], [0.5, "month"], [1, "month"],
+		[2, "month"]
+	];
+
+	// we don't know which variant(s) we'll need yet, but generating both is
+	// cheap
+
+	var specMonths = baseSpec.concat([[3, "month"], [6, "month"],
+		[1, "year"]]);
+	var specQuarters = baseSpec.concat([[1, "quarter"], [2, "quarter"],
+		[1, "year"]]);
+
+	function init(plot) {
+		plot.hooks.processOptions.push(function (plot, options) {
+			$.each(plot.getAxes(), function(axisName, axis) {
+
+				var opts = axis.options;
+
+				if (opts.mode == "time") {
+					axis.tickGenerator = function(axis) {
+
+						var ticks = [];
+						var d = dateGenerator(axis.min, opts);
+						var minSize = 0;
+
+						// make quarter use a possibility if quarters are
+						// mentioned in either of these options
+
+						var spec = (opts.tickSize && opts.tickSize[1] ===
+							"quarter") ||
+							(opts.minTickSize && opts.minTickSize[1] ===
+							"quarter") ? specQuarters : specMonths;
+
+						if (opts.minTickSize != null) {
+							if (typeof opts.tickSize == "number") {
+								minSize = opts.tickSize;
+							} else {
+								minSize = opts.minTickSize[0] * timeUnitSize[opts.minTickSize[1]];
+							}
+						}
+
+						for (var i = 0; i < spec.length - 1; ++i) {
+							if (axis.delta < (spec[i][0] * timeUnitSize[spec[i][1]]
+											  + spec[i + 1][0] * timeUnitSize[spec[i + 1][1]]) / 2
+								&& spec[i][0] * timeUnitSize[spec[i][1]] >= minSize) {
+								break;
+							}
+						}
+
+						var size = spec[i][0];
+						var unit = spec[i][1];
+
+						// special-case the possibility of several years
+
+						if (unit == "year") {
+
+							// if given a minTickSize in years, just use it,
+							// ensuring that it's an integer
+
+							if (opts.minTickSize != null && opts.minTickSize[1] == "year") {
+								size = Math.floor(opts.minTickSize[0]);
+							} else {
+
+								var magn = Math.pow(10, Math.floor(Math.log(axis.delta / timeUnitSize.year) / Math.LN10));
+								var norm = (axis.delta / timeUnitSize.year) / magn;
+
+								if (norm < 1.5) {
+									size = 1;
+								} else if (norm < 3) {
+									size = 2;
+								} else if (norm < 7.5) {
+									size = 5;
+								} else {
+									size = 10;
+								}
+
+								size *= magn;
+							}
+
+							// minimum size for years is 1
+
+							if (size < 1) {
+								size = 1;
+							}
+						}
+
+						axis.tickSize = opts.tickSize || [size, unit];
+						var tickSize = axis.tickSize[0];
+						unit = axis.tickSize[1];
+
+						var step = tickSize * timeUnitSize[unit];
+
+						if (unit == "second") {
+							d.setSeconds(floorInBase(d.getSeconds(), tickSize));
+						} else if (unit == "minute") {
+							d.setMinutes(floorInBase(d.getMinutes(), tickSize));
+						} else if (unit == "hour") {
+							d.setHours(floorInBase(d.getHours(), tickSize));
+						} else if (unit == "month") {
+							d.setMonth(floorInBase(d.getMonth(), tickSize));
+						} else if (unit == "quarter") {
+							d.setMonth(3 * floorInBase(d.getMonth() / 3,
+								tickSize));
+						} else if (unit == "year") {
+							d.setFullYear(floorInBase(d.getFullYear(), tickSize));
+						}
+
+						// reset smaller components
+
+						d.setMilliseconds(0);
+
+						if (step >= timeUnitSize.minute) {
+							d.setSeconds(0);
+						}
+						if (step >= timeUnitSize.hour) {
+							d.setMinutes(0);
+						}
+						if (step >= timeUnitSize.day) {
+							d.setHours(0);
+						}
+						if (step >= timeUnitSize.day * 4) {
+							d.setDate(1);
+						}
+						if (step >= timeUnitSize.month * 2) {
+							d.setMonth(floorInBase(d.getMonth(), 3));
+						}
+						if (step >= timeUnitSize.quarter * 2) {
+							d.setMonth(floorInBase(d.getMonth(), 6));
+						}
+						if (step >= timeUnitSize.year) {
+							d.setMonth(0);
+						}
+
+						var carry = 0;
+						var v = Number.NaN;
+						var prev;
+
+						do {
+
+							prev = v;
+							v = d.getTime();
+							ticks.push(v);
+
+							if (unit == "month" || unit == "quarter") {
+								if (tickSize < 1) {
+
+									// a bit complicated - we'll divide the
+									// month/quarter up but we need to take
+									// care of fractions so we don't end up in
+									// the middle of a day
+
+									d.setDate(1);
+									var start = d.getTime();
+									d.setMonth(d.getMonth() +
+										(unit == "quarter" ? 3 : 1));
+									var end = d.getTime();
+									d.setTime(v + carry * timeUnitSize.hour + (end - start) * tickSize);
+									carry = d.getHours();
+									d.setHours(0);
+								} else {
+									d.setMonth(d.getMonth() +
+										tickSize * (unit == "quarter" ? 3 : 1));
+								}
+							} else if (unit == "year") {
+								d.setFullYear(d.getFullYear() + tickSize);
+							} else {
+								d.setTime(v + step);
+							}
+						} while (v < axis.max && v != prev);
+
+						return ticks;
+					};
+
+					axis.tickFormatter = function (v, axis) {
+
+						var d = dateGenerator(v, axis.options);
+
+						// first check global format
+
+						if (opts.timeformat != null) {
+							return formatDate(d, opts.timeformat, opts.monthNames, opts.dayNames);
+						}
+
+						// possibly use quarters if quarters are mentioned in
+						// any of these places
+
+						var useQuarters = (axis.options.tickSize &&
+								axis.options.tickSize[1] == "quarter") ||
+							(axis.options.minTickSize &&
+								axis.options.minTickSize[1] == "quarter");
+
+						var t = axis.tickSize[0] * timeUnitSize[axis.tickSize[1]];
+						var span = axis.max - axis.min;
+						var suffix = (opts.twelveHourClock) ? " %p" : "";
+						var hourCode = (opts.twelveHourClock) ? "%I" : "%H";
+						var fmt;
+
+						if (t < timeUnitSize.minute) {
+							fmt = hourCode + ":%M:%S" + suffix;
+						} else if (t < timeUnitSize.day) {
+							if (span < 2 * timeUnitSize.day) {
+								fmt = hourCode + ":%M" + suffix;
+							} else {
+								fmt = "%b %d " + hourCode + ":%M" + suffix;
+							}
+						} else if (t < timeUnitSize.month) {
+							fmt = "%b %d";
+						} else if ((useQuarters && t < timeUnitSize.quarter) ||
+							(!useQuarters && t < timeUnitSize.year)) {
+							if (span < timeUnitSize.year) {
+								fmt = "%b";
+							} else {
+								fmt = "%b %Y";
+							}
+						} else if (useQuarters && t < timeUnitSize.year) {
+							if (span < timeUnitSize.year) {
+								fmt = "Q%q";
+							} else {
+								fmt = "Q%q %Y";
+							}
+						} else {
+							fmt = "%Y";
+						}
+
+						var rt = formatDate(d, fmt, opts.monthNames, opts.dayNames);
+
+						return rt;
+					};
+				}
+			});
+		});
+	}
+
+	$.plot.plugins.push({
+		init: init,
+		options: options,
+		name: 'time',
+		version: '1.0'
+	});
+
+	// Time-axis support used to be in Flot core, which exposed the
+	// formatDate function on the plot object.  Various plugins depend
+	// on the function, so we need to re-expose it here.
+
+	$.plot.formatDate = formatDate;
 
 })(jQuery);
 ;

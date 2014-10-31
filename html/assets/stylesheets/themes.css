@@ -9003,6 +9003,9 @@
   width: 80%;
   margin: 3px auto;
 }
+.biggerChart {
+  min-height: 300px;
+}
 .kpi-box {
   position: relative;
   width: 42%;
@@ -9149,7 +9152,7 @@
 /* Chart Suff */
 .full-chart {
   /*width:890px; */
-  height: 94px;
+  height: 120px;
   margin-left: 34px;
   margin-bottom: -26px;
 }

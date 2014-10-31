@@ -5463,7 +5463,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
         header: { 
             text: ""
         }, 
-       
+        animation: false,
         axis: { 
             y: { 
                 text: thisChart, 
@@ -5524,7 +5524,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
         header: { 
             text: ""
         }, 
-       
+        animation: false,
         axis: { 
             y: {
             	textVisible:false
@@ -5625,7 +5625,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	perTar = perTar.toFixed(2);
 	var theInterval = trendDate.length;
 	var theUnit;
-	console.log('Interval = '+theInterval);
+
 	if(theInterval == 7){
 		theUnit = 1;
 	}else if(theInterval == 30){
@@ -5637,7 +5637,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	}else if(theInterval == 365 || theInterval == 366){
 		theUnit = 90;
 	}
-	console.log(theUnit);
+
 	$('#'+thisChart).wijcompositechart({
 			axis: { 
 	            x: { 

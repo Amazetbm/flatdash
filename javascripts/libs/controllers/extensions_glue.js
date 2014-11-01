@@ -969,14 +969,18 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		series: {
 			lines: {
 				show: true,
-				lineWidth: 1
+				lineWidth: 2
 			},
 			points: {
 				show: true,
-				radius: 2,
+				radius: 3,
 				symbol: "circle"
 			},
 			shadowSize: 0
+		},
+		grid: {
+			hoverable: true,
+			clickable: true
 		},
 		xaxis: {
 			mode: "time",
@@ -1017,7 +1021,6 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	});
 
 	// now connect the two
-
 	$("#"+localDiagID).bind("plotselected", function (event, ranges) {
 
 		// do the zooming

@@ -141,6 +141,7 @@ module.exports = function (js_src, js_dest) {
               'libs/jquery.flot-0.8.2/jquery.flot.js',
               'libs/jquery.flot-0.8.2/jquery.flot.pie.js',
               'libs/jquery.flot-0.8.2/jquery.flot.time.js',
+			  'libs/jquery.flot-0.8.2/jquery.flot.selection.js',
               'build/plugins_flot.js',
             // }
 

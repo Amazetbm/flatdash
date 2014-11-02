@@ -532,6 +532,69 @@ function redoTheData(dataChain, dialogID, longID, active, avTarg, perTarg){
 	});
 }
 
+function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg){
+	var celldataCall = dataChain;
+	var funcID = dialogID;
+	var barID = longID;
+	var Tval = 0;
+	var Pval = 0;
+	var TtrendAv = 0;
+	var PtrendAv = 0;
+	var avTar = [];
+	var avPer = [];
+	var tTarget = avTarg;
+	var pTarget = perTarg;
+	var chartType;
+	var altTrend;
+	var altPerf;
+	var bttnAct = active;
+	TtrendVal = [];
+	PtrendVal = [];
+	trendDate = [];
+	var tempEpoc;
+	var availPair = [];
+	var perfPair = [];
+	$.getJSON(celldataCall, function(jldata) {
+		//Parse data from the json values
+		for (var i=0, len=jldata.length; i < len; i++) {
+			TtrendVal.push(jldata[i].availability);
+			PtrendVal.push(jldata[i].performance);
+			tempdate = new Date(jldata[i].date);
+			tempEpoc = new Date(jldata[i].date).getTime();
+			tempdate.setDate(tempdate.getDate() + 1);
+			trendDate.push(tempdate);
+			availPair.push([tempEpoc, jldata[i].availability]);
+			perfPair.push([tempEpoc, jldata[i].performance]);
+			avTar.push(tTarget);
+			avPer.push(pTarget);
+			Tval = Tval + jldata[i].availability;
+			Pval = Pval + jldata[i].performance;
+		}
+		//get the average of values vs dates
+		TtrendAv = Tval / jldata.length;
+		PtrendAv = Pval / jldata.length;
+		
+		//Round it off
+		TtrendAv = TtrendAv.toFixed(2);
+		PtrendAv = PtrendAv.toFixed(2);
+		
+		//alts
+		altTrend = TtrendVal;
+		altPerf = PtrendVal; 
+		if(funcID.indexOf('avail') > -1){
+			chartType = "Availibility";
+			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair);
+			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
+		}else if(funcID.indexOf('perf') > -1){
+			chartType = "Performance";
+			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair);
+			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
+		}
+	});
+}
+
 function miniDialogs(miniDialogID, whichType, typeID, thisSeq, fromQuery, toQuery){
 	var thisType = whichType;
 	var thisID = miniDialogID;
@@ -1116,7 +1179,7 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 		theUnit = 90;
 		theRotation = -90;
 	}
-	console.log(theUnit);
+
 	$('#'+thisChart).wijcompositechart({
 			animation: false,
 			axis: { 
@@ -1182,10 +1245,11 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 
 	var trendPush = TrendVal;
 	var trendDate = trendDater;
+	var pushSet = pairedSet;
 	var availAv = TtrendAv;
 	var perAv = PtrendAv;
-	var thisChart = funcID;
-	var longChart = barID;
+	var localDiagID = funcID;
+	var localBarID = barID;
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
@@ -1193,27 +1257,16 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	var perTar = perTarg;
 	avTar = avTar.toFixed(2);
 	perTar = perTar.toFixed(2);
-	var theInterval = trendDate.length;
-	var theUnit, theRotation;
+	var theInterval = pushSet.length;
+	var theUnit, theRotation, lineSize, dotSize;
 	
-	console.log('Interval = '+theInterval);
-	if(theInterval == 7){
-		theUnit = 1;
-		theRotation = 0;
-	}else if(theInterval == 30){
-		theUnit = 7;
-		theRotation = 0;
-	}else if(theInterval == 90){
-		theUnit = 30;
-		theRotation = -45;
-	}else if(theInterval == 180){
-		theUnit = 30;
-		theRotation = -90;
-	}else if(theInterval == 365 || theInterval == 366){
-		theUnit = 90;
-		theRotation = -90;
+	if(theInterval > 89){
+		lineSize = 1;
+		dotSize = 2;
+	}else{
+		lineSize = 2;
+		dotSize = 3;	
 	}
-	
 	var d = pushSet;
 	
 	// first correct the timestamps - they are recorded as the daily
@@ -1253,6 +1306,22 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 
 	var options = {
 		colors: ['#175E00'],
+		series: {
+			lines: {
+				show: true,
+				lineWidth: lineSize
+			},
+			points: {
+				show: true,
+				radius: dotSize,
+				symbol: "circle"
+			},
+			shadowSize: 0
+		},
+		grid: {
+			hoverable: true,
+			clickable: true
+		},
 		xaxis: {
 			mode: "time",
 			tickLength: 5
@@ -1899,7 +1968,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 				
 				break;
@@ -1916,7 +1986,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1933,7 +2004,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1950,7 +2022,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;
@@ -1967,7 +2040,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
+					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
 
 				break;

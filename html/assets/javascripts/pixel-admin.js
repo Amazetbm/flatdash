@@ -5518,151 +5518,9 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 	}
 	
 }
-/*
-function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID){
-	var trendPush = TrendVal;
-	var trendDate = trendDate;
-	var thisChart = chartType;
-	var availAv = TtrendAv;
-	var perAv = PtrendAv;
-	var targeted = theTarget;
-	var pertargeted = perTarget;
-	var avTar = theTarget[0];
-	var perTar = perTarget[0];
-	avTar = avTar.toFixed(2);
-	perTar = perTar.toFixed(2);
-	var localDiagID = diagID;
-	var localBarID = longID;
-	var starter = 0;
-	var stopper = targeted.length;
-	var targetType;
-	if(localDiagID.indexOf('-avail') > -1){
-		targetType = targeted;
-	}else if(localDiagID.indexOf('-perf') > -1){
-		targetType = pertargeted;
-	}
 
-	$('#'+localDiagID).wijcompositechart({ 
-		height: 270,
-        header: { 
-            text: ""
-        }, 
-       
-        axis: { 
-            y: { 
-                text: thisChart, 
-            }, 
-            x: { 
-                text: "",
-                //annoMethod: 'valueLabels',
-				//valueLabels: trendDate,
-				//unitMajor: 5,
-				//autoMajor : true,
-				//autoMinor : true,
-                labels: {
-                	textAlign: 'near'
-        		},
-                tickMajor: {
-                    position: "outside",
-                    style: {
-                        stroke: "#999999"
-                    }
-                }
-            } 
-        }, 
-        showChartLabels: false, 
-        legend: { 
-            visible: false
-        }, 
-        seriesList: [ 
-            { 
-            	type: "area",
-                label: thisChart, 
-                data: {  
-                    x: trendDate, 
-                    y: trendPush 
-                },
-                offset: 0
-            },
-            { 
-
-            	type: "line",
-                label: "Target", 
-                data: { 
-                    x: trendDate, 
-                    y: targetType
-                }, 
-            	offset: 0
-            },
-            
-        ],
-        seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
-           { stroke: "#00468C", "stroke-width": 2 } 
-       ], 
-       
-    });
-	
-	//For small chart
-	$('#'+localBarID).wijlinechart({ 
-		type: "area",
-		height: 90,
-        header: { 
-            text: ""
-        }, 
-       
-        axis: { 
-            y: {
-            	textVisible:false
-            }, 
-            x: {
-            	textVisible:false,
-            	text: "",
-                alignment: "near", 
-                labels: { textAlign: "near" }
-            } 
-        }, 
-        showChartLabels: false, 
-        legend: { 
-            visible: false
-        }, 
-        seriesList: [ 
-            { 
-            	type: "area",
-                label: "", 
-                data: {  
-                    x: trendDate, 
-                    y: trendPush 
-                } 
-            }
-        ],
-        seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}
-       ]
-    });
-	
-	$('#kpi-1 .kpi-actual').text(availAv+'%');
-	$('#kpi-3 .kpi-actual').text(perAv+'ms');
-	$('#kpi-1 .kpi-target').text(avTar);
-	$('#kpi-3 .kpi-target').text(perTar);
-	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, targetType, localDiagID, localBarID, avTar, perTar);
-	//setTimeout(function(){
-	//	nudgeChart(trendPush, trendDate, availAv, perAv, targeted, pertargeted, localDiagID, localBarID, avTar, perTar);
-	//}, 3000);
-	//var chartObject = $('#'+thisChart);
-	//console.log(chartObject);
-	$(window).resize(function () {
-		$('#'+localDiagID).wijcompositechart("redraw");
-		$('#'+localBarID).wijlinechart("redraw");
-    });
-	
-	TtrendVal = [];
-	PtrendVal = [];
-	trendDate = [];
-}
-*/
 function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID, pairedSet, targetPair){
-	//var trendPush = TrendVal;
+
 	var trendDate = trendDate;
 	var thisChart = chartType;
 	var availAv = TtrendAv;
@@ -5677,9 +5535,9 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	perTar = perTar.toFixed(2);
 	var localDiagID = diagID;
 	var localBarID = longID;
-	var starter = 0;
-	var stopper = targeted.length;
-	var targetType, baseNum;
+	//var starter = 0;
+	//var stopper = targeted.length;
+	var baseNum;
 	if(localDiagID.indexOf('-avail') > -1){
 		targetType = targeted;
 		baseNum = 95;
@@ -5725,39 +5583,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 
 		return markings;
 	}
-	/*
-	var options = {
-		colors: ['#175E00','#00468C'],
-		series: {
-			lines: {
-				show: true,
-				lineWidth: 2
-			},
-			points: {
-				show: true,
-				radius: 3,
-				symbol: "circle"
-			},
-			shadowSize: 0
-		},
-		grid: {
-			hoverable: true,
-			clickable: true
-		},
-		xaxis: {
-			mode: "time",
-			tickLength: 5
-		},
-		selection: {
-			mode: "x"
-		},
-		grid: {
-			markings: weekendAreas
-		}
-	};
-	*/
-	var placeholderLg = $("#"+localDiagID);
-	var placeholderSm = $("#"+localBarID);
+	
 	var plot = $.plot("#"+localDiagID, [
 		{
 			data: d,
@@ -5765,7 +5591,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 				show: true,
 				lineWidth: 2,
 				fill: true,
-				fillColor: '#B3FF99'
+				fillColor: 'rgba(179, 255, 153, 0.3)'
 			},
 			points: {
 				show: true,
@@ -5803,6 +5629,9 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 				hoverable: true,
 				clickable: true,
 				markings: weekendAreas
+			},
+			font: {
+				weight: 'bold'
 			}
 		}
      );
@@ -5811,7 +5640,9 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		series: {
 			lines: {
 				show: true,
-				lineWidth: 1
+				lineWidth: 1,
+				fill: true,
+				fillColor: 'rgba(179, 255, 153, 0.3)'
 			},
 			shadowSize: 0
 		},
@@ -5875,136 +5706,6 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
 
-}
-
-function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID, avTarg, perTarg){
-	var thisID = thefuncID;
-	var barID = thebarID;
-	var thisStart = startNum;
-	var thisStop = stopNum;
-	var thisVal = ATCtrendVal;
-	var thisAvilav = availAv;
-	var thisPerav = perAv;
-	var thisDate = trendDate;
-	var targeted = trendTarget;
-	var avTar = avTarg;
-	var perTar = perTarg;
-	
-	$('#'+thisID+'-slide').wijslider({
-		orientation: "horizontal",
-		dragFill: true,
-		range: true, 
-		min: thisStart, 
-		max: thisStop, 
-		step: 1, 
-		values: [thisStart, thisStop],
-		stop: function(event, ui){
-			thisStart = ui.values[0];
-			thisStop = ui.values[1];
-			reDoTheSlideChart(thisStart, thisStop, thisVal, thisDate, thisAvilav, thisPerav, targeted, thisID, barID, avTar, perTar);
-		}
-	});
-	
-	$(window).resize(function () {
-		$('#'+thisID+'-slide').wijslider("refresh");
-    });
-}
-
-function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
-
-	var trendPush = TrendVal;
-	var trendDate = trendDater;
-	var availAv = TtrendAv;
-	var perAv = PtrendAv;
-	var thisChart = funcID;
-	var longChart = barID;
-	var thisTarget = theTarget;
-	var starter = 0;
-	var stopper = trendPush.length;
-    var avTar = avTarg;
-	var perTar = perTarg;
-	avTar = avTar.toFixed(2);
-	perTar = perTar.toFixed(2);
-	var theInterval = trendDate.length;
-	var theUnit, theRotation;
-	
-	console.log('Interval = '+theInterval);
-	if(theInterval == 7){
-		theUnit = 1;
-		theRotation = 0;
-	}else if(theInterval == 30){
-		theUnit = 7;
-		theRotation = 0;
-	}else if(theInterval == 90){
-		theUnit = 30;
-		theRotation = -45;
-	}else if(theInterval == 180){
-		theUnit = 30;
-		theRotation = -90;
-	}else if(theInterval == 365 || theInterval == 366){
-		theUnit = 90;
-		theRotation = -90;
-	}
-
-	$('#'+thisChart).wijcompositechart({
-			animation: false,
-			axis: { 
-	            x: { 
-	                text: "",
-					//annoMethod: 'valueLabels',
-					//valueLabels: trendDate,
-	                //unitMajor: theUnit,
-					//autoMajor : true,
-					//autoMinor :true,
-	                labels: {
-	                	textAlign: 'near'
-            		},
-	                tickMajor: {
-	                    position: "outside",
-	                    style: {
-	                        stroke: "#999999"
-	                    }
-	                }
-	            } 
-	        },
-			seriesList: [{
-				type: "area",
-				label: "Values", 
-                data: {x: trendDate, y: trendPush}
-		    },{
-		    	type: "line",
-				label: "Target", 
-                data: {x: trendDate, y: thisTarget}
-		    }],
-		    seriesStyles: [ 
-                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
-                { stroke: "#00468C", "stroke-width": 2 } 
-            ] 
-	});
-	
-	$('#'+longChart).wijlinechart({ 
-		animation: false,
-        seriesList: [ 
-            { 
-            	type: "area",
-                label: "", 
-                data: {  
-                    x: trendDate, 
-                    y: trendPush 
-                } 
-            }
-        ],
-        seriesStyles: [ 
-           { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}
-       ]
-    });
-	
-	$('#kpi-1 .kpi-actual').text(availAv+'%');
-	$('#kpi-3 .kpi-actual').text(perAv+'ms');
-	$('#kpi-1 .kpi-target').text(avTar);
-	$('#kpi-3 .kpi-target').text(perTar);
-	
-	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart, avTar, perTar);
 }
 
 function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg, pairedSet, targetPair){
@@ -6073,39 +5774,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		} while (i < axes.xaxis.max);
 
 		return markings;
-	}
-	/*
-	var options = {
-		colors: ['#175E00','#00468C'],
-		series: {
-			lines: {
-				show: true,
-				lineWidth: 2
-			},
-			points: {
-				show: true,
-				radius: 3,
-				symbol: "circle"
-			},
-			shadowSize: 0
-		},
-		grid: {
-			hoverable: true,
-			clickable: true
-		},
-		xaxis: {
-			mode: "time",
-			tickLength: 5
-		},
-		selection: {
-			mode: "x"
-		},
-		grid: {
-			markings: weekendAreas
-		}
-	};
-	*/
-	//var plot = $.plot("#"+localDiagID, [d,d2], options);
+	}	
 	
 	var plot = $.plot("#"+localDiagID, [
 		{
@@ -6114,7 +5783,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 				show: true,
 				lineWidth: 2,
 				fill: true,
-				fillColor: '#B3FF99'
+				fillColor: 'rgba(179, 255, 153, 0.3)'
 			},
 			points: {
 				show: true,
@@ -6152,6 +5821,9 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 				hoverable: true,
 				clickable: true,
 				markings: weekendAreas
+			},
+			font: {
+				weight: 'bold'
 			}
 		}
      );
@@ -6160,7 +5832,9 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		series: {
 			lines: {
 				show: true,
-				lineWidth: 1
+				lineWidth: 1,
+				fill: true,
+				fillColor: 'rgba(179, 255, 153, 0.3)'
 			},
 			shadowSize: 0
 		},

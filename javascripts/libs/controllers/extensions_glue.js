@@ -1037,7 +1037,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 
 		return markings;
 	}
-
+	/*
 	var options = {
 		colors: ['#175E00','#00468C'],
 		series: {
@@ -1067,8 +1067,57 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 			markings: weekendAreas
 		}
 	};
-
-	var plot = $.plot("#"+localDiagID, [d,d2], options);
+	*/
+	var plot = $.plot("#"+localDiagID, [
+		{
+			data: d,
+			lines: {
+				show: true,
+				lineWidth: 2,
+				fill: true,
+				fillColor: '#B3FF99'
+			},
+			points: {
+				show: true,
+				radius: 3,
+				symbol: "circle"
+			},
+			shadowSize: 0
+		},
+		{
+			data: d2,
+			lines: {
+				show: true,
+				lineWidth: 2
+			},
+		}],
+		{
+			colors: ['#175E00','#00468C'],
+			series: {
+				lines: {
+					show: true,
+					lineWidth: 2
+				}				
+			},
+			grid: {
+				hoverable: true,
+				clickable: true
+			},
+			xaxis: {
+				mode: "time",
+				tickLength: 5
+			},
+			yaxis: {
+				min: baseNum
+			},
+			selection: {
+				mode: "x"
+			},
+			grid: {
+				markings: weekendAreas
+			}
+		}
+     );
 
 	var overview = $.plot("#"+localBarID, [d], {
 		series: {
@@ -1317,7 +1366,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 
 		return markings;
 	}
-
+	/*
 	var options = {
 		colors: ['#175E00','#00468C'],
 		series: {
@@ -1347,8 +1396,59 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 			markings: weekendAreas
 		}
 	};
-
-	var plot = $.plot("#"+localDiagID, [d,d2], options);
+	*/
+	//var plot = $.plot("#"+localDiagID, [d,d2], options);
+	
+	var plot = $.plot("#"+localDiagID, [
+		{
+			data: d,
+			lines: {
+				show: true,
+				lineWidth: 2,
+				fill: true,
+				fillColor: '#B3FF99'
+			},
+			points: {
+				show: true,
+				radius: 3,
+				symbol: "circle"
+			},
+			shadowSize: 0
+		},
+		{
+			data: d2,
+			lines: {
+				show: true,
+				lineWidth: 2
+			},
+		}],
+		{
+			colors: ['#175E00','#00468C'],
+			series: {
+				lines: {
+					show: true,
+					lineWidth: 2
+				}				
+			},
+			grid: {
+				hoverable: true,
+				clickable: true
+			},
+			xaxis: {
+				mode: "time",
+				tickLength: 5
+			},
+			yaxis: {
+				min: baseNum
+			},
+			selection: {
+				mode: "x"
+			},
+			grid: {
+				markings: weekendAreas
+			}
+		}
+     );
 
 	var overview = $.plot("#"+localBarID, [d], {
 		series: {

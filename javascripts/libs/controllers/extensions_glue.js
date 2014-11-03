@@ -282,8 +282,8 @@ function loadSparkDyn(IDChain, chainData){
 }
 
 function initTagButtons(fromQuery, toQuery){
-	//var fromThis = fromQuery;
-	//var toThis = toQuery;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
 	
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');

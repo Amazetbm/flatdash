@@ -477,6 +477,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 		$('#content-row-incident').css('display','block');
 		$('#content-row-chart').css('display','none');
 		$('#chart-col').empty();
+		$('#tooltip').remove();
 	});
 }
 
@@ -994,7 +995,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	var targetType, baseNum;
 	if(localDiagID.indexOf('-avail') > -1){
 		targetType = targeted;
-		baseNum = 96;
+		baseNum = 95;
 	}else if(localDiagID.indexOf('-perf') > -1){
 		targetType = pertargeted;
 		baseNum = 1;
@@ -1068,6 +1069,8 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		}
 	};
 	*/
+	var placeholderLg = $("#"+localDiagID);
+	var placeholderSm = $("#"+localBarID);
 	var plot = $.plot("#"+localDiagID, [
 		{
 			data: d,
@@ -1099,10 +1102,6 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 					lineWidth: 2
 				}				
 			},
-			grid: {
-				hoverable: true,
-				clickable: true
-			},
 			xaxis: {
 				mode: "time",
 				tickLength: 5
@@ -1114,6 +1113,8 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 				mode: "x"
 			},
 			grid: {
+				hoverable: true,
+				clickable: true,
 				markings: weekendAreas
 			}
 		}
@@ -1142,7 +1143,26 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 			mode: "x"
 		}
 	});
-
+	$("<div id='tooltip'></div>").css({
+			position: "absolute",
+			display: "none",
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#fee",
+			opacity: 0.80
+	}).appendTo("body");
+	
+	$("#"+localDiagID).bind("plothover", function (event, pos, item) {
+		if (item) {
+			var x = item.datapoint[0], y = item.datapoint[1].toFixed(2);
+			var thisDater = new Date(x);
+			thisDater.setDate(thisDater.getDate() + 1);
+			thisDater = thisDater.format('M d, Y');
+			$("#tooltip").html(thisDater + " = " + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);
+		} else {
+			$("#tooltip").hide();
+		}
+	});
 	// now connect the two
 	$("#"+localDiagID).bind("plotselected", function (event, ranges) {
 
@@ -1158,7 +1178,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		// don't fire event on the overview to prevent eternal loop
 		overview.setSelection(ranges, true);
 	});
-
+	
 	$("#"+localBarID).bind("plotselected", function (event, ranges) {
 		plot.setSelection(ranges);
 	});
@@ -1167,6 +1187,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
+
 }
 
 function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, trendTarget, thefuncID, thebarID, avTarg, perTarg){
@@ -1319,7 +1340,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	var theInterval = pushSet.length;
 	var theUnit, theRotation, lineSize, dotSize, baseNum;
 	if(localDiagID.indexOf('-avail') > -1){
-		baseNum = 96;
+		baseNum = 95;
 	}else if(localDiagID.indexOf('-perf') > -1){
 		baseNum = 1;
 	}
@@ -1430,10 +1451,6 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 					lineWidth: 2
 				}				
 			},
-			grid: {
-				hoverable: true,
-				clickable: true
-			},
 			xaxis: {
 				mode: "time",
 				tickLength: 5
@@ -1445,6 +1462,8 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 				mode: "x"
 			},
 			grid: {
+				hoverable: true,
+				clickable: true,
 				markings: weekendAreas
 			}
 		}
@@ -1473,9 +1492,18 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 			mode: "x"
 		}
 	});
-
+	$("#"+localDiagID).bind("plothover", function (event, pos, item) {
+		if (item) {
+			var x = item.datapoint[0], y = item.datapoint[1].toFixed(2);
+			var thisDater = new Date(x);
+			thisDater.setDate(thisDater.getDate() + 1);
+			thisDater = thisDater.format('M d, Y');
+			$("#tooltip").html(thisDater + " = " + y).css({top: item.pageY+5, left: item.pageX+5}).fadeIn(200);
+		} else {
+			$("#tooltip").hide();
+		}
+	});
 	// now connect the two
-
 	$("#"+localDiagID).bind("plotselected", function (event, ranges) {
 
 		// do the zooming
@@ -1501,6 +1529,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	$('#kpi-3 .kpi-actual').text(perAv+'ms');
 	$('#kpi-1 .kpi-target').text(avTar);
 	$('#kpi-3 .kpi-target').text(perTar);
+
 }
 
 function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){

@@ -297,10 +297,15 @@ function initTagButtons(fromQuery, toQuery){
 		var thisMarquee;
 		var fromThis = fromQuery;
 		var toThis = toQuery;
-
 		var past = new Date(fromThis);
+		var newPast = new Date(fromThis); 
 		var today = new Date(toThis);
-		
+		var newToday  = new Date(toThis);
+		newPast = newPast.setDate(newPast.getDate() + 1);
+		newToday = newToday.setDate(newToday.getDate() + 1);
+		var pset = new Date(newPast);
+		var tset = new Date(newToday);
+
 		var dd = today.getDate()+1;
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
@@ -330,10 +335,10 @@ function initTagButtons(fromQuery, toQuery){
 		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
 		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
 
-		thisMonth = todayRe.format('M d, Y');
-		pastMonth = pastRe.format('M d, Y');
-		queryFrom = pastRe.format('yyyy-mm-dd');
-		queryTo = todayRe.format('yyyy-mm-dd');
+		thisMonth = tset.format('M d, Y');
+		pastMonth = pset.format('M d, Y');
+		queryFrom = pset.format('Y-m-d');
+		queryTo = todayRe.format('Y-m-d');
 
 		if(thisLocal.indexOf('availtrend') > -1){
 			thisMarquee = thisLocal.split('-availtrend')[0];
@@ -2050,7 +2055,7 @@ function dateRanger(tabID){
     	var yyyyT = pretoThis.split('/')[2];
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
-
+		
     	//Reformate date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	

@@ -346,7 +346,7 @@ function initTagButtons(fromQuery, toQuery){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
 			thisMarquee = thisMarquee.toUpperCase();
-			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart">></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
 		}
@@ -422,6 +422,8 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 	trendDate = [];
 	var availPair = [];
 	var perfPair = [];
+	var availTarPair = [];
+	var perTarPair = [];
 	$.getJSON(celldataCall, function(jldata) {
 		//Parse data from the json values
 		for (var i=0, len=jldata.length; i < len; i++) {
@@ -433,6 +435,8 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
 			perfPair.push([tempEpoc, jldata[i].performance]);
+			availTarPair.push([tempEpoc, tTarget]);
+			perTarPair.push([tempEpoc, pTarget]); 
 			avTar.push(tTarget);
 			avPer.push(pTarget);
 			Tval = Tval + jldata[i].availability;
@@ -455,14 +459,14 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Availibility";
 			//bigChartDyn(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
-			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, availPair);
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, availPair, availTarPair);
 			buildButtons(altTrend, trendDate, avTar, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Performance";
 			//bigChartDyn(PtrendVal, trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID);
-			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, perfPair);
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, perfPair, perTarPair);
 			buildButtons(altPerf, trendDate, avPer, funcID, '', tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
@@ -554,6 +558,8 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg){
 	var tempEpoc;
 	var availPair = [];
 	var perfPair = [];
+	var availTarPair = [];
+	var perTarPair = [];
 	$.getJSON(celldataCall, function(jldata) {
 		//Parse data from the json values
 		for (var i=0, len=jldata.length; i < len; i++) {
@@ -565,6 +571,8 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg){
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
 			perfPair.push([tempEpoc, jldata[i].performance]);
+			availTarPair.push([tempEpoc, tTarget]);
+			perTarPair.push([tempEpoc, pTarget]);
 			avTar.push(tTarget);
 			avPer.push(pTarget);
 			Tval = Tval + jldata[i].availability;
@@ -583,12 +591,12 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg){
 		altPerf = PtrendVal; 
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
-			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair);
+			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair, availTarPair);
 			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
-			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair);
+			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair, perTarPair);
 			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
@@ -822,7 +830,7 @@ function buildMiniTables(theName, tableType, availtarget, perftarget, trending, 
 	}
 	
 }
-
+/*
 function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID){
 	var trendPush = TrendVal;
 	var trendDate = trendDate;
@@ -964,7 +972,7 @@ function bigChartDyn(TrendVal, trendDate, TtrendAv, PtrendAv, theTarget, perTarg
 	PtrendVal = [];
 	trendDate = [];
 }
-
+*/
 function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chartType, diagID, longID, pairedSet, targetPair){
 	//var trendPush = TrendVal;
 	var trendDate = trendDate;
@@ -972,6 +980,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	var availAv = TtrendAv;
 	var perAv = PtrendAv;
 	var pushSet = pairedSet;
+	var pushTarget = targetPair;
 	var targeted = theTarget;
 	var pertargeted = perTarget;
 	var avTar = theTarget[0];
@@ -982,16 +991,18 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	var localBarID = longID;
 	var starter = 0;
 	var stopper = targeted.length;
-	var targetType;
+	var targetType, baseNum;
 	if(localDiagID.indexOf('-avail') > -1){
 		targetType = targeted;
+		baseNum = 96;
 	}else if(localDiagID.indexOf('-perf') > -1){
 		targetType = pertargeted;
+		baseNum = 1;
 	}
 	
 	//new plotter
 	var d = pushSet;
-	
+	var d2 = pushTarget;
 	// first correct the timestamps - they are recorded as the daily
 	// midnights in UTC+0100, but Flot always displays dates in UTC
 	// so we have to add one hour to hit the midnights in the plot
@@ -1028,7 +1039,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	}
 
 	var options = {
-		colors: ['#175E00'],
+		colors: ['#175E00','#00468C'],
 		series: {
 			lines: {
 				show: true,
@@ -1057,7 +1068,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		}
 	};
 
-	var plot = $.plot("#"+localDiagID, [d], options);
+	var plot = $.plot("#"+localDiagID, [d,d2], options);
 
 	var overview = $.plot("#"+localBarID, [d], {
 		series: {
@@ -1075,8 +1086,8 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		},
 		yaxis: {
 			ticks: [],
-			min: 0,
-			autoscaleMargin: 0.3
+			min: baseNum,	
+			autoscaleMargin: 0.1
 		},
 		selection: {
 			mode: "x"
@@ -1095,9 +1106,7 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 		plot.setupGrid();
 		plot.draw();
 		plot.clearSelection();
-
 		// don't fire event on the overview to prevent eternal loop
-
 		overview.setSelection(ranges, true);
 	});
 
@@ -1246,6 +1255,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	var trendPush = TrendVal;
 	var trendDate = trendDater;
 	var pushSet = pairedSet;
+	var pushTarget = targetPair;
 	var availAv = TtrendAv;
 	var perAv = PtrendAv;
 	var localDiagID = funcID;
@@ -1258,8 +1268,12 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	avTar = avTar.toFixed(2);
 	perTar = perTar.toFixed(2);
 	var theInterval = pushSet.length;
-	var theUnit, theRotation, lineSize, dotSize;
-	
+	var theUnit, theRotation, lineSize, dotSize, baseNum;
+	if(localDiagID.indexOf('-avail') > -1){
+		baseNum = 96;
+	}else if(localDiagID.indexOf('-perf') > -1){
+		baseNum = 1;
+	}
 	if(theInterval > 89){
 		lineSize = 1;
 		dotSize = 2;
@@ -1268,7 +1282,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		dotSize = 3;	
 	}
 	var d = pushSet;
-	
+	var d2 = pushTarget;
 	// first correct the timestamps - they are recorded as the daily
 	// midnights in UTC+0100, but Flot always displays dates in UTC
 	// so we have to add one hour to hit the midnights in the plot
@@ -1305,15 +1319,15 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	}
 
 	var options = {
-		colors: ['#175E00'],
+		colors: ['#175E00','#00468C'],
 		series: {
 			lines: {
 				show: true,
-				lineWidth: lineSize
+				lineWidth: 2
 			},
 			points: {
 				show: true,
-				radius: dotSize,
+				radius: 3,
 				symbol: "circle"
 			},
 			shadowSize: 0
@@ -1334,7 +1348,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		}
 	};
 
-	var plot = $.plot("#"+localDiagID, [d], options);
+	var plot = $.plot("#"+localDiagID, [d,d2], options);
 
 	var overview = $.plot("#"+localBarID, [d], {
 		series: {
@@ -1352,7 +1366,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		},
 		yaxis: {
 			ticks: [],
-			min: 0,
+			min: baseNum,
 			autoscaleMargin: 0.1
 		},
 		selection: {

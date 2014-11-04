@@ -4787,6 +4787,21 @@ function initApp(){
 	buildout(initButton);
 }
 
+function writedateCookie(queryFrom, queryTo){
+	var fromThis = queryFrom;
+	var toThis = queryTo;
+	
+	cookieString = 'fromThis='+fromThis;
+	cookieString += '; toThis='+toThis;
+	console.log('write '+toThis);
+	document.cookie=cookieString;	
+}
+
+function readdateCookie(){
+	var dateRanger = document.cookie;
+	console.log('cookie string '+dateRanger);
+}
+
 function selectedTab(tabID, queryFrom, queryTo){
 	//Checks strings from the table ID
 	if (typeof String.prototype.startsWith != 'function') {
@@ -4842,7 +4857,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	        return this.slice(-suffix.length) == suffix;
 	    };
 	}
-	
+	readdateCookie();
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
 			divVar = confdata[i].division;
@@ -5021,7 +5036,7 @@ function initTagButtons(fromQuery, toQuery){
 		pastMonth = pset.format('M d, Y');
 		queryFrom = pset.format('Y-m-d');
 		queryTo = todayRe.format('Y-m-d');
-
+		
 		if(thisLocal.indexOf('availtrend') > -1){
 			thisMarquee = thisLocal.split('-availtrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
@@ -6412,6 +6427,8 @@ function dateRanger(tabID){
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
 		
+    	writedateCookie(fromThis, toThis);
+    	
     	//Reformate date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	

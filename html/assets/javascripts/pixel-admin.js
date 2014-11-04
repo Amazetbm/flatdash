@@ -4680,7 +4680,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
 }(jQuery));
 ;
-//var jsonData = "assets/json/mockdata.json";
 var dasConfig = "assets/json/config.json";
 var initVars;
 var tableVars;
@@ -6314,8 +6313,8 @@ function buildout(button){
 
 	today = mm+'/'+dd+'/'+yyyy;
 	pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
-	//queryTo = yyyy+'-'+mm+'-'+dd;
-	//queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
+	queryTo = yyyy+'-'+mm+'-'+dd;
+	queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
 	
 	if (!cookieDates){
 		console.log('No data, dude');

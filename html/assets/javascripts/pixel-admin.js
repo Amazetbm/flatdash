@@ -4790,16 +4790,8 @@ function initApp(){
 function writedateCookie(queryFrom, queryTo){
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-	
-	cookieString = 'fromThis='+fromThis;
-	cookieString += '; toThis='+toThis;
-	console.log('write '+toThis);
-	document.cookie=cookieString;	
-}
-
-function readdateCookie(){
-	var dateRanger = document.cookie;
-	console.log('cookie string '+dateRanger);
+	document.cookie='fromThis='+fromThis;	
+	document.cookie='toThis='+toThis;
 }
 
 function selectedTab(tabID, queryFrom, queryTo){
@@ -4845,6 +4837,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	var celldataCall;
 	var fromThis = queryFrom;
 	var toThis = queryTo;
+	var cookieDates = document.cookie;
 	//Checks strings from the current ID
 	if (typeof String.prototype.startsWith != 'function') {
 	    String.prototype.startsWith = function(prefix) {
@@ -4857,7 +4850,14 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	        return this.slice(-suffix.length) == suffix;
 	    };
 	}
-	readdateCookie();
+
+	if (!cookieDates){
+		console.log('No data, dude');
+	}else{
+		var cookieArray = cookieDates.split(';');
+		fromThis = cookieArray[0].split('=')[1];
+	    toThis = cookieArray[1].split('=')[1];
+	}
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
 			divVar = confdata[i].division;
@@ -5028,7 +5028,7 @@ function initTagButtons(fromQuery, toQuery){
 		if(p_mm<10) {
 		    p_mm='0'+p_mm;
 		} 
-
+		
 		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
 		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
 
@@ -6294,7 +6294,8 @@ function buildout(button){
 	var p_dd = pastMonth.getDate();
 	var p_mm = pastMonth.getMonth()+1;
 	var p_yyyy = pastMonth.getFullYear();
-	var queryTo, queryFrom;
+	var cookieDates = document.cookie;
+	var queryTo, queryFrom;	
 	if(dd<10) {
 	    dd='0'+dd;
 	} 
@@ -6313,10 +6314,25 @@ function buildout(button){
 
 	today = mm+'/'+dd+'/'+yyyy;
 	pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
-	queryTo = yyyy+'-'+mm+'-'+dd;
-	queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
+	//queryTo = yyyy+'-'+mm+'-'+dd;
+	//queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
 	
-
+	if (!cookieDates){
+		console.log('No data, dude');
+	}else{
+		var cookieArray = cookieDates.split(';');
+		var epocFrom = new Date(cookieArray[0].split('=')[1]);
+		var epocTo = new Date(cookieArray[1].split('=')[1]);
+		epocFrom.setDate(epocFrom.getDate() + 1);
+		epocTo.setDate(epocTo.getDate() + 1);
+		pastMonth = new Date(epocFrom);
+		today = new Date(epocTo);
+		pastMonth = pastMonth.format('m/d/Y');
+		today = today.format('m/d/Y');
+		queryFrom = cookieArray[0].split('=')[1];
+	    queryTo = cookieArray[1].split('=')[1];
+	}
+	
 	$('#content-row-table').empty();
 	$('#content-row-table').css('display','block');
 	$('#content-row-incident').css('display','block');

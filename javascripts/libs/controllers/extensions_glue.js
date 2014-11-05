@@ -127,7 +127,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	var thisID = tabID+'-table';
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-
+	console.log('selectedTab '+fromThis);
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
 		buildTables(thisID, tableVars, fromThis, toThis);
@@ -167,13 +167,15 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	        return this.slice(-suffix.length) == suffix;
 	    };
 	}
-
+	
 	if (!cookieDates){
 		console.log('No data, dude');
+		console.log('Default built '+fromThis);
 	}else{
 		var cookieArray = cookieDates.split(';');
 		fromThis = cookieArray[0].split('=')[1];
 	    toThis = cookieArray[1].split('=')[1];
+	    console.log('built date '+fromThis);
 	}
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
@@ -1629,13 +1631,13 @@ function buildout(button){
 	    p_mm='0'+p_mm;
 	} 
 
-	today = mm+'/'+dd+'/'+yyyy;
-	pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
-	queryTo = yyyy+'-'+mm+'-'+dd;
-	queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
-	
 	if (!cookieDates){
 		console.log('No data, dude');
+		today = mm+'/'+dd+'/'+yyyy;
+		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
+		queryTo = yyyy+'-'+mm+'-'+dd;
+		queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
+		console.log('Default date '+queryFrom);
 	}else{
 		var cookieArray = cookieDates.split(';');
 		var epocFrom = new Date(cookieArray[0].split('=')[1]);
@@ -1648,6 +1650,7 @@ function buildout(button){
 		today = today.format('m/d/Y');
 		queryFrom = cookieArray[0].split('=')[1];
 	    queryTo = cookieArray[1].split('=')[1];
+	    console.log('Changed date '+queryFrom);
 	}
 	
 	$('#content-row-table').empty();
@@ -1761,7 +1764,7 @@ function dateRanger(tabID){
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
 		
     	writedateCookie(fromThis, toThis);
-    	
+    	console.log('dateRanger '+fromThis);
     	//Reformate date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	
@@ -1796,7 +1799,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 
 		todayText = today.format('M d, Y');
 		today = today.format('Y-m-d');
-		
+
 		if(thisChart.indexOf('-avail-') > -1){
 			longChart = thisChart.replace('-avail-', '-long-');
 		}else if(thisChart.indexOf('-perf-') > -1){
@@ -1808,6 +1811,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		$('.kpi-gauge').empty();
 		$('#chart-buttons').empty();
 		//Buttns switching
+
 		switch (thisCartButton){
 			case 'chart-weekly':
 				notCurrent = new Date(today);

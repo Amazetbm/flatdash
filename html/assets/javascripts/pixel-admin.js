@@ -4809,7 +4809,6 @@ function selectedTab(tabID, queryFrom, queryTo){
 	var thisID = tabID+'-table';
 	var fromThis = queryFrom;
 	var toThis = queryTo;
-	console.log('selectedTab '+fromThis);
 	if (thisID.startsWith('Digital')){
 		tableVars = 'Digital_Media';
 		buildTables(thisID, tableVars, fromThis, toThis);
@@ -4852,12 +4851,10 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	
 	if (!cookieDates){
 		console.log('No data, dude');
-		console.log('Default built '+fromThis);
 	}else{
 		var cookieArray = cookieDates.split(';');
 		fromThis = cookieArray[0].split('=')[1];
 	    toThis = cookieArray[1].split('=')[1];
-	    console.log('built date '+fromThis);
 	}
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
@@ -4893,7 +4890,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 		initTagButtons(fromThis, toThis);
 	});	
 }
-
+//Add notes to Incidents page
 function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	var currentID = dataID;
 	var notesURI = theURI;
@@ -5078,7 +5075,7 @@ function initTagButtons(fromQuery, toQuery){
 		prettyStr = prettyStr.toUpperCase();
 		if (thisID.search('notes') > -1){
 			miniWidth = 680;
-			miniHeight = 420;
+			miniHeight = 380;
 			whichType = 'notes';
 		}else{
 			miniWidth = 680;
@@ -5429,10 +5426,8 @@ function tableBuild(dataType, whichID, typeID, thisSeq, fromQuery, toQuery){
 					atarget = thisDiv[jLoc].availTarget;
 					ptarget = thisDiv[jLoc].perfTarget;
 					buildMiniTables(theName, thisTableType, atarget, ptarget, trendDataCall, fromQ, toQ, notesDataCall, 4);
-				});
-				
-			}
-			
+				});				
+			}		
 		}
 	}
 }	
@@ -5908,7 +5903,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	$('#kpi-3 .kpi-target').text(perTar);
 
 }
-
+/*
 function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
 	var starter = startNum;
 	var stopper = stopNum;
@@ -5963,7 +5958,7 @@ function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, Pt
 	$('#kpi-3 .kpi-target').text(perTar);
 
 }
-
+*/
 //Tag cells based on performance
 function tagCells(chainedID, PtrendAv, TtrendAV){
 	var localID = chainedID;
@@ -6319,7 +6314,6 @@ function buildout(button){
 		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		queryTo = yyyy+'-'+mm+'-'+dd;
 		queryFrom = p_yyyy+'-'+p_mm+'-'+p_dd;
-		console.log('Default date '+queryFrom);
 	}else{
 		var cookieArray = cookieDates.split(';');
 		var epocFrom = new Date(cookieArray[0].split('=')[1]);
@@ -6332,7 +6326,6 @@ function buildout(button){
 		today = today.format('m/d/Y');
 		queryFrom = cookieArray[0].split('=')[1];
 	    queryTo = cookieArray[1].split('=')[1];
-	    console.log('Changed date '+queryFrom);
 	}
 	
 	$('#content-row-table').empty();
@@ -6446,8 +6439,8 @@ function dateRanger(tabID){
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
 		
     	writedateCookie(fromThis, toThis);
-    	console.log('dateRanger '+fromThis);
-    	//Reformate date range for database query
+
+    	//Reformat date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	
     });
@@ -6508,10 +6501,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
-				});
-				
+				});				
 				break;
 			case 'chart-daily':
 				notCurrent = new Date(today);
@@ -6526,10 +6517,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
-
 				break;
 			case 'chart-quaterly':
 				notCurrent = new Date(today);
@@ -6544,10 +6533,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
-
 				break;
 			case 'chart-simi':
 				notCurrent = new Date(today);
@@ -6562,10 +6549,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
-
 				break;
 			case 'chart-year':
 				notCurrent = new Date(today);
@@ -6580,10 +6565,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 					celldataCall = thisDiv[jLoc].dataURI;
 					celldataCall = celldataCall.replace('fromThis', thePast);
 					celldataCall = celldataCall.replace('toThis', today);
-					//redoTheData(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 					redoTheDataToo(celldataCall, thisChart, longChart, thisCartButton, avTar, perTar);
 				});
-
 				break;
 		}
 	}).hover(function(){
@@ -6622,7 +6605,6 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 		default:
 			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	}
-
 	chartRanger(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
 }
 

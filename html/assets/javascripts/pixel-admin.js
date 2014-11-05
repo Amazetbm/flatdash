@@ -5546,17 +5546,16 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	perTar = perTar.toFixed(2);
 	var localDiagID = diagID;
 	var localBarID = longID;
-	//var starter = 0;
-	//var stopper = targeted.length;
 	var baseNum;
-	if(localDiagID.indexOf('-avail') > -1){
-		targetType = targeted;
-		baseNum = 95;
-	}else if(localDiagID.indexOf('-perf') > -1){
-		targetType = pertargeted;
-		baseNum = 1;
+	var xVals = pushSet.map(function(obj) { return obj[1]; });
+	var min = Math.min.apply(null, xVals);
+	minNum = parseInt(min);
+	minNum = minNum - 1;
+	if (minNum < 0){
+		baseNum = 0;
+	}else{
+		baseNum = minNum;
 	}
-	
 	//new plotter
 	var d = pushSet;
 	var d2 = pushTarget;
@@ -5738,17 +5737,14 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	perTar = perTar.toFixed(2);
 	var theInterval = pushSet.length;
 	var theUnit, theRotation, lineSize, dotSize, baseNum;
-	if(localDiagID.indexOf('-avail') > -1){
-		baseNum = 95;
-	}else if(localDiagID.indexOf('-perf') > -1){
-		baseNum = 1;
-	}
-	if(theInterval > 89){
-		lineSize = 1;
-		dotSize = 2;
+	var xVals = pushSet.map(function(obj) { return obj[1]; });
+	var min = Math.min.apply(null, xVals);
+	minNum = parseInt(min);
+	minNum = minNum - 1;
+	if (minNum < 0){
+		baseNum = 0;
 	}else{
-		lineSize = 2;
-		dotSize = 3;	
+		baseNum = minNum;
 	}
 	var d = pushSet;
 	var d2 = pushTarget;

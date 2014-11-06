@@ -4850,12 +4850,13 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	}
 	
 	if (!cookieDates){
-		console.log('No data, dude');
+		// console.log('No data, dude');
 	}else{
 		var cookieArray = cookieDates.split(';');
 		fromThis = cookieArray[0].split('=')[1];
 	    toThis = cookieArray[1].split('=')[1];
 	}
+	
 	$.getJSON(dasConfig, function(confdata){
 		for (var i=0, len=confdata.length; i < len; i++){
 			divVar = confdata[i].division;
@@ -5138,7 +5139,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID){
 			availTarPair.push([tempEpoc, tTarget]);
 			perTarPair.push([tempEpoc, pTarget]); 
 			avTar.push(tTarget);
-			avPer.push(pTarget);
+			avPer.push(pTarget);	
 			Tval = Tval + jldata[i].availability;
 			Pval = Pval + jldata[i].performance;
 		}
@@ -6305,7 +6306,7 @@ function buildout(button){
 	} 
 
 	if (!cookieDates){
-		console.log('No data, dude');
+		// console.log('No data, dude');
 		today = mm+'/'+dd+'/'+yyyy;
 		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		queryTo = yyyy+'-'+mm+'-'+dd;
@@ -6569,6 +6570,95 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			$(this).addClass('bttnSelected');
 		}, function(){
 			$(this).removeClass('bttnSelected');		
+	});
+	
+	$('.kpi-box').click(function(){
+		//var thisButton = $(this).attr('id');
+		var thisLocal = $(this).attr('id');
+		var thisSeq = $('.biggerChart').attr('ctseq');
+		var thisDiv, celldataCall, trendDataCall, notesDataCall, dialogID, longID;
+		var confLoc = thisSeq.split(',')[0];
+		var jLoc = thisSeq.split(',')[1];
+		confLoc = parseInt(confLoc);
+		jLoc = parseInt(jLoc);
+		var chartDialog;
+		var thisMarquee;
+		var fromThis = $('#fromThis').text();
+		var toThis =  $('#toThis').text();
+		var past = new Date(fromThis);
+		var newPast = new Date(fromThis); 
+		var today = new Date(toThis);
+		var newToday  = new Date(toThis);
+		newPast = newPast.setDate(newPast.getDate() + 1);
+		newToday = newToday.setDate(newToday.getDate() + 1);
+		var pset = new Date(newPast);
+		var tset = new Date(newToday);
+
+		var dd = today.getDate()+1;
+		var mm = today.getMonth()+1;
+		var yyyy = today.getFullYear();
+		
+		var p_dd = past.getDate()+1;
+		var p_mm = past.getMonth()+1;
+		var p_yyyy = past.getFullYear();
+		var queryTo, queryFrom, thisMonth, pastMonth;	
+		var availTar, perfTar;
+
+		if(dd<10) {
+		    dd='0'+dd;
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm;
+		}
+		if(p_dd<10) {
+		    p_dd='0'+p_dd;
+		} 
+
+		if(p_mm<10) {
+		    p_mm='0'+p_mm;
+		} 
+		
+		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
+		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
+		console.log(thisMarquee);
+		thisMonth = tset.format('M d, Y');
+		pastMonth = pset.format('M d, Y');
+		queryFrom = pset.format('Y-m-d');
+		queryTo = todayRe.format('Y-m-d');
+		$('#chart-col').empty();
+		$('#tooltip').remove();
+		
+		if(thisLocal.indexOf('kpi-1') > -1){
+			thisMarquee = thisLocal.split('-availtrend')[0];
+			thisMarquee = thisMarquee.split('-').join(' ');
+			thisMarquee = thisMarquee.toUpperCase();
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			dialogID = thisLocal+'-avail-chart';
+			longID = thisLocal+'-long-chart';
+		}else if(thisLocal.indexOf('kpi-3') > -1){
+			thisMarquee = thisLocal.split('-perftrend')[0];
+			thisMarquee = thisMarquee.split('-').join(' ');
+			thisMarquee = thisMarquee.toUpperCase();
+			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
+			dialogID = thisLocal+'-perf-chart';
+			longID = thisLocal+'-long-chart';
+		}
+		$('#content-row-table').css('display','none');
+		$('#content-row-incident').css('display','none');
+		$('#content-row-chart').css('display','block');
+		$('#chart-col').append(chartDialog);
+
+		$.getJSON(dasConfig, function(confdata){
+			thisDiv = confdata[confLoc].units;	
+			celldataCall = thisDiv[jLoc].dataURI;
+			celldataCall = celldataCall.replace('fromThis', queryFrom);
+			celldataCall = celldataCall.replace('toThis', queryTo);
+			availTar = thisDiv[jLoc].availTarget;
+			perfTar = thisDiv[jLoc].perfTarget;
+			largeData(celldataCall, availTar, perfTar, dialogID, longID);
+		});
+		
 	});
 }
 

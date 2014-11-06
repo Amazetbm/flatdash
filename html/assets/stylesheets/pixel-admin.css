@@ -19193,6 +19193,7 @@ body:not(.right-to-left) .no-border-l {
   float: left;
   font-size: 1.2em;
   padding: 1px;
+  cursor: pointer;
 }
 #kpi-avail-overlay {
   position: absolute;

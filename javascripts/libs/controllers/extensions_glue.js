@@ -1890,6 +1890,10 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			$(this).removeClass('bttnSelected');		
 	});
 	
+	
+}
+
+function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('.kpi-box').click(function(){
 		//var thisButton = $(this).attr('id');
 		var thisLocal = $(this).attr('id');
@@ -1977,7 +1981,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			largeData(celldataCall, availTar, perfTar, dialogID, longID);
 		});
 		
-	});
+	});	
 }
 
 //Chart Buttons
@@ -2010,6 +2014,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
 	}
 	chartRanger(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
+	//kpiSwitch(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
 }
 
 $('.navigation li a').click(function(){

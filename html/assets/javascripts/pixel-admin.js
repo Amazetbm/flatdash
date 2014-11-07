@@ -4792,6 +4792,7 @@ function writedateCookie(queryFrom, queryTo){
 	document.cookie='fromThis='+fromThis;	
 	document.cookie='toThis='+toThis;
 }
+
 function deleteCookie(){
 	document.cookie='fromThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 	document.cookie='toThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
@@ -4896,6 +4897,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 		initTagButtons(fromThis, toThis);
 	});	
 }
+
 //Add notes to Incidents page
 function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	var currentID = dataID;
@@ -6354,8 +6356,8 @@ function dateRanger(tabID){
 		$('#fromText').text(targetDate);
 		$(this).datepicker( "option", "minDate", selectedDate);
 		$(this).datepicker('setDate', selectedDate);
-        $(this).blur();
-        $('.datepicker').hide();
+       // $(this).blur();
+       // $('.datepicker').hide();
     });
 	
     $('#to').datepicker({
@@ -6368,8 +6370,8 @@ function dateRanger(tabID){
 		$('#toText').text(targetDate);
     	$(this).datepicker( "option", "maxDate", selectedDate);
     	$(this).datepicker('setDate', selectedDate);
-        $(this).blur();
-        $('.datepicker').hide();
+      //  $(this).blur();
+      //  $('.datepicker').hide();
     });
     
     $('#newRanger').click(function(){

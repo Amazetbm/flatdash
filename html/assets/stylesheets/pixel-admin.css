@@ -19254,6 +19254,7 @@ body:not(.right-to-left) .no-border-l {
 }
 .dater {
   /*width: 6em;	*/
+  color: #000000;
 }
 .target-label {
   width: 68%;
@@ -19400,12 +19401,14 @@ body:not(.right-to-left) .no-border-l {
   position: relative;
 }
 #content-row-table .DT-per-page #fromText {
+  display: none;
   position: absolute;
   color: #000;
   left: 130px;
   top: 3px;
 }
 #content-row-table .DT-per-page #toText {
+  display: none;
   position: absolute;
   color: #000;
   left: 318px;

@@ -19462,6 +19462,9 @@ body:not(.right-to-left) .no-border-l {
 .flot-text {
   font-weight: bold;
 }
+#dateReset {
+  margin-left: 3px;
+}
 #main-navbar .navbar-brand {
   font-size: 13px;
   opacity: 1;

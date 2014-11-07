@@ -110,6 +110,11 @@ function writedateCookie(queryFrom, queryTo){
 	document.cookie='fromThis='+fromThis;	
 	document.cookie='toThis='+toThis;
 }
+function deleteCookie(){
+	document.cookie='fromThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	document.cookie='toThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	location.reload();
+}
 
 function selectedTab(tabID, queryFrom, queryTo){
 	//Checks strings from the table ID
@@ -1218,62 +1223,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	$('#kpi-3 .kpi-target').text(perTar);
 
 }
-/*
-function reDoTheSlideChart(startNum, stopNum, TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg){
-	var starter = startNum;
-	var stopper = stopNum;
-	var trendPush = TrendVal;
-	var trendDate = trendDater;
-	var availAv = TtrendAv;
-	var perAv = PtrendAv;
-	var thisChart = funcID;
-	var longChart = barID;
-	var thisTarget = theTarget;
-	var avTar = avTarg;
-	var perTar = perTarg;
-	trendPush = trendPush.slice(starter, stopper);
-	trendDate = trendDate.slice(starter, stopper);
-	thisTarget = thisTarget.slice(starter, stopper);
-	$('#'+thisChart).wijcompositechart({
-			axis: { 
-	            x: { 
-	                text: "",
-					//annoMethod: 'valueLabels',
-				    //alueLabels: trendDate,
-				    //unitMajor: 5,
-					//autoMajor : false,
-					//autoMinor :false,
-	                labels: {textAlign: 'near'},
-	                tickMajor: {
-	                    position: "outside",
-	                    style: {
-	                        stroke: "#999999"
-	                    }
-	                }
-	            } 
-	        },
-			seriesList: [{
-				type: "area",
-				label: "Values", 
-                data: {x: trendDate, y: trendPush}
-		    },{
-		    	type: "line",
-				label: "Target", 
-                data: {x: trendDate, y: thisTarget}
-		    }],
-		    seriesStyles: [ 
-                { stroke: "#175E00", "stroke-width": 1, fill: "#B3FF99", "fill-opacity": 0.4}, 
-                { stroke: "#00468C", "stroke-width": 2 } 
-            ] 
-	});
 
-	$('#kpi-1 .kpi-actual').text(availAv+'%');
-	$('#kpi-3 .kpi-actual').text(perAv+'ms');
-	$('#kpi-1 .kpi-target').text(avTar);
-	$('#kpi-3 .kpi-target').text(perTar);
-
-}
-*/
 //Tag cells based on performance
 function tagCells(chainedID, PtrendAv, TtrendAV){
 	var localID = chainedID;
@@ -1685,7 +1635,7 @@ function buildout(button){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 		<div class="table-header clearfix"> \
 		<div class="table-caption">'+ tableRow +'</div> \
-		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
 		<tbody></tbody> \
@@ -1695,7 +1645,7 @@ function buildout(button){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 		<div class="table-header clearfix"> \
 		<div class="table-caption">'+ tableRow +' Summary</div> \
-		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button></div></div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 		<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 		<tbody></tbody> \
@@ -1759,16 +1709,20 @@ function dateRanger(tabID){
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	
     });
+    
+    $('#dateReset').click(function(){
+    	deleteCookie();
+    });
 }
 
 //Select chart range.
 function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('#chart-buttons li').click(function(){
 		var thisCartButton = $(this).attr('id');
-		var startNum, stopNum;
-		var thisTrend = Tval;
+		//var startNum, stopNum;
+		//var thisTrend = Tval;
 		var thisDate = trendDate;
-		var thisTarget = trendTarget;
+		//var thisTarget = trendTarget;
 		var thisChart = funcID;
 		var thisSeq = $('#'+thisChart).attr('ctseq');
 		var confLoc = thisSeq.split(',')[0];
@@ -1776,7 +1730,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		confLoc = parseInt(confLoc);
 		jLoc = parseInt(jLoc);
 		var longChart;
-		var currentStart = thisDate[0];
+		//var currentStart = thisDate[0];
 		var fromThisTxt = $('#fromThis').text();
 		var toThisTxt =  $('#toThis').text();
 		var past = new Date(fromThisTxt);
@@ -1898,7 +1852,7 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		//var thisButton = $(this).attr('id');
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $('.biggerChart').attr('ctseq');
-		var thisDiv, celldataCall, trendDataCall, notesDataCall, dialogID, longID;
+		var thisDiv, celldataCall, dialogID, longID;
 		var confLoc = thisSeq.split(',')[0];
 		var jLoc = thisSeq.split(',')[1];
 		confLoc = parseInt(confLoc);
@@ -1942,8 +1896,8 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		} 
 		
 		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
-		var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
-		console.log(thisMarquee);
+		//var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
+
 		thisMonth = tset.format('M d, Y');
 		pastMonth = pset.format('M d, Y');
 		queryFrom = pset.format('Y-m-d');

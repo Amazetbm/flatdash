@@ -222,7 +222,7 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	var notesURI = theURI;
 	var fromThis = fromQuery;
 	var toThis = toQuery;
-
+	
 	$.getJSON(notesURI, function(jdata){
 		for (var i=0, len=jdata.length; i < len; i++) {
 			var theUnit = jdata[i].company;
@@ -230,11 +230,21 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 			var theNote = jdata[i].description;
 			var dateTimer = new Date(theDate);
 			var dateUnformated = new Date(theDate).getTime();
-			if(!theUnit){
+
+			if(!theUnit || theUnit == 'General'){
 				theUnit = 'General';
 			}
+			
+			if(!theDate || theDate == '' || theDate == null){
+				theDate = '<span class="noDataTag">No Data</span>';
+			}
+			
+			if(!theNote || theNote == '' || theNote == null){
+				theNote = '<span class="noDataTag">No Data</span>';
+			}
+			
 			dateTimer = dateTimer.format('M d, Y');
-			$('#'+currentID+' tbody').append('<tr rowdate="'+dateUnformated+'"><td>'+dateTimer+'</td><td>'+theUnit+'</td><td>'+theNote+'</td></tr>');
+			$('#'+currentID+' tbody').append('<tr rowdate="'+dateUnformated+'"><td id="'+theUnit+'-date-'+i+'">'+dateTimer+'</td><td id="'+theUnit+'-name-'+i+'">'+theUnit+'</td><td id="'+theUnit+'-note-'+i+'">'+theNote+'</td></tr>');
 		}
 		sortIssues(currentID);
 	}).fail(function(){
@@ -538,7 +548,6 @@ function stuffTrends(availTrend, perfTrend){
 	var perf = perfTrend;
 	$('#availArrow').attr('availTrending', avail);
 	$('#perfArrow').attr('perfTrending', perf);
-	//console.log('Availability: '+avail+' perfomrance: '+perf);
 }
 
 function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, trendCall){
@@ -1251,8 +1260,6 @@ function compairTrending(){
 	}else{
 		$('#perfArrow').addClass('fa-arrow-up').css('color','#F72D00');;
 	}
-	console.log('Availability, current: '+currentAvail+' previous: '+prevAvail);
-	console.log('Performance, current: '+currentPerf+' previous: '+prevPerf);
 }
 
 //Tag cells based on performance

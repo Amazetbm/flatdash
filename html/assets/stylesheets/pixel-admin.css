@@ -19459,6 +19459,9 @@ body:not(.right-to-left) .no-border-l {
   font-weight: bold;
   text-align: center;
 }
+.noDataTag {
+  color: #F72D00;
+}
 .noDialog {
   text-align: left;
   color: #555;

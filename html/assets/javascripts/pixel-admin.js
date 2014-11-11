@@ -5206,12 +5206,14 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 			chartType = "Availibility";
 			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, availPair, availTarPair);
 			buildButtons(altTrend, trendDate, avTar, funcID, '', tTarget, pTarget);
+			kpiSwitch(altTrend, trendDate, avTar, funcID, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
 			chartType = "Performance";
 			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, perfPair, perTarPair);
 			buildButtons(altPerf, trendDate, avPer, funcID, '', tTarget, pTarget);
+			kpiSwitch(altTrend, trendDate, avTar, funcID, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
@@ -5309,11 +5311,13 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 			chartType = "Availibility";
 			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair, availTarPair);
 			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
+			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair, perTarPair);
 			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
+			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
@@ -6601,6 +6605,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('.kpi-box').click(function(){
 		//var thisButton = $(this).attr('id');
+		var theTrend = trendTarget;
+		console.log(theTrend);
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $('.biggerChart').attr('ctseq');
 		var thisDiv, celldataCall, dialogID, longID;
@@ -6616,16 +6622,16 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		var newPast = new Date(fromThis); 
 		var today = new Date(toThis);
 		var newToday  = new Date(toThis);
-		newPast = newPast.setDate(newPast.getDate() + 1);
-		newToday = newToday.setDate(newToday.getDate() + 1);
+		newPast = newPast.setDate(newPast.getDate());
+		newToday = newToday.setDate(newToday.getDate());
 		var pset = new Date(newPast);
 		var tset = new Date(newToday);
 
-		var dd = today.getDate()+1;
+		var dd = today.getDate();
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
 		
-		var p_dd = past.getDate()+1;
+		var p_dd = past.getDate();
 		var p_mm = past.getMonth()+1;
 		var p_yyyy = past.getFullYear();
 		var queryTo, queryFrom, thisMonth, pastMonth;	
@@ -6647,7 +6653,6 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		} 
 		
 		var todayRe = new Date(mm+'/'+dd+'/'+yyyy);
-		//var pastRe = new Date(p_mm+'/'+p_dd+'/'+p_yyyy);
 
 		thisMonth = tset.format('M d, Y');
 		pastMonth = pset.format('M d, Y');
@@ -6683,7 +6688,7 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			celldataCall = celldataCall.replace('toThis', queryTo);
 			availTar = thisDiv[jLoc].availTarget;
 			perfTar = thisDiv[jLoc].perfTarget;
-			largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
+			largeData(celldataCall, availTar, perfTar, dialogID, longID, '');
 		});
 		
 	});	

@@ -19197,8 +19197,8 @@ body:not(.right-to-left) .no-border-l {
 }
 #kpi-avail-overlay {
   position: absolute;
-  height: 100%;
-  width: 100%;
+  height: 99%;
+  width: 99%;
   background-color: #EEE;
   opacity: 0;
   z-index: 0;
@@ -19292,7 +19292,7 @@ body:not(.right-to-left) .no-border-l {
   min-height: 1.6em;
   color: #333;
   font-size: 1.1em;
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   border-bottom: 1px solid #969696;
   margin-bottom: 8px;

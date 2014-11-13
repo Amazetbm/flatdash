@@ -267,7 +267,6 @@ function loadSparkDyn(IDChain, chainData){
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
-
 	$.getJSON(localData, function(jdata) {
 		//Parse data from the json values
 		for (var i=0, len=jdata.length; i < len; i++) {
@@ -314,8 +313,7 @@ function loadSparkDyn(IDChain, chainData){
 
 function initTagButtons(fromQuery, toQuery){
 	var fromThis = fromQuery;
-	var toThis = toQuery;
-	
+	var toThis = toQuery;	
 	$('.theme-global-spark-link').click(function(){
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
@@ -486,7 +484,6 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 		trendTtrendAv = trendTtrendAv.toFixed(2);
 		trendPtrendAv = trendPtrendAv.toFixed(2);
 		stuffTrends(trendTtrendAv, trendPtrendAv);
-		console.log('large new: '+trendPtrendAv);
 	});
 
 	$.getJSON(celldataCall, function(jldata) {
@@ -630,13 +627,13 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
 			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair, availTarPair);
-			buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
+			//buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair, perTarPair);
-			buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
+			//buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}
@@ -1058,7 +1055,6 @@ function bigChartDyn2(trendDate, TtrendAv, PtrendAv, theTarget, perTarget, chart
 	$('#kpi-3 .kpi-target').text(perTar);
 	
 	setTimeout(compairTrending, 500);
-	//compairTrending();
 }
 
 function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID, avTarg, perTarg, pairedSet, targetPair){
@@ -1242,7 +1238,6 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	$('#kpi-3 .kpi-target').text(perTar);
 	
 	setTimeout(compairTrending, 500);
-	//compairTrending();
 }
 //Compair previous to current ot get the trending
 
@@ -1799,11 +1794,12 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		}
 		$('.kpi-actual').empty();
 		$('.kpi-gauge').empty();
-		$('#chart-buttons').empty();
+		//$('#chart-buttons').empty();
 		//Buttns switching
 
 		switch (thisCartButton){
 			case 'chart-weekly':
+				console.log('weekly');
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-6);
 				thePast = new Date(notCurrent);
@@ -1827,6 +1823,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				});				
 				break;
 			case 'chart-daily':
+				console.log('daily');
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-29);
 				thePast = new Date(notCurrent);
@@ -1850,6 +1847,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				});
 				break;
 			case 'chart-quaterly':
+				console.log('quaterly');
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-89);
 				thePast = new Date(notCurrent);
@@ -1873,6 +1871,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				});
 				break;
 			case 'chart-simi':
+				console.log('simi');
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-179);
 				thePast = new Date(notCurrent);
@@ -1896,6 +1895,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				});
 				break;
 			case 'chart-year':
+				console.log('yearly');
 				notCurrent = new Date(today);
 				notCurrent.setDate(notCurrent.getDate()-365);
 				thePast = new Date(notCurrent);
@@ -1933,6 +1933,7 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		var theTrend = trendTarget;
 		var thisLocal = $(this).attr('id');
 		var thisSeq = $('.biggerChart').attr('ctseq');
+		var buttonsThere = $('#chart-buttons').html();
 		var thisDiv, celldataCall, dialogID, longID;
 		var confLoc = thisSeq.split(',')[0];
 		var jLoc = thisSeq.split(',')[1];
@@ -1985,6 +1986,13 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		pastMonth = pset.format('M d, Y');
 		queryFrom = pset.format('Y-m-d');
 		queryTo = todayRe.format('Y-m-d');
+		
+		if(!buttonsThere){
+			console.log('kpi yep');
+		}else{
+			console.log('kpi no parking');
+		}
+		
 		$('#chart-col').empty();
 		$('#tooltip').remove();
 		
@@ -2025,6 +2033,7 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 
 //Chart Buttons
 function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarget, perTarget){
+	var buttonsThere = $('#chart-buttons').html();
 	var thisVal = newTrend;
 	var thisDate = trendDate;
 	var thisTarget = newTarget;
@@ -2032,28 +2041,31 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 	var active = bttnPress;
 	var tTarget = avTarget;
 	var pTarget = perTarget;
-
-	switch (active){
-	case 'chart-weekly':
-		$('#chart-buttons').append('<ul><li id="chart-weekly" class="bttnActive">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
-		break;
-	case 'chart-daily':
-		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily" class="bttnActive">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
-		break;
-	case 'chart-quaterly':
-		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly" class="bttnActive">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
-		break;
-	case 'chart-simi':
-		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi" class="bttnActive">180 Days</li><li id="chart-year">1 y</li></ul>');
-		break;
-	case 'chart-year':
-		$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year"  class="bttnActive">1 y</li></ul>');
-		break;
-		default:
+	
+	if(!buttonsThere){
+		switch (active){
+			case 'chart-weekly':
+				$('#chart-buttons').append('<ul><li id="chart-weekly" class="bttnActive">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+				break;
+			case 'chart-daily':
+				$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily" class="bttnActive">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+				break;
+			case 'chart-quaterly':
+				$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly" class="bttnActive">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
+				break;
+			case 'chart-simi':
+				$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi" class="bttnActive">180 Days</li><li id="chart-year">1 y</li></ul>');
+				break;
+			case 'chart-year':
+				$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year"  class="bttnActive">1 y</li></ul>');
+				break;
+			default:
 			$('#chart-buttons').append('<ul><li id="chart-weekly">7 Days</li><li id="chart-daily">30 Days</li><li id="chart-quaterly">90 Days</li><li id="chart-simi">180 Days</li><li id="chart-year">1 y</li></ul>');
-	}
-	chartRanger(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
-	//kpiSwitch(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
+			chartRanger(thisVal, thisDate, thisTarget, thisChart, tTarget, pTarget);
+		}
+	}else{
+		console.log('lot full');
+	}	
 }
 
 $('.navigation li a').click(function(){

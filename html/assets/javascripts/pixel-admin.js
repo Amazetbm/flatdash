@@ -6767,6 +6767,10 @@ $('.navigation li a').click(function(){
 	var linkBttn = $(this).attr('id');
 	buildout(linkBttn);
 });;
+function initAdminApp(){
+	var initButton = 'menu-link-digitalMedia';
+	buildout(initButton);
+};
 /*!
  * jQuery UI Core 1.10.4
  * http://jqueryui.com

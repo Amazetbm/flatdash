@@ -1776,7 +1776,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		var toThisTxt =  $('#toThis').text();
 		var past = new Date(fromThisTxt);
 		var today = new Date(toThisTxt);
-		var notCurrent, thePast;
+		var notCurrent, thePast, notCurrentText, notPastText;
 		var celldataCall, thisDiv;
 		var pastText, todayText;
 		var avTar = avTarg;
@@ -1825,15 +1825,18 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			case 'chart-daily':
 				console.log('daily');
 				notCurrent = new Date(today);
-				notCurrent.setDate(notCurrent.getDate()-29);
+				//notCurrent.setDate(notCurrent.getDate()-29);
+				notCurrentText = new Date(today);
+				notCurrentText.setDate(notCurrentText.getDate()-29);
 				thePast = new Date(notCurrent);
+				notPastText = newDate(notCurrentText);
 				notTrend = new Date(today);
-				notTrend.setDate(notTrend.getDate()-59);
+				notTrend.setDate(notTrend.getDate()-29);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
 				trendSet = trendSet.format('Y-m-d');
-				$('#fromThis').text(pastText);
+				$('#fromThis').text(notPastText);
 				$('#toThis').text(todayText);
 				$.getJSON(dasConfig, function(confdata){
 					thisDiv = confdata[confLoc].units;

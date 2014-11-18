@@ -1680,7 +1680,7 @@ function buildout(button){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 		<div class="table-header clearfix"> \
 		<div class="table-caption">'+ tableRow +'</div> \
-		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">Custom</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
 		<tbody></tbody> \
@@ -1690,7 +1690,7 @@ function buildout(button){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 		<div class="table-header clearfix"> \
 		<div class="table-caption">'+ tableRow +' Summary</div> \
-		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">New Range</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
+		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date Range From:&nbsp;</label><input type="text" class="dater" id="from" name="from" value="'+pastMonth+'"><label for="to">&nbsp;To:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">Custom</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
 		<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>&nbsp;</th><th>Avail Trend</th><th>Target</th><th>Performance</th><th>&nbsp;</th><th>Perf Trend</th><th>Notes</th><th>Trending</th></tr></thead> \
 		<tbody></tbody> \
@@ -1940,7 +1940,17 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		confLoc = parseInt(confLoc);
 		jLoc = parseInt(jLoc);
 		var chartDialog;
+		var theMarquee = $('.thisMarquee').text();
 		var thisMarquee;
+		console.log(theMarquee);
+		if (theMarquee.indexOf('AVAILABILITY') > -1){
+			theMarquee = theMarquee.replace(' AVAILABILITY', '');
+			thisMarquee = theMarquee;
+		}else if(theMarquee.indexOf('PERFORMANCE') > -1){
+			theMarquee = theMarquee.replace(' PERFORMANCE', '');
+			thisMarquee = theMarquee;
+		}
+		
 		var fromThis = $('#fromThis').text();
 		var toThis =  $('#toThis').text();
 		var past = new Date(fromThis);
@@ -1997,16 +2007,16 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		$('#tooltip').remove();
 		
 		if(thisLocal.indexOf('kpi-1') > -1){
-			thisMarquee = thisLocal.split('-availtrend')[0];
-			thisMarquee = thisMarquee.split('-').join(' ');
-			thisMarquee = thisMarquee.toUpperCase();
+			//thisMarquee = thisLocal.split('-availtrend')[0];
+			//thisMarquee = thisMarquee.split('-').join(' ');
+			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 		}else if(thisLocal.indexOf('kpi-3') > -1){
-			thisMarquee = thisLocal.split('-perftrend')[0];
-			thisMarquee = thisMarquee.split('-').join(' ');
-			thisMarquee = thisMarquee.toUpperCase();
+			//thisMarquee = thisLocal.split('-perftrend')[0];
+			//thisMarquee = thisMarquee.split('-').join(' ');
+			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';

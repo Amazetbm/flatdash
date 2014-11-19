@@ -114,7 +114,7 @@ function writedateCookie(queryFrom, queryTo){
 function deleteCookie(){
 	document.cookie='fromThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 	document.cookie='toThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-	location.reload();
+	initApp();
 }
 
 function selectedTab(tabID, queryFrom, queryTo){

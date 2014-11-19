@@ -4796,7 +4796,7 @@ function writedateCookie(queryFrom, queryTo){
 function deleteCookie(){
 	document.cookie='fromThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 	document.cookie='toThis=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-	location.reload();
+	initApp();
 }
 
 function selectedTab(tabID, queryFrom, queryTo){
@@ -6775,6 +6775,19 @@ function initAdminApp(){
 	buildoutAdmin(initButton);
 }
 
+function writedateCookieAdmin(queryFrom, queryTo){
+	var fromThis = queryFrom;
+	var toThis = queryTo;
+	document.cookie='fromThisAdmin='+fromThis;	
+	document.cookie='toThisAdmin='+toThis;
+}
+
+function deleteCookieAdmin(){
+	document.cookie='fromThisAdmin=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	document.cookie='toThisAdmin=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+	initAdminApp();
+}
+
 function buildoutAdmin(button){
 	var thisBttn = button;
 	var tableRow;
@@ -6791,7 +6804,7 @@ function buildoutAdmin(button){
 	var p_dd = pastMonth.getDate();
 	var p_mm = pastMonth.getMonth()+1;
 	var p_yyyy = pastMonth.getFullYear();
-	var cookieDates;
+	var cookieDates = document.cookie;
 	var queryTo, queryFrom;	
 	if(dd<10) {
 	    dd='0'+dd;
@@ -6936,7 +6949,7 @@ function dateRangerAdmin(tabID){
     });
     
     $('#newRanger').click(function(){
-    	var prefromThis = $('#from').val();
+    	var prefromThis = $('#to').val();
     	var pretoThis = $('#to').val();
     	var fromThis, toThis;
     	var mmF = prefromThis.split('/')[0];
@@ -6948,7 +6961,7 @@ function dateRangerAdmin(tabID){
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
     	toThis = yyyyT+'-'+mmT+'-'+ddT;
 		
-    	writedateCookie(fromThis, toThis);
+    	writedateCookieAdmin(fromThis, toThis);
 
     	//Reformat date range for database query
     	$('#'+currentID+'-table tbody').empty();
@@ -6956,7 +6969,7 @@ function dateRangerAdmin(tabID){
     });
     
     $('#dateReset').click(function(){
-    	deleteCookie();
+    	deleteCookieAdmin();
     });
 }
 
@@ -6998,36 +7011,81 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 			divVar = confdata[i].division;
 			if (divVar == currentTable){
 				thisDiv = confdata[i].units;
-				for(var j=0, jlen=thisDiv.length; j < jlen; j++){
-					if(currentID.startsWith('Issues')){
-						cellName = thisDiv[j].name;
-						celldataCall = thisDiv[j].notesURI;
-						celldataCall = celldataCall.replace('fromThis', fromThis);
-						celldataCall = celldataCall.replace('toThis', toThis);
-						//Make it happen
-						IDTag = cellName.toLowerCase();
-						IDTag = IDTag.split(' ').join('-');
-						stuffNotes(currentID, celldataCall, fromThis, toThis);
-					}else{
-						cellName = thisDiv[j].name;
-						cellTTarget = thisDiv[j].availTarget;
-						cellPTarget = thisDiv[j].perfTarget;
-						celldataCall = thisDiv[j].dataURI;
-						celldataCall = celldataCall.replace('fromThis', fromThis);
-						celldataCall = celldataCall.replace('toThis', toThis);
-						//Make it happen
-						IDTag = cellName.toLowerCase();
-						IDTag = IDTag.split(' ').join('-');
-						$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa  fa-files-o"></span>Notes</button></td></tr>');
-						loadSparkDyn(IDTag, celldataCall); // From extentions_glue.js
-					}
+				for(var j=0, jlen=thisDiv.length; j < jlen; j++){	
+					cellName = thisDiv[j].name;
+					cellTTarget = thisDiv[j].availTarget;
+					cellPTarget = thisDiv[j].perfTarget;
+					celldataCall = thisDiv[j].dataURI;
+					celldataCall = celldataCall.replace('fromThis', fromThis);
+					celldataCall = celldataCall.replace('toThis', toThis);
+					//Make it happen
+					IDTag = cellName.toLowerCase();
+					IDTag = IDTag.split(' ').join('-');
+					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target" data-thecount="">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+					loadSparkDynAdmin(IDTag, celldataCall);
 				}				
 			}
 		}
 		//initTagButtons(fromThis, toThis);
 	});	
 }
-//Nave
+
+function loadSparkDynAdmin(IDChain, chainData){
+	var localID = IDChain;
+	var localData = chainData;
+	var Tval = 0;
+	var Pval = 0;
+	var TtrendAv = 0;
+	var PtrendAv = 0;
+	var tCount = 0;
+	TtrendVal = [];
+	PtrendVal = [];
+	trendDate = [];
+	$.getJSON(localData, function(jdata) {
+		//Parse data from the json values
+		for (var i=0, len=jdata.length; i < len; i++) {
+			TtrendVal.push(jdata[i].availability);
+			PtrendVal.push(jdata[i].performance);
+			trendDate.push(jdata[i].date);
+			tCount = jdata[i].count;
+			Tval = Tval + jdata[i].availability;
+			Pval = Pval + jdata[i].performance;		
+		}
+
+		stopNum = TtrendVal.length;
+		
+		//get the average of values vs dates
+		TtrendAv = Tval / jdata.length;
+		PtrendAv = Pval / jdata.length;
+		
+		//Round it off
+		TtrendAv = TtrendAv.toFixed(2);
+		PtrendAv = PtrendAv.toFixed(2);	
+		
+		// Plug em into the table
+		if(TtrendVal == '' || TtrendVal == null){
+			$('#'+localID+'-avail').text('No Data').css('font-size','0.8em').css('color','#F72D00');
+			$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+			$('#'+localID+'-availtrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+			$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');			
+		}else{
+			$('#'+localID+'-avail').text(TtrendAv);
+			$('#'+localID+'-perf').text(PtrendAv);
+			$('#'+localID+'-avail-target').attr('data-thecount', tCount);
+			tagCells(localID, PtrendAv, TtrendAv);
+			TtrendVal = [];
+			PtrendVal = [];
+			trendDate = [];
+		}
+    }).fail(function(){
+    	$('#'+localID+'-avail').text('No Data').css('font-size','0.8em').css('color','#F72D00');
+		$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+		$('#'+localID+'-availtrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+		$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
+    });		
+}
+
+//Nav
 $('#main-menu-buttons-admin li a').click(function(){
 	var linkBttn = $(this).attr('id');
 	buildoutAdmin(linkBttn);

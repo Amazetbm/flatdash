@@ -251,7 +251,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target" data-thecount="">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target" data-thecount="" pageID="">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
 					loadSparkDynAdmin(IDTag, celldataCall);
 				}				
 			}
@@ -268,6 +268,7 @@ function loadSparkDynAdmin(IDChain, chainData){
 	var TtrendAv = 0;
 	var PtrendAv = 0;
 	var tCount = 0;
+	var pageID;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -278,6 +279,7 @@ function loadSparkDynAdmin(IDChain, chainData){
 			PtrendVal.push(jdata[i].performance);
 			trendDate.push(jdata[i].date);
 			tCount = jdata[i].count;
+			pageID = jdata[i].page_id;
 			Tval = Tval + jdata[i].availability;
 			Pval = Pval + jdata[i].performance;		
 		}
@@ -302,6 +304,7 @@ function loadSparkDynAdmin(IDChain, chainData){
 			$('#'+localID+'-avail').text(TtrendAv);
 			$('#'+localID+'-perf').text(PtrendAv);
 			$('#'+localID+'-avail-target').attr('data-thecount', tCount);
+			$('#'+localID+'-avail-target').attr('pageID', pageID);
 			tagCells(localID, PtrendAv, TtrendAv);
 			TtrendVal = [];
 			PtrendVal = [];

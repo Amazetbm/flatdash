@@ -1829,11 +1829,12 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				notCurrentText = new Date(today);
 				notCurrentText.setDate(notCurrentText.getDate()-29);
 				thePast = new Date(notCurrent);
-				notPastText = newDate(notCurrentText);
+				notPastText = new Date(notCurrentText);
 				notTrend = new Date(today);
 				notTrend.setDate(notTrend.getDate()-29);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
+				notPastText = notPastText.format('M d, Y');
 				thePast = thePast.format('Y-m-d');
 				trendSet = trendSet.format('Y-m-d');
 				$('#fromThis').text(notPastText);
@@ -2081,7 +2082,7 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 	}	
 }
 
-$('.navigation li a').click(function(){
+$('#main-menu-buttons li a').click(function(){
 	var linkBttn = $(this).attr('id');
 	buildout(linkBttn);
 });

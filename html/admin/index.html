@@ -43,7 +43,7 @@ Use search to find needed section.
 <link href="../assets/stylesheets/jquery.wijmo-open.3.20142.45.css" rel="stylesheet" type="text/css" />
 <link href="../assets/stylesheets/jquery.wijmo-pro.3.20142.45.css" rel="stylesheet" type="text/css" />
 <!--[if lt IE 9]>
-		<script src="assets/javascripts/ie.min.js"></script>
+		<script src="../assets/javascripts/ie.min.js"></script>
 	<![endif]-->
 
 </head>
@@ -63,7 +63,7 @@ Use search to find needed section.
 -->
 <body class="theme-default main-menu-animated">
 <script>var init = [];</script> 
-<!-- Demo script --> <script src="assets/demo/demo.js"></script> <!-- / Demo script -->
+<!-- Demo script <script src="../assets/demo/demo.js"></script>  / Demo script -->
 
 <div id="main-wrapper"> 
   
@@ -80,7 +80,7 @@ Use search to find needed section.
         
         <!-- Logo --> 
         <a href="index.html" class="navbar-brand">
-        <div><img alt="Cox Automotive" src="assets/images/pixel-admin/CAI-color.jpg"></div>
+        <div><img alt="Cox Automotive" src="../assets/images/pixel-admin/CAI-color.jpg"></div>
         Score Card </a> 
         
         <!-- Main navbar toggle -->
@@ -172,7 +172,7 @@ Use search to find needed section.
                   <input type="text" class="form-control" placeholder="Search">
                 </form>
               </li>
-              <li class="dropdown"> <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown"> <img src="assets/demo/avatars/1.jpg" alt=""> <span>John Doe</span> </a>
+              <li class="dropdown"> <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown"> <img src="../assets/demo/avatars/1.jpg" alt=""> <span>John Doe</span> </a>
                 <ul class="dropdown-menu">
                   <li><a href="#"><span class="label label-warning pull-right">New</span>Profile</a></li>
                   <li><a href="#"><span class="badge badge-primary pull-right">New</span>Account</a></li>
@@ -223,16 +223,15 @@ Use search to find needed section.
         <!-- Menu custom -->
         <div>
           <div class="text-bg"><span class="text-slim">Welcome,</span> <span class="text-semibold">John</span></div>
-          <img src="assets/demo/avatars/1.jpg" alt="" class="">
+          <img src="../assets/demo/avatars/1.jpg" alt="" class="">
           <div class="btn-group"> <a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-envelope"></i></a> <a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-user"></i></a> <a href="#" class="btn btn-xs btn-primary btn-outline dark"><i class="fa fa-cog"></i></a> <a href="#" class="btn btn-xs btn-danger btn-outline dark"><i class="fa fa-power-off"></i></a> </div>
           <a href="#" class="close">&times;</a> </div>
       </div>
-      <ul class="navigation" id="main-menu-buttons">
+      <ul class="navigation" id="main-menu-buttons-admin">
         <!-- li> <a href="index.html" id="menu-link-dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a> </li -->
-        <li> <a href="#" id="menu-link-digitalMedia"><i class="menu-icon fa fa-th"></i><span class="mm-text">Digital Media</span></a></li>
-        <li> <a href="#" id="menu-link-software"><i class="menu-icon fa fa-tasks"></i><span class="mm-text">Software Division</span></a> </li>
-        <li> <a href="#" id="menu-link-enterprise"><i class="menu-icon fa fa-table"></i><span class="mm-text">Enterprise Division</span></a> </li>
-      	<li> <a href="#" id="menu-link-issues"><i class="menu-icon fa fa-exclamation"></i><span class="mm-text">Issues Summary</span></a> </li>
+        <li> <a href="#" id="menu-link-digitalMedia-admin"><i class="menu-icon fa fa-th"></i><span class="mm-text">Digital Media</span></a></li>
+        <li> <a href="#" id="menu-link-software-admin"><i class="menu-icon fa fa-tasks"></i><span class="mm-text">Software Division</span></a> </li>
+        <li> <a href="#" id="menu-link-enterprise-admin"><i class="menu-icon fa fa-table"></i><span class="mm-text">Enterprise Division</span></a> </li>
       </ul>
       <!-- / .navigation --> 
     </div>
@@ -285,30 +284,9 @@ Use search to find needed section.
         </div>
       </div>
     </div>
-    <div class="row" id="content-row-incident">
+    <div class="row" id="content-alert-row">
     	<div class="col-md-12">
-    		<div class="table-primary">
-          <div class="table-header">
-            <div class="table-caption">Incident</div>
-          </div>
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Incident Name</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Progress</th>
-                <th>Resolution</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="5" class="tempSpace"><br/>Coming Soon...</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="table-footer">&nbsp;</div>
-        </div>
+    		<!-- Other Stuff -->
     	</div>
     	<div class="col-md-4">
     		<span id="perf-chart" class="pie-chart"></span>&nbsp;<span id="perf-chart2" class="pie-chart"></span>

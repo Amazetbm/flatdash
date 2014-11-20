@@ -69,7 +69,7 @@ function buildoutAdmin(button){
 	$('#content-row-incident').css('display','block');
 	$('#content-row-chart').css('display','none');
 	$('#chart-col').empty();
-	$('#main-menu-buttons').children().removeClass('active');
+	$('#main-menu-buttons-admin').children().removeClass('active');
 	
 	switch (thisBttn){
 		case 'menu-link-digitalMedia-admin':
@@ -251,7 +251,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td>'+cellName+'</td><td id="'+IDTag+'-avail-target" data-thecount="" pageID="">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes"><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+					$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" pageID="" data-avail=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
 					loadSparkDynAdmin(IDTag, celldataCall);
 				}				
 			}
@@ -303,8 +303,9 @@ function loadSparkDynAdmin(IDChain, chainData){
 		}else{
 			$('#'+localID+'-avail').text(TtrendAv);
 			$('#'+localID+'-perf').text(PtrendAv);
-			$('#'+localID+'-avail-target').attr('data-thecount', tCount);
-			$('#'+localID+'-avail-target').attr('pageID', pageID);
+			$('#'+localID+'-notes').attr('data-thecount', tCount);
+			$('#'+localID+'-notes').attr('data-avail', TtrendAv);
+			$('#'+localID+'-notes').attr('pageID', pageID);
 			tagCells(localID, PtrendAv, TtrendAv);
 			TtrendVal = [];
 			PtrendVal = [];
@@ -315,7 +316,52 @@ function loadSparkDynAdmin(IDChain, chainData){
 		$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
 		$('#'+localID+'-availtrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
 		$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
-    });		
+    });	
+	
+	$('.btn-primary').unbind().click(function(){
+		var thisID = $(this).attr('id');
+		var thisSeq = $(this).attr('seq-loc');
+		var thisUnit = thisID.split('-notes')[0];
+		var thisPageID = $(this).attr('pageID');
+		var thisAvail = $(this).attr('data-avail');
+		var thisCount = $(this).attr('data-thecount');
+		var prettyStr = thisUnit.split('-').join(' ');
+		thisCount = parseInt(thisCount);
+		thisAvail = parseFloat(thisAvail);
+		thisAVail = thisAvail.toFixed(2);
+		prettyStr = prettyStr.toUpperCase();
+		console.log('Availability: '+thisAvail);
+		console.log('Count: '+thisCount);
+		editForm(thisPageID, prettyStr, thisAvail, thisCount);
+	});	
+}
+
+function editForm (pageID, unit, avail, count){
+	var thisUnit = unit;
+	var thisAvail = avail;
+	var thisCount = count;
+	var thisPageID = pageID;
+	var total, converted;
+	converted = thisAvail/100;
+	total = thisCount/converted;
+	total = Math.round(total);
+	total = parseInt(total);
+	console.log('total: '+total);
+	var chartDialog = '<div class="panel"><div class="panel-heading"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div class="row form-group"><label class="col-sm-2">Count:</label><div class="col-sm-4"><input type="text" name="count" class="form-control"></div></div></div></div>';
+	$('#content-row-table').css('display','none');
+	$('#content-row-incident').css('display','none');
+	$('#content-row-chart').css('display','block');
+	$('#chart-col').append(chartDialog);
+	theCloser();
+}
+
+function theCloser(){
+	$('#closeChart').click(function(){
+		$('#content-row-table').css('display','block');
+		$('#content-row-incident').css('display','block');
+		$('#content-row-chart').css('display','none');
+		$('#chart-col').empty();
+	});
 }
 
 //Nav

@@ -7111,33 +7111,37 @@ function editForm (pageID, unit, avail, count){
 	var thisAvail = avail;
 	var thisCount = count;
 	var thisPageID = pageID;
-	var total, converted;
+	var total, errorCount, converted;
 	converted = thisAvail/100;
 	total = thisCount/converted;
 	total = Math.round(total);
 	total = parseInt(total);
+	errorCount = total - thisCount;
 	console.log('total: '+total);
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Good Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+thisCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary">Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary">Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
 	$('#chart-col').append(chartDialog);
-	recUpdate(thisPageID, thisAvail, thisCount, total);
+	recUpdate(thisPageID, thisAvail, errorCount, total);
 	theCloser();
 }
 
-function recUpdate(pageID, avail, count, total){
+function recUpdate(pageID, avail, errors, total){
 	var thisPageID = pageID;
-	var thisCount = count;
+	var thisCount;
 	var thisAVail = avail;
+	var theseErrors = errors;
 	var thisTotal = total;
 	var newAvail;
 
 	$('#inCount').blur(function(){
-		thisCount = $(this).val();
+		theseErrors = $(this).val();
+		thisCount = thisTotal - theseErrors;
 		newAvail = thisCount / thisTotal;
 		newAvail = newAvail * 100;
 		newAvail = newAvail.toFixed(2);
+		$('#goodCount').text(thisCount).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		
 	});

@@ -330,8 +330,6 @@ function loadSparkDynAdmin(IDChain, chainData){
 		thisAvail = parseFloat(thisAvail);
 		thisAVail = thisAvail.toFixed(2);
 		prettyStr = prettyStr.toUpperCase();
-		console.log('Availability: '+thisAvail);
-		console.log('Count: '+thisCount);
 		editForm(thisPageID, prettyStr, thisAvail, thisCount);
 	});	
 }
@@ -347,7 +345,7 @@ function editForm (pageID, unit, avail, count){
 	total = Math.round(total);
 	total = parseInt(total);
 	errorCount = total - thisCount;
-	console.log('total: '+total);
+
 	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary">Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');

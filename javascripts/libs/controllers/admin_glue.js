@@ -347,12 +347,30 @@ function editForm (pageID, unit, avail, count){
 	total = Math.round(total);
 	total = parseInt(total);
 	console.log('total: '+total);
-	var chartDialog = '<div class="panel"><div class="panel-heading"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div class="row form-group"><label class="col-sm-2">Count:</label><div class="col-sm-4"><input type="text" name="count" class="form-control"></div></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Good Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+thisCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary">Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
 	$('#chart-col').append(chartDialog);
+	recUpdate(thisPageID, thisAvail, thisCount, total);
 	theCloser();
+}
+
+function recUpdate(pageID, avail, count, total){
+	var thisPageID = pageID;
+	var thisCount = count;
+	var thisAVail = avail;
+	var thisTotal = total;
+	var newAvail;
+
+	$('#inCount').blur(function(){
+		thisCount = $(this).val();
+		newAvail = thisCount / thisTotal;
+		newAvail = newAvail * 100;
+		newAvail = newAvail.toFixed(2);
+		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
+		
+	});
 }
 
 function theCloser(){

@@ -9311,3 +9311,7 @@
 #dateReset {
   margin-left: 3px;
 }
+.currentPulse {
+  color: #1CC90C;
+  font-size: 1.4em;
+}

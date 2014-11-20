@@ -19488,6 +19488,10 @@ body:not(.right-to-left) .no-border-l {
 #dateReset {
   margin-left: 3px;
 }
+.currentPulse {
+  color: #1CC90C;
+  font-size: 1.4em;
+}
 #main-navbar .navbar-brand {
   font-size: 13px;
   opacity: 1;

@@ -7049,7 +7049,7 @@ function loadSparkDynAdmin(IDChain, chainData){
 			PtrendVal.push(jdata[i].performance);
 			trendDate.push(jdata[i].date);
 			tCount = jdata[i].count;
-			pageID = jdata[i].page_id;
+			pageID = jdata[i]._id;
 			Tval = Tval + jdata[i].availability;
 			Pval = Pval + jdata[i].performance;		
 		}

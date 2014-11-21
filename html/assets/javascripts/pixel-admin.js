@@ -7116,7 +7116,7 @@ function editForm (pageID, unit, avail, count){
 	total = parseInt(total);
 	errorCount = total - thisCount;
 
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary">Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
@@ -7135,13 +7135,40 @@ function recUpdate(pageID, avail, errors, total){
 
 	$('#inCount').blur(function(){
 		theseErrors = $(this).val();
+		theseErrors = parseInt(theseErrors);
 		thisCount = thisTotal - theseErrors;
 		newAvail = thisCount / thisTotal;
 		newAvail = newAvail * 100;
+		newAvail = parseFloat(newAvail);
 		newAvail = newAvail.toFixed(2);
 		$('#goodCount').text(thisCount).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
-		
+		$('#updateRecord').prop('disabled', false);
+	});
+	
+	$('#updateRecord').click(function(){
+		console.log(thisPageID);
+		console.log(newAvail);
+		console.log(thisCount);
+		$.ajax({
+			  url: 'https://taxi49071.autotrader.com:3000/scorecard/daily/'+thisPageID,
+		      data: {
+		    	  count : thisCount,
+			      availability : newAvail,
+	    	  },
+		      type: "PUT",
+		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		      success: function (msg) {
+	              console.log('Success');
+	              $('#content-row-table').css('display','block');
+	      		  $('#content-row-incident').css('display','block');
+	      		  $('#content-row-chart').css('display','none');
+	      		  $('#chart-col').empty();
+		      },
+		      error: function (err){
+                  console.log('Error');
+		      }
+		});
 	});
 }
 

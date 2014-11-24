@@ -7116,7 +7116,7 @@ function editForm (pageID, unit, avail, count){
 	total = parseInt(total);
 	errorCount = total - thisCount;
 
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox" class="col-sm-3"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
@@ -7144,6 +7144,8 @@ function recUpdate(pageID, avail, errors, total){
 		$('#goodCount').text(thisCount).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#updateRecord').prop('disabled', false);
+	}).focus(function(){
+		$('#alertBox').empty().removeClass('errorPulse');
 	});
 	
 	$('#updateRecord').click(function(){
@@ -7166,6 +7168,7 @@ function recUpdate(pageID, avail, errors, total){
 	      		  $('#chart-col').empty();
 		      },
 		      error: function (err){
+		    	  $('#alertBox').text('Unable to update record!').addClass('errorPulse');
                   console.log('Error');
 		      }
 		});

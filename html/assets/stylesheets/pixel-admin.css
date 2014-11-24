@@ -19492,6 +19492,10 @@ body:not(.right-to-left) .no-border-l {
   color: #1CC90C;
   font-size: 1.4em;
 }
+.errorPulse {
+  color: #F72D00;
+  font-weight: bold;
+}
 #main-navbar .navbar-brand {
   font-size: 13px;
   opacity: 1;

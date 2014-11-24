@@ -9315,3 +9315,7 @@
   color: #1CC90C;
   font-size: 1.4em;
 }
+.errorPulse {
+  color: #F72D00;
+  font-weight: bold;
+}

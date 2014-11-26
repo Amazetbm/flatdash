@@ -322,8 +322,7 @@ function initTagButtons(fromQuery, toQuery){
 		var jLoc = thisSeq.split(',')[1];
 		confLoc = parseInt(confLoc);
 		jLoc = parseInt(jLoc);
-		var chartDialog;
-		var thisMarquee;
+		var chartDialog, thisMarquee;
 		var fromThis = fromQuery;
 		var toThis = toQuery;
 		var past = new Date(fromThis);
@@ -397,12 +396,16 @@ function initTagButtons(fromQuery, toQuery){
 			celldataCall = thisDiv[jLoc].dataURI;
 			celldataCall = celldataCall.replace('fromThis', fromThis);
 			celldataCall = celldataCall.replace('toThis', toThis);
+			notesdataCall = thisDiv[jLoc].notesURI;
+			notesdataCall = notesdataCall.replace('fromThis', fromThis);
+			notesdataCall = notesdataCall.replace('toThis', toThis);
 			theTrend = thisDiv[jLoc].dataURI;
 			theTrend = theTrend.replace('fromThis', trendSet);
 			theTrend = theTrend.replace('toThis', trendTo);
 			availTar = thisDiv[jLoc].availTarget;
 			perfTar = thisDiv[jLoc].perfTarget;
-			largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
+			//largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
+			largeDataNotes(celldataCall, availTar, perfTar, dialogID, longID, theTrend, notesdataCall);
 		});
 	});	
 	
@@ -533,6 +536,127 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 		}
 	});
+	
+	$('#closeChart').click(function(){
+		$('#content-row-table').css('display','block');
+		$('#content-row-incident').css('display','block');
+		$('#content-row-chart').css('display','none');
+		$('#chart-col').empty();
+		$('#tooltip').remove();
+	});
+}
+
+function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, trendCall, notesChain){
+	var celldataCall = dataChain;
+	var trenddataCall = trendCall;
+	var notesdataCall = notesChain;
+	var funcID = dialogID;
+	var barID = longID;
+	var Tval = 0;
+	var Pval = 0;
+	var TtrendAv = 0;
+	var PtrendAv = 0;
+	var trendTval = 0;
+	var trendPval = 0;
+	var trendTtrendAv = 0;
+	var trendPtrendAv = 0;
+	var avTar = [];
+	var avPer = [];
+	var tTarget = parseFloat(availTarget);
+	var pTarget = parseFloat(perfTarget);
+	var chartType;
+	var altTrend;
+	var altPerf;
+	var tempdate;
+	var tempEpoc;
+	var theUnit;
+	var theDate;
+	var theNote;
+	var dateTimer;
+	TtrendVal = [];
+	PtrendVal = [];
+	trendDate = [];
+	var availPair = [];
+	var perfPair = [];
+	var availTarPair = [];
+	var perTarPair = [];
+
+	$.getJSON(trenddataCall, function(jtdata) {
+		for (var j=0, len=jtdata.length; j < len; j++) {
+			trendTval = trendTval + jtdata[j].availability;
+			trendPval = trendPval + jtdata[j].performance;
+		}
+		
+		//get the average of values vs dates 
+		trendTtrendAv = trendTval / jtdata.length;
+		trendPtrendAv = trendPval / jtdata.length;
+		
+		//Round it off
+		trendTtrendAv = trendTtrendAv.toFixed(2);
+		trendPtrendAv = trendPtrendAv.toFixed(2);
+		stuffTrends(trendTtrendAv, trendPtrendAv);
+	});
+	
+	$.getJSON(notesdataCall, function(jdata){
+		for (var i=0, len=jdata.length; i < len; i++) {
+			theUnit = jdata[i].company;
+			theDate = jdata[i].opened_at;
+			theNote = jdata[i].description;
+			dateTimer = new Date(theDate).getTime();
+			if(!theUnit){
+				theUnit = 'General';
+			}
+		}
+	});
+	
+	$.getJSON(celldataCall, function(jldata) {
+		//Parse data from the json values
+		for (var i=0, len=jldata.length; i < len; i++) {
+			TtrendVal.push(jldata[i].availability);
+			PtrendVal.push(jldata[i].performance);
+			tempdate = new Date(jldata[i].date);
+			tempEpoc = new Date(jldata[i].date).getTime();
+			tempdate.setDate(tempdate.getDate() + 1);
+			trendDate.push(tempdate);
+			availPair.push([tempEpoc, jldata[i].availability]);
+			perfPair.push([tempEpoc, jldata[i].performance]);
+			availTarPair.push([tempEpoc, tTarget]);
+			perTarPair.push([tempEpoc, pTarget]); 
+			avTar.push(tTarget);
+			avPer.push(pTarget);	
+			Tval = Tval + jldata[i].availability;
+			Pval = Pval + jldata[i].performance;
+		}
+
+		//get the average of values vs dates 
+		TtrendAv = Tval / jldata.length;
+		PtrendAv = Pval / jldata.length;
+		
+		//Round it off
+		TtrendAv = TtrendAv.toFixed(2);
+		PtrendAv = PtrendAv.toFixed(2);
+		
+		//alts
+		altTrend = TtrendVal;
+		altPerf = PtrendVal; 
+		
+		if(funcID.indexOf('avail') > -1){
+			$('#kpi-perf-overlay').css({"z-index":3,"opacity":.7});
+			chartType = "Availibility";
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, availPair, availTarPair);
+			buildButtons(altTrend, trendDate, avTar, funcID, '', tTarget, pTarget);
+			kpiSwitch(altTrend, trendDate, avTar, funcID, tTarget, pTarget);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
+		}else if(funcID.indexOf('perf') > -1){
+			$('#kpi-avail-overlay').css({"z-index":3,"opacity":.7});
+			chartType = "Performance";
+			bigChartDyn2(trendDate, TtrendAv, PtrendAv, avTar, avPer, chartType, funcID, barID, perfPair, perTarPair);
+			buildButtons(altPerf, trendDate, avPer, funcID, '', tTarget, pTarget);
+			kpiSwitch(altPerf, trendDate, avPer, funcID, tTarget, pTarget);
+			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
+		}
+	});
+	
 	
 	$('#closeChart').click(function(){
 		$('#content-row-table').css('display','block');

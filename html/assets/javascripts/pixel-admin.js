@@ -7277,7 +7277,7 @@ function recUpdate(pageID, avail, errors, total){
 		console.log(newAvail);
 		console.log(thisCount);
 		$.ajax({
-			  url: 'https://taxi49071.autotrader.com:3000/scorecard/daily/'+thisPageID,
+			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisPageID,
 		      data: {
 		    	  count : thisCount,
 			      availability : newAvail,

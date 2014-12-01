@@ -19496,6 +19496,10 @@ body:not(.right-to-left) .no-border-l {
   color: #F72D00;
   font-weight: bold;
 }
+.successPulse {
+  color: #1CC90C;
+  font-weight: bold;
+}
 #main-navbar .navbar-brand {
   font-size: 13px;
   opacity: 1;

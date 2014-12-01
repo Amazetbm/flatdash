@@ -252,7 +252,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
 					$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" pageID="" data-avail=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
-					loadSparkDynAdmin(IDTag, celldataCall);
+					loadSparkDynAdmin(IDTag, celldataCall, fromThis);
 				}				
 			}
 		}
@@ -260,9 +260,10 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 	});	
 }
 
-function loadSparkDynAdmin(IDChain, chainData){
+function loadSparkDynAdmin(IDChain, chainData, fromDate){
 	var localID = IDChain;
 	var localData = chainData;
+	var fromThis = fromDate;
 	var Tval = 0;
 	var Pval = 0;
 	var TtrendAv = 0;
@@ -299,7 +300,7 @@ function loadSparkDynAdmin(IDChain, chainData){
 			$('#'+localID+'-avail').text('No Data').css('font-size','0.8em').css('color','#F72D00');
 			$('#'+localID+'-perf').text('No Data').css('font-size','0.7em').css('color','#F72D00');
 			$('#'+localID+'-availtrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
-			$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');			
+			$('#'+localID+'-perftrend').text('No Data').css('font-size','0.7em').css('color','#F72D00');
 		}else{
 			$('#'+localID+'-avail').text(TtrendAv);
 			$('#'+localID+'-perf').text(PtrendAv);
@@ -330,15 +331,18 @@ function loadSparkDynAdmin(IDChain, chainData){
 		thisAvail = parseFloat(thisAvail);
 		thisAVail = thisAvail.toFixed(2);
 		prettyStr = prettyStr.toUpperCase();
-		editForm(thisPageID, prettyStr, thisAvail, thisCount);
+		editForm(thisPageID, prettyStr, thisAvail, thisCount, fromThis);
 	});	
 }
 
-function editForm (pageID, unit, avail, count){
+function editForm (pageID, unit, avail, count, fromDate){
 	var thisUnit = unit;
 	var thisAvail = avail;
 	var thisCount = count;
 	var thisPageID = pageID;
+	var fromThis = fromDate;
+	var displayDate = new Date(fromThis);
+	displayDate = displayDate.format('M d, Y');;
 	var total, errorCount, converted;
 	converted = thisAvail/100;
 	total = thisCount/converted;
@@ -346,23 +350,24 @@ function editForm (pageID, unit, avail, count){
 	total = parseInt(total);
 	errorCount = total - thisCount;
 
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox" class="col-sm-3"></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span>&nbsp;&nbsp;-&nbsp;&nbsp;<spanRecord >Date: </span><span id="displayDate">'+displayDate+'</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox" class="col-sm-3"></div></div><div class="row form-group"><label class="col-sm-2">Notes: </label><div class="col-sm-4"><textarea rows="5" cols="40" id="inNote" name="notes" class="form-control"></textarea></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
 	$('#chart-col').append(chartDialog);
-	recUpdate(thisPageID, thisAvail, errorCount, total);
+	recUpdate(thisPageID, thisAvail, errorCount, total, fromThis);
 	theCloser();
 }
 
-function recUpdate(pageID, avail, errors, total){
+function recUpdate(pageID, avail, errors, total, fromDate){
 	var thisPageID = pageID;
 	var thisCount;
 	var thisAVail = avail;
 	var theseErrors = errors;
 	var thisTotal = total;
-	var newAvail;
-
+	var fromThis = fromDate;
+	var today, newAvail, newNote;
+	
 	$('#inCount').blur(function(){
 		theseErrors = $(this).val();
 		theseErrors = parseInt(theseErrors);
@@ -371,38 +376,55 @@ function recUpdate(pageID, avail, errors, total){
 		newAvail = newAvail * 100;
 		newAvail = parseFloat(newAvail);
 		newAvail = newAvail.toFixed(2);
+		today = new Date();
+		today = today.format('c');
 		$('#goodCount').text(thisCount).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#updateRecord').prop('disabled', false);
+		
 	}).focus(function(){
 		$('#alertBox').empty().removeClass('errorPulse');
 	});
 	
+	
 	$('#updateRecord').click(function(){
-		console.log(thisPageID);
-		console.log(newAvail);
-		console.log(thisCount);
-		$.ajax({
+		newNote = $('#inNote').val();
+		console.log('_id: '+thisPageID);
+		console.log('date: '+fromThis);
+		console.log('count: '+thisCount);
+		console.log('availability: '+newAvail);
+		console.log('updated_at: '+today);
+		console.log('notes: '+newNote);
+		/*$.ajax({
 			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisPageID,
+			  type: "PUT",
 		      data: {
+		    	  date: fromThis,
 		    	  count : thisCount,
 			      availability : newAvail,
-	    	  },
-		      type: "PUT",
-		      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		      success: function (msg) {
+			      updated_at: today
+	    	  },  
+		      contentType: "application/json",
+		      success: function () {
 	              console.log('Success');
-	              $('#content-row-table').css('display','block');
-	      		  $('#content-row-incident').css('display','block');
-	      		  $('#content-row-chart').css('display','none');
-	      		  $('#chart-col').empty();
+	              $('#alertBox').text('Record Updated!').addClass('successPulse');
+	              setTimeout(closeBox, 2000);
 		      },
-		      error: function (err){
+		      error: function (){
 		    	  $('#alertBox').text('Unable to update record!').addClass('errorPulse');
                   console.log('Error');
 		      }
 		});
+		*/
 	});
+}
+
+function closeBox(){
+	$('#content-row-table').css('display','block');
+	$('#content-row-incident').css('display','block');	
+	$('#content-row-chart').css('display','none');
+	$('#chart-col').empty();
+	initAdminApp();
 }
 
 function theCloser(){

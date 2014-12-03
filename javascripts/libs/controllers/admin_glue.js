@@ -406,8 +406,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 	
 	
 	$('#updateRecord').click(function(){
-		newNote = $('#inNote').val();
-		
+		newNote = $('#inNote').val();	
 		var availData = new Object();
 		availData = {
 			_id: thisID,
@@ -437,10 +436,9 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		      dataType: "json",
 		      success: function (data, textStatus, jqXHR) {
 	              $('#alertBox_avail').text('Record Updated!').addClass('successPulse');
-	              console.log(data);
 	              availSuccess = true;
 	              actionType = 'avail';
-	              actionLogger(today, actionType, availSuccess, thisID);
+	              actionLogger(today, actionType, availSuccess, thisID); 
 	              
 	              if(!newNote || newNote == ''){
 		      			console.log('Note field is empty');
@@ -490,7 +488,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	var currentState = thisState;
 	var thisID = thisPage;
 	var displayState, displayType;
-	
+	var logData = new Object();
 	if (logType == 'avail'){
 		displayType = 'Availability';
 	}else if (logType == 'note'){
@@ -503,7 +501,30 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 		displayState = 'Failed';
 	}
 	
-	console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+thisID);
+	logData = {
+		Timestamp: today,
+		Log_Type: displayType,
+		Log_State: displayState,
+		Record: thisID
+	};
+	
+	//console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+thisID);
+	$.ajax({
+		  url: 'https://itsc.autotrader.com:3000/scorecard/last_upd_log/',
+		  type: 'POST',
+		  crossDomain: true,
+	      data: JSON.stringify(logData),  
+	      contentType: "application/json",
+	      dataType: "json",
+	      success: function (data, textStatus, jqXHR) {        
+              console.log('success!');
+              console.log(data);
+	      },
+	      error: function (req, status, err){
+	    	  var errorType = req.status;
+	    	  console.log('error: '+errorType);
+	      }
+	});
 }
 
 function closeBox(){

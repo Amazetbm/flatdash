@@ -251,7 +251,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 					//Make it happen
 					IDTag = cellName.toLowerCase();
 					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" pageID="" data-avail=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+					$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
 					loadSparkDynAdmin(IDTag, celldataCall, fromThis);
 				}				
 			}
@@ -269,7 +269,7 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 	var TtrendAv = 0;
 	var PtrendAv = 0;
 	var tCount = 0;
-	var pageID;
+	var thisID, pageID, thisUnit, thisPage;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -280,7 +280,10 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 			PtrendVal.push(jdata[i].performance);
 			trendDate.push(jdata[i].date);
 			tCount = jdata[i].count;
-			pageID = jdata[i]._id;
+			thisID = jdata[i]._id;
+			pageID = jdata[i].page_id;
+			thisUnit = jdata[i].unit;
+			thisPage = jdata[i].page;
 			Tval = Tval + jdata[i].availability;
 			Pval = Pval + jdata[i].performance;		
 		}
@@ -306,7 +309,10 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 			$('#'+localID+'-perf').text(PtrendAv);
 			$('#'+localID+'-notes').attr('data-thecount', tCount);
 			$('#'+localID+'-notes').attr('data-avail', TtrendAv);
-			$('#'+localID+'-notes').attr('pageID', pageID);
+			$('#'+localID+'-notes').attr('data-perf', PtrendAv);
+			$('#'+localID+'-notes').attr('data-page', thisPage);
+			$('#'+localID+'-notes').attr('thisPageID', pageID);
+			$('#'+localID+'-notes').attr('thisID', thisID);
 			tagCells(localID, PtrendAv, TtrendAv);
 			TtrendVal = [];
 			PtrendVal = [];
@@ -323,23 +329,29 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 		var thisID = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
 		var thisUnit = thisID.split('-notes')[0];
-		var thisPageID = $(this).attr('pageID');
+		var thisID = $(this).attr('thisID');
 		var thisAvail = $(this).attr('data-avail');
 		var thisCount = $(this).attr('data-thecount');
+		var currentPerf = $(this).attr('data-perf');
+		var currentPage = $(this).attr('data-page');
+		var currPageID = $(this).attr('thisPageID');
 		var prettyStr = thisUnit.split('-').join(' ');
 		thisCount = parseInt(thisCount);
 		thisAvail = parseFloat(thisAvail);
 		thisAVail = thisAvail.toFixed(2);
 		prettyStr = prettyStr.toUpperCase();
-		editForm(thisPageID, prettyStr, thisAvail, thisCount, fromThis);
+		editForm(thisID, prettyStr, currentPage, currPageID, thisAvail, currentPerf, thisCount, fromThis);
 	});	
 }
 
-function editForm (pageID, unit, avail, count, fromDate){
+function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	var thisUnit = unit;
+	var thisPage = page;
+	var pageID = pgID;
 	var thisAvail = avail;
+	var thisPerf = perf;
 	var thisCount = count;
-	var thisPageID = pageID;
+	var thisID = thisID;
 	var fromThis = fromDate;
 	var displayDate = new Date(fromThis);
 	displayDate = displayDate.format('M d, Y');;
@@ -350,23 +362,27 @@ function editForm (pageID, unit, avail, count, fromDate){
 	total = parseInt(total);
 	errorCount = total - thisCount;
 
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span>&nbsp;&nbsp;-&nbsp;&nbsp;<spanRecord >Date: </span><span id="displayDate">'+displayDate+'</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox_avail" class="col-sm-5"></div></div><div class="row form-group"><label class="col-sm-2">Notes: </label><div class="col-sm-4"><textarea rows="5" cols="40" id="inNote" name="notes" class="form-control"></textarea></div><div id="alertBox_note" class="col-sm-5"></div></div><div class="panel-footer text-right"><button id="cancelThis" class="btn btn-primary">Cancel</button>&nbsp;<button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" thisID="'+thisID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span>&nbsp;&nbsp;-&nbsp;&nbsp;<spanRecord >Date: </span><span id="displayDate">'+displayDate+'</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox_avail" class="col-sm-5"></div></div><div class="row form-group"><label class="col-sm-2">Notes: </label><div class="col-sm-4"><textarea rows="5" cols="40" id="inNote" name="notes" class="form-control"></textarea></div><div id="alertBox_note" class="col-sm-5"></div></div><div class="panel-footer text-right"><button id="cancelThis" class="btn btn-primary">Cancel</button>&nbsp;<button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
 	$('#chart-col').append(chartDialog);
-	recUpdate(thisPageID, thisAvail, errorCount, total, fromThis);
+	recUpdate(thisID, pageID, thisUnit, thisAvail, thisPerf, errorCount, total, fromThis);
 	theCloser();
 }
 
-function recUpdate(pageID, avail, errors, total, fromDate){
-	var thisPageID = pageID;
+function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
+	var thisID = thisID;
+	var pageID = pgID;
+	var thisPage = unit;
+	var thisUnit = unit;
 	var thisCount;
 	var thisAVail = avail;
+	var thisPerf = perf;
 	var theseErrors = errors;
 	var thisTotal = total;
 	var fromThis = fromDate;
-	var today, newAvail, newNote, availSuccess, noteSuccess, logSuccess, actionType;
+	var today, opened_AT, newAvail, newNote, availSuccess, noteSuccess, logSuccess, actionType;
 	
 	$('#inCount').blur(function(){
 		theseErrors = $(this).val();
@@ -377,7 +393,9 @@ function recUpdate(pageID, avail, errors, total, fromDate){
 		newAvail = parseFloat(newAvail);
 		newAvail = newAvail.toFixed(2);
 		today = new Date();
+		opened_AT = new Date();
 		today = today.format('c');
+		opened_AT = opened_AT.format('m/d/Y');
 		$('#goodCount').text(thisCount).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#thisAvail').text(newAvail).addClass('currentPulse').delay(500).removeClass('currentPulse', 1000);
 		$('#updateRecord').prop('disabled', false);
@@ -390,73 +408,78 @@ function recUpdate(pageID, avail, errors, total, fromDate){
 	$('#updateRecord').click(function(){
 		newNote = $('#inNote').val();
 		
-		var availData = {
-				_id: thisPageID,
-				date: fromThis,
-				count: thisCount,
-				availability: newAvail,
-				updated_at: today
+		var availData = new Object();
+		availData = {
+			_id: thisID,
+			date: fromThis,
+			page_id: pageID,
+			availability: newAvail,
+			performance: thisPerf,
+			count: thisCount,
+			unit: thisUnit,
+			page: thisPage
 		};
-		
+
 		var noteData = {
-				date: today,
-				note: newNote
-		}
+				opend_at: today,
+				date: opened_AT,
+				page_id: pageID,
+				unit: thisUnit,
+				company: '',
+				description: newNote
+		};
 		$.ajax({
-			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisPageID,
+			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisID,
 			  type: "PUT",
 			  crossDomain: true,
-		      data: JSON.stringify(availData),  
+		      data: JSON.stringify(availData),
 		      contentType: "application/json",
 		      dataType: "json",
 		      success: function (data, textStatus, jqXHR) {
 	              $('#alertBox_avail').text('Record Updated!').addClass('successPulse');
-	              console.log('Success');
 	              console.log(data);
 	              availSuccess = true;
 	              actionType = 'avail';
-	              actionLogger(today, actionType, availSuccess, thisPageID);
+	              actionLogger(today, actionType, availSuccess, thisID);
+	              
+	              if(!newNote || newNote == ''){
+		      			console.log('Note field is empty');
+		      			noteSucces = true;
+		      		}else{
+		      			$.ajax({
+		      				  url: 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/',
+		      				  type: 'POST',
+		      				  crossDomain: true,
+		      			      data: JSON.stringify(noteData),  
+		      			      contentType: "application/json",
+		      			      dataType: "json",
+		      			      success: function (data, textStatus, jqXHR) {        
+		      		              $('#alertBox_note').text('Record Updated!').addClass('successPulse');
+		      		              noteSuccess = true;
+		      		              actionType = 'note';
+		      		              actionLogger(today, actionType, noteSuccess, thisID);
+		      		              setTimeout(closeBox, 2000);
+		      			      },
+		      			      error: function (req, status, err){
+		      			    	  var errorType = req.status;
+		      			    	  $('#alertBox_note').text('Unable to update record! Error Code: '+errorType).addClass('errorPulse');	    	  
+		      			    	  noteSuccess = false;
+		      			    	  actionType = 'note';
+		      			    	  actionLogger(today, actionType, noteSuccess, thisID);
+		      			      }
+		      			});
+		      		}
 	              //setTimeout(closeBox, 2000);
 		      },
 		      error: function (req, status, err){
-		    	  console.log('Error');
 		    	  var errorType = req.status;
 		    	  $('#alertBox_avail').text('Unable to update record! Error Code: '+errorType).addClass('errorPulse');    
                   availSuccess = false;
                   actionType = 'avail';
-                  actionLogger(today, actionType, availSuccess, thisPageID);
+                  actionLogger(today, actionType, availSuccess, thisID);
 		      }
 		});
 		
-		if(!newNote || newNote == ''){
-			console.log('Note field is empty');
-		}else{
-			$.ajax({
-				  url: 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/',
-				  type: 'POST',
-				  crossDomain: true,
-			      data: JSON.stringify(noteData),  
-			      contentType: "application/json",
-			      dataType: "json",
-			      success: function (data, textStatus, jqXHR) {        
-		              $('#alertBox_note').text('Record Updated!').addClass('successPulse');
-		              console.log('Success');
-		              console.log(data);
-		              noteSuccess = true;
-		              actionType = 'note';
-		              actionLogger(today, actionType, noteSuccess, thisPageID);
-		              //setTimeout(closeBox, 2000);
-			      },
-			      error: function (req, status, err){
-			    	  console.log('Error');
-			    	  var errorType = req.status;
-			    	  $('#alertBox_note').text('Unable to update record! Error Code: '+errorType).addClass('errorPulse');	    	  
-			    	  noteSuccess = false;
-			    	  actionType = 'note';
-			    	  actionLogger(today, actionType, noteSuccess, thisPageID);
-			      }
-			});
-		}		
 	});
 }
 
@@ -465,7 +488,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	var today = thisDate;
 	var logType = thisType;
 	var currentState = thisState;
-	var pageID = thisPage;
+	var thisID = thisPage;
 	var displayState, displayType;
 	
 	if (logType == 'avail'){
@@ -480,7 +503,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 		displayState = 'Failed';
 	}
 	
-	console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+pageID);
+	console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+thisID);
 }
 
 function closeBox(){

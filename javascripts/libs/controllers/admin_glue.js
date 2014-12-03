@@ -350,7 +350,7 @@ function editForm (pageID, unit, avail, count, fromDate){
 	total = parseInt(total);
 	errorCount = total - thisCount;
 
-	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span>&nbsp;&nbsp;-&nbsp;&nbsp;<spanRecord >Date: </span><span id="displayDate">'+displayDate+'</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox" class="col-sm-3"></div></div><div class="row form-group"><label class="col-sm-2">Notes: </label><div class="col-sm-4"><textarea rows="5" cols="40" id="inNote" name="notes" class="form-control"></textarea></div></div><div class="panel-footer text-right"><button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" pageID="'+thisPageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div><div class="panel-body"><div><p><strong>Total: <span id="thisTotal">'+total+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;Good Count: <span id="goodCount">'+thisCount+'</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span id="currentLine">Current Availability: <span id="thisAvail">'+thisAvail+'</span>%</span>&nbsp;&nbsp;-&nbsp;&nbsp;<spanRecord >Date: </span><span id="displayDate">'+displayDate+'</span></strong></p></div><div class="row form-group"><label class="col-sm-2">Error Count:</label><div class="col-sm-4"><input type="text" id="inCount" name="count" class="form-control" value="'+errorCount+'"></div><div id="alertBox_avail" class="col-sm-5"></div></div><div class="row form-group"><label class="col-sm-2">Notes: </label><div class="col-sm-4"><textarea rows="5" cols="40" id="inNote" name="notes" class="form-control"></textarea></div><div id="alertBox_note" class="col-sm-5"></div></div><div class="panel-footer text-right"><button id="cancelThis" class="btn btn-primary">Cancel</button>&nbsp;<button id="updateRecord" class="btn btn-primary" disabled>Update</button></div></div></div>';
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
@@ -366,7 +366,7 @@ function recUpdate(pageID, avail, errors, total, fromDate){
 	var theseErrors = errors;
 	var thisTotal = total;
 	var fromThis = fromDate;
-	var today, newAvail, newNote;
+	var today, newAvail, newNote, availSuccess, noteSuccess, logSuccess, actionType;
 	
 	$('#inCount').blur(function(){
 		theseErrors = $(this).val();
@@ -383,40 +383,104 @@ function recUpdate(pageID, avail, errors, total, fromDate){
 		$('#updateRecord').prop('disabled', false);
 		
 	}).focus(function(){
-		$('#alertBox').empty().removeClass('errorPulse');
+		$('#alertBox_avail').empty().removeClass('errorPulse');
 	});
 	
 	
 	$('#updateRecord').click(function(){
 		newNote = $('#inNote').val();
-		console.log('_id: '+thisPageID);
-		console.log('date: '+fromThis);
-		console.log('count: '+thisCount);
-		console.log('availability: '+newAvail);
-		console.log('updated_at: '+today);
-		console.log('notes: '+newNote);
-		/*$.ajax({
+		
+		var availData = {
+				_id: thisPageID,
+				date: fromThis,
+				count: thisCount,
+				availability: newAvail,
+				updated_at: today
+		};
+		
+		var noteData = {
+				date: today,
+				note: newNote
+		}
+		$.ajax({
 			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisPageID,
 			  type: "PUT",
-		      data: {
-		    	  date: fromThis,
-		    	  count : thisCount,
-			      availability : newAvail,
-			      updated_at: today
-	    	  },  
+			  crossDomain: true,
+		      data: JSON.stringify(availData),  
 		      contentType: "application/json",
-		      success: function () {
+		      dataType: "json",
+		      success: function (data, textStatus, jqXHR) {
+	              $('#alertBox_avail').text('Record Updated!').addClass('successPulse');
 	              console.log('Success');
-	              $('#alertBox').text('Record Updated!').addClass('successPulse');
-	              setTimeout(closeBox, 2000);
+	              console.log(data);
+	              availSuccess = true;
+	              actionType = 'avail';
+	              actionLogger(today, actionType, availSuccess, thisPageID);
+	              //setTimeout(closeBox, 2000);
 		      },
-		      error: function (){
-		    	  $('#alertBox').text('Unable to update record!').addClass('errorPulse');
-                  console.log('Error');
+		      error: function (req, status, err){
+		    	  console.log('Error');
+		    	  var errorType = req.status;
+		    	  $('#alertBox_avail').text('Unable to update record! Error Code: '+errorType).addClass('errorPulse');    
+                  availSuccess = false;
+                  actionType = 'avail';
+                  actionLogger(today, actionType, availSuccess, thisPageID);
 		      }
 		});
-		*/
+		
+		if(!newNote || newNote == ''){
+			console.log('Note field is empty');
+		}else{
+			$.ajax({
+				  url: 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/',
+				  type: 'POST',
+				  crossDomain: true,
+			      data: JSON.stringify(noteData),  
+			      contentType: "application/json",
+			      dataType: "json",
+			      success: function (data, textStatus, jqXHR) {        
+		              $('#alertBox_note').text('Record Updated!').addClass('successPulse');
+		              console.log('Success');
+		              console.log(data);
+		              noteSuccess = true;
+		              actionType = 'note';
+		              actionLogger(today, actionType, noteSuccess, thisPageID);
+		              //setTimeout(closeBox, 2000);
+			      },
+			      error: function (req, status, err){
+			    	  console.log('Error');
+			    	  var errorType = req.status;
+			    	  $('#alertBox_note').text('Unable to update record! Error Code: '+errorType).addClass('errorPulse');	    	  
+			    	  noteSuccess = false;
+			    	  actionType = 'note';
+			    	  actionLogger(today, actionType, noteSuccess, thisPageID);
+			      }
+			});
+		}		
 	});
+}
+
+// Write actions to external log
+function actionLogger(thisDate, thisType, thisState, thisPage){
+	var today = thisDate;
+	var logType = thisType;
+	var currentState = thisState;
+	var pageID = thisPage;
+	var displayState, displayType;
+	
+	if (logType == 'avail'){
+		displayType = 'Availability';
+	}else if (logType == 'note'){
+		displayType = 'Note';
+	}
+	
+	if (currentState == true){
+		displayState = 'Succeeded';
+	}else{
+		displayState = 'Failed';
+	}
+	
+	console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+pageID);
 }
 
 function closeBox(){
@@ -428,7 +492,7 @@ function closeBox(){
 }
 
 function theCloser(){
-	$('#closeChart').click(function(){
+	$('#closeChart, #cancelThis').click(function(){
 		$('#content-row-table').css('display','block');
 		$('#content-row-incident').css('display','block');
 		$('#content-row-chart').css('display','none');

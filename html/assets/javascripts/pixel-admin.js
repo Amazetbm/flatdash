@@ -7406,7 +7406,6 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 		Record: thisID
 	};
 	
-	//console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+thisID);
 	$.ajax({
 		  url: logURL,
 		  type: 'POST',

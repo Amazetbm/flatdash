@@ -427,8 +427,11 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 				company: '',
 				description: newNote
 		};
+		var dataURL = 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisID;
+		var notesURL = 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/';
+		console.log(dataURL);
 		$.ajax({
-			  url: 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisID,
+			  url: dataURL,
 			  type: "PUT",
 			  crossDomain: true,
 		      data: JSON.stringify(availData),
@@ -445,7 +448,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		      			noteSucces = true;
 		      		}else{
 		      			$.ajax({
-		      				  url: 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/',
+		      				  url: notesURL,
 		      				  type: 'POST',
 		      				  crossDomain: true,
 		      			      data: JSON.stringify(noteData),  
@@ -489,6 +492,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	var thisID = thisPage;
 	var displayState, displayType;
 	var logData = new Object();
+	var logURL = 'https://itsc.autotrader.com:3000/scorecard/last_upd_log/';
 	if (logType == 'avail'){
 		displayType = 'Availability';
 	}else if (logType == 'note'){
@@ -510,7 +514,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	
 	//console.log('Timestamp: '+today+', Log type: '+displayType+', State: '+displayState+', Record ID: '+thisID);
 	$.ajax({
-		  url: 'https://itsc.autotrader.com:3000/scorecard/last_upd_log/',
+		  url: logURL,
 		  type: 'POST',
 		  crossDomain: true,
 	      data: JSON.stringify(logData),  

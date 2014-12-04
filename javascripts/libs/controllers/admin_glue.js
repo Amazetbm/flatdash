@@ -256,7 +256,6 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 				}				
 			}
 		}
-		//initTagButtons(fromThis, toThis);
 	});	
 }
 
@@ -374,11 +373,14 @@ function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 	var thisID = thisID;
 	var pageID = pgID;
+	pageID = parseInt(pageID);
 	var thisPage = unit;
 	var thisUnit = unit;
 	var thisCount;
 	var thisAVail = avail;
 	var thisPerf = perf;
+	thisPerf = parseFloat(thisPerf);
+	thisPerf = thisPerf.toFixed(2);
 	var theseErrors = errors;
 	var thisTotal = total;
 	var fromThis = fromDate;
@@ -409,7 +411,6 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		newNote = $('#inNote').val();	
 		var availData = new Object();
 		availData = {
-			_id: thisID,
 			date: fromThis,
 			page_id: pageID,
 			availability: newAvail,
@@ -418,7 +419,8 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 			unit: thisUnit,
 			page: thisPage
 		};
-
+		console.log(availData);
+		console.log(JSON.stringify(noteData));
 		var noteData = {
 				opend_at: today,
 				date: opened_AT,
@@ -427,18 +429,31 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 				company: '',
 				description: newNote
 		};
+		
 		var dataURL = 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisID;
 		var notesURL = 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/';
-		console.log(dataURL);
-		$.ajax({
+		
+		console.log(dataURL); //check
+		/*$.ajax({
 			  url: dataURL,
 			  type: "PUT",
 			  crossDomain: true,
-		      data: JSON.stringify(availData),
-		      contentType: "application/json",
+		      //data: JSON.stringify(availData),
+			  data:{
+					date: fromThis,
+					page_id: pageID,
+					availability: newAvail,
+					performance: thisPerf,
+					count: thisCount,
+					unit: thisUnit,
+					page: thisPage
+				},
+			
+		      contentType: "application/json; charset=utf-8",
 		      dataType: "json",
 		      success: function (data, textStatus, jqXHR) {
 	              $('#alertBox_avail').text('Record Updated!').addClass('successPulse');
+	              console.log(data);
 	              availSuccess = true;
 	              actionType = 'avail';
 	              actionLogger(today, actionType, availSuccess, thisID); 
@@ -470,7 +485,6 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		      			      }
 		      			});
 		      		}
-	              //setTimeout(closeBox, 2000);
 		      },
 		      error: function (req, status, err){
 		    	  var errorType = req.status;
@@ -480,7 +494,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
                   actionLogger(today, actionType, availSuccess, thisID);
 		      }
 		});
-		
+		*/
 	});
 }
 

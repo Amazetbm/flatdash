@@ -6893,7 +6893,7 @@ $('#main-menu-buttons li a').click(function(){
 	buildout(linkBttn);
 });;
 var adminConfig = "../assets/json/config.json";
-
+//Turn on he app
 function initAdminApp(){
 	var initButton = 'menu-link-digitalMedia-admin';
 	buildoutAdmin(initButton);
@@ -6912,6 +6912,7 @@ function deleteCookieAdmin(){
 	initAdminApp();
 }
 
+//Build Inital Page
 function buildoutAdmin(button){
 	var thisBttn = button;
 	var tableRow;
@@ -7018,6 +7019,7 @@ function buildoutAdmin(button){
 	dateRangerAdmin(truncTableRow);
 }
 
+//Controls for Left Navigation
 function selectedTabAdmin(tabID, queryFrom, queryTo){
 	//Checks strings from the table ID
 	if (typeof String.prototype.startsWith != 'function') {
@@ -7046,6 +7048,7 @@ function selectedTabAdmin(tabID, queryFrom, queryTo){
 	}
 }
 
+//Set New range for the date
 function dateRangerAdmin(tabID){
 	var currentID = tabID;
 	$('#from').datepicker({
@@ -7097,6 +7100,7 @@ function dateRangerAdmin(tabID){
     });
 }
 
+//Build out the table row for each subdivision
 function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 	var currentID = tableID;
 	var currentTable = VarID;
@@ -7153,6 +7157,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 	});	
 }
 
+//Populate the cells with data
 function loadSparkDynAdmin(IDChain, chainData, fromDate){
 	var localID = IDChain;
 	var localData = chainData;
@@ -7237,6 +7242,7 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 	});	
 }
 
+//Opens Edit Form Populates it with proper data
 function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	var thisUnit = unit;
 	var thisPage = page;
@@ -7265,6 +7271,7 @@ function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	theCloser();
 }
 
+//Updates availablity record and allows user to enter notes as to "why"
 function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 	var thisID = thisID;
 	var pageID = pgID;
@@ -7332,21 +7339,10 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 			  type: "PUT",
 			  crossDomain: true,
 		      data: JSON.stringify(availData),
-			  /*data:{
-					date: fromThis,
-					page_id: pageID,
-					availability: newAvail,
-					performance: thisPerf,
-					count: thisCount,
-					unit: thisUnit,
-					page: thisPage
-				},
-			  */
 		      contentType: "application/json; charset=utf-8",
 		      dataType: "json",
 		      success: function (data, textStatus, jqXHR) {
 	              $('#alertBox_avail').text('Record Updated!').addClass('successPulse');
-	              console.log(data);
 	              availSuccess = true;
 	              actionType = 'avail';
 	              actionLogger(today, actionType, availSuccess, thisID); 
@@ -7354,6 +7350,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 	              if(!newNote || newNote == ''){
 		      			console.log('Note field is empty');
 		      			noteSucces = true;
+		      			setTimeout(closeBox, 2000);
 		      		}else{
 		      			$.ajax({
 		      				  url: notesURL,
@@ -7427,7 +7424,6 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	      dataType: "json",
 	      success: function (data, textStatus, jqXHR) {        
               console.log('success!');
-              console.log(data);
 	      },
 	      error: function (req, status, err){
 	    	  var errorType = req.status;
@@ -7435,7 +7431,7 @@ function actionLogger(thisDate, thisType, thisState, thisPage){
 	      }
 	});
 }
-
+//Reload new data
 function closeBox(){
 	$('#content-row-table').css('display','block');
 	$('#content-row-incident').css('display','block');	

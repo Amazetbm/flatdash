@@ -353,7 +353,8 @@ function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	var thisID = thisID;
 	var fromThis = fromDate;
 	var displayDate = new Date(fromThis);
-	displayDate = displayDate.format('M d, Y');;
+	displayDate.setDate(displayDate.getDate() + 1);
+	displayDate = displayDate.format('M d, Y');
 	var total, errorCount, converted;
 	converted = thisAvail/100;
 	total = thisCount/converted;
@@ -409,7 +410,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 	
 	$('#updateRecord').click(function(){
 		newNote = $('#inNote').val();	
-		var availData = new Object();
+		var availData = new Object();	
 		availData = {
 			date: fromThis,
 			page_id: pageID,
@@ -419,8 +420,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 			unit: thisUnit,
 			page: thisPage
 		};
-		console.log(availData);
-		console.log(JSON.stringify(noteData));
+		
 		var noteData = {
 				opend_at: today,
 				date: opened_AT,
@@ -432,14 +432,13 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		
 		var dataURL = 'https://itsc.autotrader.com:3000/scorecard/daily/'+thisID;
 		var notesURL = 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/';
-		
-		console.log(dataURL); //check
-		/*$.ajax({
+	
+		$.ajax({
 			  url: dataURL,
 			  type: "PUT",
 			  crossDomain: true,
-		      //data: JSON.stringify(availData),
-			  data:{
+		      data: JSON.stringify(availData),
+			  /*data:{
 					date: fromThis,
 					page_id: pageID,
 					availability: newAvail,
@@ -448,7 +447,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 					unit: thisUnit,
 					page: thisPage
 				},
-			
+			  */
 		      contentType: "application/json; charset=utf-8",
 		      dataType: "json",
 		      success: function (data, textStatus, jqXHR) {
@@ -467,7 +466,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		      				  type: 'POST',
 		      				  crossDomain: true,
 		      			      data: JSON.stringify(noteData),  
-		      			      contentType: "application/json",
+		      			      contentType: "application/json; charset=utf-8",
 		      			      dataType: "json",
 		      			      success: function (data, textStatus, jqXHR) {        
 		      		              $('#alertBox_note').text('Record Updated!').addClass('successPulse');
@@ -494,7 +493,6 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
                   actionLogger(today, actionType, availSuccess, thisID);
 		      }
 		});
-		*/
 	});
 }
 

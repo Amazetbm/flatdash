@@ -1,10 +1,12 @@
 var adminConfig = "../assets/json/config.json";
+
 //Turn on he app
 function initAdminApp(){
 	var initButton = 'menu-link-digitalMedia-admin';
 	buildoutAdmin(initButton);
 }
 
+//Cookie functions
 function writedateCookieAdmin(queryFrom, queryTo){
 	var fromThis = queryFrom;
 	var toThis = queryTo;
@@ -94,8 +96,7 @@ function buildoutAdmin(button){
 		
 	}
 	
-	//Build table
-	
+	//Build table	
 	truncTableRow = tableRow.split(' ').join('');
 	if (thisBttn == 'menu-link-issues'){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \

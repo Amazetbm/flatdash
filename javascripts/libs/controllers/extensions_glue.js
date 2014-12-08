@@ -2104,17 +2104,11 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		}
 		var parsedFrom = $('#fromText').text();
 		var parsedTo = $('#toText').text(); 
-		//parsedFrom = parsedFrom.split('/').join('-');
-		//parsedTo = parsedTo.split('/').join('-');
-		var fromThis = Date.parse(parsedFrom);
+		var fromThis = Date.parse(parsedFrom);  //uses date.js --> API http://www.datejs.com/2007/11/27/getting-started-with-datejs/
 		var toThis = Date.parse(parsedTo);
-		console.log('To this '+toThis);
-		//var fromThis = $('#fromThis').text();
-		//var toThis = $('#toThis').text();
 		var past = new Date(fromThis);
 		var newPast = new Date(fromThis); 
 		var today = new Date(toThis);
-		console.log('today '+today);
 		var newToday  = new Date(toThis);
 		var trendFrom = new Date(fromThis);
 		newPast = newPast.setDate(newPast.getDate());

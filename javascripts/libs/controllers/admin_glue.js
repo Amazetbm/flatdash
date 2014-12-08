@@ -55,10 +55,12 @@ function buildoutAdmin(button){
 		queryFrom = queryTo;
 	}else{
 		var cookieArray = cookieDates.split(';');
-		var epocFrom = new Date(cookieArray[0].split('=')[1]);
-		var epocTo = new Date(cookieArray[1].split('=')[1]);
-		epocFrom.setDate(epocFrom.getDate() + 1);
-		epocTo.setDate(epocTo.getDate() + 1);
+		var parsedFrom = Date.parse(cookieArray[0].split('=')[1]);
+		var parsedTo = Date.parse(cookieArray[1].split('=')[1]);
+		var epocFrom = new Date(parsedFrom);
+		var epocTo = new Date(parsedTo);
+		epocFrom.setDate(epocFrom.getDate());
+		epocTo.setDate(epocTo.getDate());
 		pastMonth = new Date(epocFrom);
 		today = new Date(epocTo);
 		pastMonth = pastMonth.format('m/d/Y');
@@ -358,9 +360,9 @@ function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	var thisPerf = perf;
 	var thisCount = count;
 	var thisID = thisID;
-	var fromThis = fromDate;
+	var fromThis = Date.parse(fromDate);
 	var displayDate = new Date(fromThis);
-	displayDate.setDate(displayDate.getDate() + 1);
+	displayDate.setDate(displayDate.getDate());
 	displayDate = displayDate.format('M d, Y');
 	var total, errorCount, converted;
 	converted = thisAvail/100;

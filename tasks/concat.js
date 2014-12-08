@@ -49,6 +49,7 @@ module.exports = function (js_src, js_dest) {
             'libs/select2-3.4.5/select2.js',
             'libs/controllers/extensions_glue.js',
             'libs/controllers/admin_glue.js',
+            'libs/controllers/date.js',
             
             // jQuery UI
             'libs/jquery-ui-1.10.4/jquery.ui.core.js',

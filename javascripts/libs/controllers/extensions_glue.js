@@ -99,6 +99,11 @@ Date.replaceChars = {
     U: function() { return this.getTime() / 1000; }
 };
 
+function parseDate(input) {
+  var parts = input.match(/(\d+)/g);
+  return new Date(parts[0], parts[1]-1, parts[2]);
+}
+
 function initApp(){
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
@@ -324,12 +329,14 @@ function initTagButtons(fromQuery, toQuery){
 		jLoc = parseInt(jLoc);
 		var chartDialog, thisMarquee;
 		var fromThis = fromQuery;
+		var fromParsed = parseDate(fromQuery);
 		var toThis = toQuery;
-		var past = new Date(fromThis);
-		var newPast = new Date(fromThis); 
-		var trendFrom = new Date(fromThis);
-		var today = new Date(toThis);
-		var newToday  = new Date(toThis);
+		var toParsed = parseDate(toThis);
+		var past = new Date(fromParsed);
+		var newPast = new Date(fromParsed); 
+		var trendFrom = new Date(fromParsed);
+		var today = new Date(toParsed);
+		var newToday  = new Date(toParsed);
 		newPast = newPast.setDate(newPast.getDate() + 1);
 		newToday = newToday.setDate(newToday.getDate() + 1);
 		trendFrom = trendFrom.setDate(trendFrom.getDate() - 30);
@@ -465,6 +472,7 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 	var altPerf;
 	var tempdate;
 	var tempEpoc;
+	var tempParse, tempDateParsed;
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
@@ -494,8 +502,12 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
-			tempdate = new Date(jldata[i].date);
-			tempEpoc = new Date(jldata[i].date).getTime();
+			tempParse = jldata[i].date;
+			tempDateParsed = parseDate(tempParse);
+			tempdate = new Date(tempDateParsed);
+			tempEpoc = new Date(tempDateParsed).getTime();
+			//tempdate = new Date(jldata[i].date);
+			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -569,6 +581,8 @@ function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, tr
 	var altPerf;
 	var tempdate;
 	var tempEpoc;
+	var tempParse;
+	var tempDateParsed;
 	var theUnit;
 	var theDate;
 	var theNote;
@@ -602,7 +616,9 @@ function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, tr
 			theUnit = jdata[i].company;
 			theDate = jdata[i].opened_at;
 			theNote = jdata[i].description;
-			dateTimer = new Date(theDate).getTime();
+			
+			dateTimer = new Date(parseDate(theDate)).getTime();
+			console.log(dateTimer);
 			if(!theUnit){
 				theUnit = 'General';
 			}
@@ -614,8 +630,12 @@ function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, tr
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
-			tempdate = new Date(jldata[i].date);
-			tempEpoc = new Date(jldata[i].date).getTime();
+			tempParse = jldata[i].date;
+			tempDateParsed = parseDate(tempParse);
+			tempdate = new Date(tempDateParsed);
+			tempEpoc = new Date(tempDateParsed).getTime();
+			//tempdate = new Date(jldata[i].date);
+			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -696,7 +716,7 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 	TtrendVal = [];
 	PtrendVal = [];
 	trendDate = [];
-	var tempEpoc;
+	var tempEpoc, tempParse, tempDateParsed;
 	var availPair = [];
 	var perfPair = [];
 	var availTarPair = [];
@@ -724,8 +744,12 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 		for (var i=0, len=jldata.length; i < len; i++) {
 			TtrendVal.push(jldata[i].availability);
 			PtrendVal.push(jldata[i].performance);
-			tempdate = new Date(jldata[i].date);
-			tempEpoc = new Date(jldata[i].date).getTime();
+			tempParse = jldata[i].date;
+			tempDateParsed = parseDate(tempParse);
+			tempdate = new Date(tempDateParsed);
+			tempEpoc = new Date(tempDateParsed).getTime();
+			//tempdate = new Date(jldata[i].date);
+			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -1908,7 +1932,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		var trendDate, trendSet, notTrend;
 		todayText = today.format('M d, Y');
 		today = today.format('Y-m-d');
-
+		console.log(todayText);
 		if(thisChart.indexOf('-avail-') > -1){
 			longChart = thisChart.replace('-avail-', '-long-');
 		}else if(thisChart.indexOf('-perf-') > -1){
@@ -1924,10 +1948,10 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		switch (thisCartButton){
 			case 'chart-weekly':
 				console.log('weekly');
-				notCurrent = new Date(today);
+				notCurrent = new Date(parseDate(today));
 				notCurrent.setDate(notCurrent.getDate()-6);
 				thePast = new Date(notCurrent);
-				notTrend = new Date(today);
+				notTrend = new Date(parseDate(today));
 				notTrend.setDate(notTrend.getDate()-13);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
@@ -1948,13 +1972,13 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-daily':
 				console.log('daily');
-				notCurrent = new Date(today);
+				notCurrent = new Date(parseDate(today));
 				//notCurrent.setDate(notCurrent.getDate()-29);
-				notCurrentText = new Date(today);
+				notCurrentText = new Date(parseDate(today));
 				notCurrentText.setDate(notCurrentText.getDate()-29);
 				thePast = new Date(notCurrent);
 				notPastText = new Date(notCurrentText);
-				notTrend = new Date(today);
+				notTrend = new Date(parseDate(today));
 				notTrend.setDate(notTrend.getDate()-29);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
@@ -1976,10 +2000,10 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-quaterly':
 				console.log('quaterly');
-				notCurrent = new Date(today);
+				notCurrent = new Date(parseDate(today));
 				notCurrent.setDate(notCurrent.getDate()-89);
 				thePast = new Date(notCurrent);
-				notTrend = new Date(today);
+				notTrend = new Date(parseDat(today));
 				notTrend.setDate(notTrend.getDate()-179);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
@@ -2000,10 +2024,10 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-simi':
 				console.log('simi');
-				notCurrent = new Date(today);
+				notCurrent = new Date(parseDate(today));
 				notCurrent.setDate(notCurrent.getDate()-179);
 				thePast = new Date(notCurrent);
-				notTrend = new Date(today);
+				notTrend = new Date(parseDate(today));
 				notTrend.setDate(notTrend.getDate()-359);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
@@ -2024,10 +2048,10 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 				break;
 			case 'chart-year':
 				console.log('yearly');
-				notCurrent = new Date(today);
+				notCurrent = new Date(parseDate(today));
 				notCurrent.setDate(notCurrent.getDate()-365);
 				thePast = new Date(notCurrent);
-				notTrend = new Date(today);
+				notTrend = new Date(parseDate(today));
 				notTrend.setDate(notTrend.getDate()-730);
 				trendSet = new Date(notTrend);
 				pastText = thePast.format('M d, Y');
@@ -2078,12 +2102,19 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			theMarquee = theMarquee.replace(' PERFORMANCE', '');
 			thisMarquee = theMarquee;
 		}
-		
-		var fromThis = $('#fromThis').text();
-		var toThis =  $('#toThis').text();
+		var parsedFrom = $('#fromText').text();
+		var parsedTo = $('#toText').text(); 
+		//parsedFrom = parsedFrom.split('/').join('-');
+		//parsedTo = parsedTo.split('/').join('-');
+		var fromThis = Date.parse(parsedFrom);
+		var toThis = Date.parse(parsedTo);
+		console.log('To this '+toThis);
+		//var fromThis = $('#fromThis').text();
+		//var toThis = $('#toThis').text();
 		var past = new Date(fromThis);
 		var newPast = new Date(fromThis); 
 		var today = new Date(toThis);
+		console.log('today '+today);
 		var newToday  = new Date(toThis);
 		var trendFrom = new Date(fromThis);
 		newPast = newPast.setDate(newPast.getDate());
@@ -2095,7 +2126,6 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		var dd = today.getDate();
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
-		
 		var p_dd = past.getDate();
 		var p_mm = past.getMonth()+1;
 		var p_yyyy = past.getFullYear();

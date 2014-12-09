@@ -160,6 +160,10 @@ function selectedTabAdmin(tabID, queryFrom, queryTo){
 	}else if(thisID.startsWith('Enterprise')){
 		tableVars = 'Enterprise';
 		buildTablesAdmin(thisID, tableVars, fromThis, toThis);
+	}else if(thisID.startsWith('Updated')){
+		tableVars = 'Updated_Notes';
+		console.log('clicked');
+		buildTablesAdmin(thisID, tableVars, fromThis, toThis);
 	}
 }
 
@@ -227,7 +231,9 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 	var celldataCall;
 	var fromThis = queryFrom;
 	var toThis = queryTo;
+	var notesURL = 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/';
 	var cookieDates = document.cookie;
+	console.log('building');
 	//Checks strings from the current ID
 	if (typeof String.prototype.startsWith != 'function') {
 	    String.prototype.startsWith = function(prefix) {
@@ -248,28 +254,76 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 		fromThis = cookieArray[0].split('=')[1];
 	    toThis = cookieArray[1].split('=')[1];
 	}
-	
-	$.getJSON(adminConfig, function(confdata){
-		for (var i=0, len=confdata.length; i < len; i++){
-			divVar = confdata[i].division;
-			if (divVar == currentTable){
-				thisDiv = confdata[i].units;
-				for(var j=0, jlen=thisDiv.length; j < jlen; j++){	
-					cellName = thisDiv[j].name;
-					cellTTarget = thisDiv[j].availTarget;
-					cellPTarget = thisDiv[j].perfTarget;
-					celldataCall = thisDiv[j].dataURI;
-					celldataCall = celldataCall.replace('fromThis', fromThis);
-					celldataCall = celldataCall.replace('toThis', toThis);
-					//Make it happen
-					IDTag = cellName.toLowerCase();
-					IDTag = IDTag.split(' ').join('-');
-					$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
-					loadSparkDynAdmin(IDTag, celldataCall, fromThis);
-				}				
+	if(currentID.startsWith('Updated')){
+		$.getJSON(notesURL, function(notesdata){
+			for (var j=0, len=notesdata.length; j < len; j++){
+				var notesDate = notesdata[j].date;
+				var notesOpened = notesdata[j].opend_at;
+				var notesUnit = notesdata[j].unit;
+				var notesDisc = notesdata[j].description;
+				$('#'+currentID+' tbody').append('<tr><td><strong>'+notesDate+'</strong></td><td><strong>'+notesUnit+'</strong></td><td><p><strong>Opened at:</strong> '+notesOpened+'</p><p>'+notesDisc+'</p></td></tr>');
 			}
+		});
+	}else{
+		$.getJSON(adminConfig, function(confdata){
+			for (var i=0, len=confdata.length; i < len; i++){
+				divVar = confdata[i].division;
+				if (divVar == currentTable){
+					thisDiv = confdata[i].units;
+					for(var j=0, jlen=thisDiv.length; j < jlen; j++){
+						cellName = thisDiv[j].name;
+						cellTTarget = thisDiv[j].availTarget;
+						cellPTarget = thisDiv[j].perfTarget;
+						celldataCall = thisDiv[j].dataURI;
+						celldataCall = celldataCall.replace('fromThis', fromThis);
+						celldataCall = celldataCall.replace('toThis', toThis);
+						//Make it happen
+						IDTag = cellName.toLowerCase();
+						IDTag = IDTag.split(' ').join('-');
+						$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+						loadSparkDynAdmin(IDTag, celldataCall, fromThis);
+					}				
+				}
+			}
+		});	
+	}
+}
+
+//Add notes to Incidents page
+function stuffNotesAdmin(dataID, theURI, fromQuery, toQuery){
+	var currentID = dataID;
+	var notesURI = theURI;
+	var fromThis = fromQuery;
+	var toThis = toQuery;
+	
+	$.getJSON(notesURI, function(jdata){
+		for (var i=0, len=jdata.length; i < len; i++) {
+			var theUnit = jdata[i].company;
+			var theDate = jdata[i].opened_at;
+			var theNote = jdata[i].description;
+			var dateTimer = new Date(theDate);
+			var dateUnformated = new Date(theDate).getTime();
+
+			if(!theUnit || theUnit == 'General'){
+				theUnit = 'General';
+			}
+			
+			if(!theDate || theDate == '' || theDate == null){
+				theDate = '<span class="noDataTag">No Data</span>';
+			}
+			
+			if(!theNote || theNote == '' || theNote == null){
+				theNote = '<span class="noDataTag">No Data</span>';
+			}
+			
+			dateTimer = dateTimer.format('M d, Y');
+			$('#'+currentID+' tbody').append('<tr rowdate="'+dateUnformated+'"><td id="'+theUnit+'-date-'+i+'">'+dateTimer+'</td><td id="'+theUnit+'-name-'+i+'">'+theUnit+'</td><td id="'+theUnit+'-note-'+i+'">'+theNote+'</td></tr>');
 		}
-	});	
+		sortIssues(currentID);
+	}).fail(function(){
+		console.log('error');
+	});
+	
 }
 
 //Populate the cells with data
@@ -438,7 +492,7 @@ function recUpdate(thisID, pgID, unit, avail, perf, errors, total, fromDate){
 		};
 		
 		var noteData = {
-				opend_at: today,
+				opened_at: today,
 				date: opened_AT,
 				page_id: pageID,
 				unit: thisUnit,

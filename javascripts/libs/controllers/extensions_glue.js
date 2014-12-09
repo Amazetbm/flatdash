@@ -748,8 +748,6 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 			tempDateParsed = parseDate(tempParse);
 			tempdate = new Date(tempDateParsed);
 			tempEpoc = new Date(tempDateParsed).getTime();
-			//tempdate = new Date(jldata[i].date);
-			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);

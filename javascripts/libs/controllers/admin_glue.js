@@ -95,12 +95,18 @@ function buildoutAdmin(button){
 			$('#'+thisBttn).parent().addClass('active');
 			$('#page-header-title').text(tableRow);
 			break;
+		case 'menu-link-notes-admin':
+			tableRow = "  Updated Notes";
+			colSize = 12;
+			$('#'+thisBttn).parent().addClass('active');
+			$('#page-header-title').text(tableRow);
+			break;
 		
 	}
 	
 	//Build table	
 	truncTableRow = tableRow.split(' ').join('');
-	if (thisBttn == 'menu-link-issues'){
+	if (thisBttn == 'menu-link-notes-admin'){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
 		<div class="table-header clearfix"> \
 		<div class="table-caption">'+ tableRow +'</div> \

@@ -19471,6 +19471,10 @@ body:not(.right-to-left) .no-border-l {
 #content-row-chart {
   display: none;
 }
+#edit-col,
+#notes-col {
+  display: none;
+}
 .thisMarquee {
   float: left;
   font-size: 1.2em;

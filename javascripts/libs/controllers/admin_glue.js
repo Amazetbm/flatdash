@@ -112,7 +112,7 @@ function buildoutAdmin(button){
 		<div class="table-caption">'+ tableRow +'</div> \
 		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">Custom</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes&nbsp;</th></tr></thead> \
+		<thead><tr><th class="issueDate">Date</th><th class="issueUnit">Unit&nbsp;</th><th>Notes</th>/tr></thead> \
 		<tbody></tbody> \
 		</table> \
 		</div></div>';
@@ -122,7 +122,7 @@ function buildoutAdmin(button){
 		<div class="table-caption">'+ tableRow +' Summary</div> \
 		<div class="DT-lf-right"><div class="DT-per-page"><div id="fromText">'+pastMonth+'</div><div id="toText">'+today+'</div><label for="from">Date:&nbsp;</label><input type="text" class="dater" id="to" name="to" value="'+today+'"></div><button id="newRanger" class="btn btn-info btn-sm">Custom</button><button id="dateReset" class="btn btn-info btn-sm">Reset</button></div></div> \
 		<table class="table table-bordered" id="'+truncTableRow+'-table"> \
-		<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>Target</th><th>Performance</th><th>Notes</th></tr></thead> \
+		<thead><tr><th>ATG'+tableRow+'</th><th>Target</th><th>Availability</th><th>Target</th><th>Performance</th><th>Edit Notes</th><th>View Notes</th></tr></thead> \
 		<tbody></tbody> \
 		</table> \
 		</div></div>';
@@ -258,7 +258,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 		$.getJSON(notesURL, function(notesdata){
 			for (var j=0, len=notesdata.length; j < len; j++){
 				var notesDate = notesdata[j].date;
-				var notesOpened = notesdata[j].opend_at;
+				var notesOpened = notesdata[j].opened_at;
 				var notesUnit = notesdata[j].unit;
 				var notesDisc = notesdata[j].description;
 				$('#'+currentID+' tbody').append('<tr><td><strong>'+notesDate+'</strong></td><td><strong>'+notesUnit+'</strong></td><td><p><strong>Opened at:</strong> '+notesOpened+'</p><p>'+notesDisc+'</p></td></tr>');
@@ -280,7 +280,7 @@ function buildTablesAdmin(tableID, VarID, queryFrom, queryTo){
 						//Make it happen
 						IDTag = cellName.toLowerCase();
 						IDTag = IDTag.split(' ').join('-');
-						$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td></tr>');
+						$('#'+currentID+' tbody').append('<tr><td dammit="">'+cellName+'</td><td id="'+IDTag+'-avail-target">'+cellTTarget+'</td><td><span id="'+IDTag+'-avail"></span></td><td id="'+IDTag+'-perf-target">'+cellPTarget+'</td><td><span id="'+IDTag+'-perf"></span></td><td class="cellNudge"><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-pencil"></span>Edit</button></td><td><button class="btn btn-outline btn-xs btn-labeled btn-primary" seq-loc="'+i+','+j+'" id="'+IDTag+'-notes-log" data-thecount="" thisID="" data-avail="" data-perf="" data-page="" thisPageID=""><span class="btn-label icon fa fa-files-o"></span>Notes</button></td></tr>');
 						loadSparkDynAdmin(IDTag, celldataCall, fromThis);
 					}				
 				}
@@ -374,12 +374,12 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 		}else{
 			$('#'+localID+'-avail').text(TtrendAv);
 			$('#'+localID+'-perf').text(PtrendAv);
-			$('#'+localID+'-notes').attr('data-thecount', tCount);
-			$('#'+localID+'-notes').attr('data-avail', TtrendAv);
-			$('#'+localID+'-notes').attr('data-perf', PtrendAv);
-			$('#'+localID+'-notes').attr('data-page', thisPage);
-			$('#'+localID+'-notes').attr('thisPageID', pageID);
-			$('#'+localID+'-notes').attr('thisID', thisID);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('data-thecount', tCount);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('data-avail', TtrendAv);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('data-perf', PtrendAv);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('data-page', thisPage);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('thisPageID', pageID);
+			$('#'+localID+'-notes, #'+localID+'-notes-log').attr('thisID', thisID);
 			tagCells(localID, PtrendAv, TtrendAv);
 			TtrendVal = [];
 			PtrendVal = [];
@@ -393,9 +393,9 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
     });	
 	
 	$('.btn-primary').unbind().click(function(){
-		var thisID = $(this).attr('id');
+		var thisBttnID = $(this).attr('id');
 		var thisSeq = $(this).attr('seq-loc');
-		var thisUnit = thisID.split('-notes')[0];
+		var thisUnit = thisBttnID.split('-notes')[0];
 		var thisID = $(this).attr('thisID');
 		var thisAvail = $(this).attr('data-avail');
 		var thisCount = $(this).attr('data-thecount');
@@ -403,11 +403,16 @@ function loadSparkDynAdmin(IDChain, chainData, fromDate){
 		var currentPage = $(this).attr('data-page');
 		var currPageID = $(this).attr('thisPageID');
 		var prettyStr = thisUnit.split('-').join(' ');
+		var idType = thisBttnID.indexOf('-notes-log');
 		thisCount = parseInt(thisCount);
 		thisAvail = parseFloat(thisAvail);
 		thisAVail = thisAvail.toFixed(2);
 		prettyStr = prettyStr.toUpperCase();
-		editForm(thisID, prettyStr, currentPage, currPageID, thisAvail, currentPerf, thisCount, fromThis);
+		if (idType > -1){
+			viewNotes(prettyStr, currPageID);
+		}else{
+			editForm(thisID, prettyStr, currentPage, currPageID, thisAvail, currentPerf, thisCount, fromThis);
+		}
 	});	
 }
 
@@ -435,9 +440,43 @@ function editForm (thisID, unit, page, pgID, avail, perf, count, fromDate){
 	$('#content-row-table').css('display','none');
 	$('#content-row-incident').css('display','none');
 	$('#content-row-chart').css('display','block');
-	$('#chart-col').append(chartDialog);
+	$('#edit-col').css('display','block');
+	$('#edit-col').append(chartDialog);
 	recUpdate(thisID, pageID, thisUnit, thisAvail, thisPerf, errorCount, total, fromThis);
 	theCloser();
+}
+
+function viewNotes(prettyStr, thisPage){
+	var pageID = thisPage;
+	var thisUnit = prettyStr;
+	console.log(prettyStr);
+	var notesURL = 'https://itsc.autotrader.com:3000/scorecard/daily_upd_notes/?query={"page_id":{"$in":['+pageID+']}}';
+	var chartDialog = '<div class="panel"><div id="formHeader" class="panel-heading" thisID="'+pageID+'"><div class="panel-title"><strong>'+thisUnit+'</strong><div class="closer"><button id="closeNotes" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div></div></div> \
+	<table class="table table-bordered" id="notesList"> \
+	<thead><tr><th>Unit</th><th>Date</th><th>Notes</th></tr></thead> \
+	<tbody></tbody> \
+	</table> </div>';
+	$('#content-row-table').css('display','none');
+	$('#content-row-incident').css('display','none');
+	$('#content-row-chart').css('display','block');
+	$('#notes-col').css('display','block');
+	$('#notes-col').append(chartDialog);
+	
+	stuffView(notesURL);
+	theCloser();
+}
+
+function stuffView(notesCall){
+	var notesURL = notesCall;
+	$.getJSON(notesURL, function(jdata) {
+		for (var i=0, len=jdata.length; i < len; i++){
+			var jUnit = jdata[i].unit;
+			var jDate = jdata[i].date;
+			var jOpened = jdata[i].opened_at;
+			var jDisc = jdata[i].description;
+			$('#notesList tbody').append('<tr><td>'+jUnit+'</td><td>'+jDate+'</td><td><span>Opened At:&nbsp;'+jOpened+'</span><br /><p>'+jDisc+'</p></td></tr>');
+		}
+	});		
 }
 
 //Updates availablity record and allows user to enter notes as to "why"
@@ -605,16 +644,23 @@ function closeBox(){
 	$('#content-row-table').css('display','block');
 	$('#content-row-incident').css('display','block');	
 	$('#content-row-chart').css('display','none');
-	$('#chart-col').empty();
+	$('#edit-col').css('display','none');
+	$('#notes-col').css('display','none');
+	$('#edit-col').empty();
+	$('#notes-col').empty();
 	initAdminApp();
 }
 
+
 function theCloser(){
-	$('#closeChart, #cancelThis').click(function(){
+	$('#closeChart, #closeNotes, #cancelThis').click(function(){
 		$('#content-row-table').css('display','block');
 		$('#content-row-incident').css('display','block');
 		$('#content-row-chart').css('display','none');
-		$('#chart-col').empty();
+		$('#edit-col').css('display','none');
+		$('#notes-col').css('display','none');
+		$('#edit-col').empty();
+		$('#notes-col').empty();
 	});
 }
 

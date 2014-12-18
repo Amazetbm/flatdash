@@ -103,6 +103,7 @@ Date.replaceChars = {
 function initApp(){
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
+	console.log('Initialized. Building...');
 }
 
 
@@ -136,6 +137,8 @@ function selectedTab(tabID, queryFrom, queryTo){
 		tableVars = 'Issues';
 		buildTables(thisID, tableVars, fromThis, toThis);
 	}
+	
+	console.log(thisID+' tables built.');
 }
 
 //Build landing page tables.
@@ -196,6 +199,8 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 		}
 		initTagButtons(fromThis, toThis);
 	});	
+	
+	console.log('Tables built...');
 }
 
 //Build tables for notes
@@ -737,7 +742,6 @@ function makeSlider(startNum, stopNum, ATCtrendVal, trendDate, availAv, perAv, t
 	});	
 }
 
-
 function reDoChart(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcID){
 	var starter = startNum;
 	var stopper = stopNum;
@@ -767,14 +771,12 @@ function reDoChart(startNum, stopNum, ATCtrendVal, trendDate, trendTarget, funcI
 }
 
 function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcID, barID){
-
 	var trendPush = TrendVal;
 	var trendDate = trendDater;
 	var availAv = TtrendAv;
 	var perAv = PtrendAv;
 	var thisChart = funcID;
 	var longChart = barID;
-	//var slideID =
 	var thisTarget = theTarget;
 	var starter = 0;
 	var stopper = trendPush.length;
@@ -816,7 +818,6 @@ function reDoTheChart(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, funcI
 	$('#kpi-1 .kpi-target').text(availTarget);
 	$('#kpi-3 .kpi-target').text(perfTarget);
 	
-	//makeSlider(starter, stopper, trendPush, trendDate, thisTarget, funcID);
 	makeSlider(starter, stopper, trendPush, trendDate, availAv, perAv, thisTarget, thisChart, longChart);
 }
 

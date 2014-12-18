@@ -107,6 +107,7 @@ function parseDate(input) {
 function initApp(){
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
+	console.log('Initializing App. Building...');
 }
 
 function writedateCookie(queryFrom, queryTo){

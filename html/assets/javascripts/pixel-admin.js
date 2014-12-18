@@ -4820,6 +4820,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	}
 }
 
+//Build landing page tables.
 function buildTables(tableID, VarID, queryFrom, queryTo){
 	var currentID = tableID;
 	var currentTable = VarID;
@@ -4879,6 +4880,7 @@ function buildTables(tableID, VarID, queryFrom, queryTo){
 	});	
 }
 
+//Build tables for notes
 function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	var currentID = dataID;
 	var notesURI = theURI;
@@ -4899,6 +4901,7 @@ function stuffNotes(dataID, theURI, fromQuery, toQuery){
 	});
 }
 
+//Add sparkline charts
 function loadSparkDyn(IDChain, chainData){
 	var localID = IDChain;
 	var localData = chainData;
@@ -4954,6 +4957,7 @@ function loadSparkDyn(IDChain, chainData){
     });		
 }
 
+//Make the sparkline charts clickable.
 function initTagButtons(fromQuery, toQuery){
 	var fromThis = fromQuery;
 	var toThis = toQuery;
@@ -4997,8 +5001,6 @@ function initTagButtons(fromQuery, toQuery){
 		    p_mm='0'+p_mm;
 		} 
 		
-		//today = mm+'/'+dd+'/'+yyyy;
-		//pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		today = today.format('M d, Y');
 		pastMonth = pastMonth.format('M d, Y');
 		
@@ -5009,7 +5011,6 @@ function initTagButtons(fromQuery, toQuery){
 			chartDialog = $('<div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
-			//thisName = thisName + '  AVAILABILITY';
 		}else if(thisLocal.indexOf('perftrend') > -1){
 			thisMarquee = thisLocal.split('-perftrend')[0];
 			thisMarquee = thisMarquee.split('-').join(' ');
@@ -5017,7 +5018,6 @@ function initTagButtons(fromQuery, toQuery){
 			chartDialog = $('<div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - <span id="toThis">'+today+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-up"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div class="kpi-actual">.</div><div class="kpi-indicator fa fa-arrow-down"></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';
-			//thisName = thisName + '  PERFORMANCE';
 		}
 		
 		chartDialog.dialog({
@@ -5074,6 +5074,7 @@ function initTagButtons(fromQuery, toQuery){
 	
 }
 
+//Show the charts as large page spanning infographs
 function largeData(dataChain, dialogID, longID){
 	var celldataCall = dataChain;
 	var funcID = dialogID;
@@ -5130,6 +5131,7 @@ function largeData(dataChain, dialogID, longID){
 	});
 }
 
+//Refresh  chart based off of new date range. 
 function redoTheData(dataChain, dialogID, longID){
 	var celldataCall = dataChain;
 	var funcID = dialogID;

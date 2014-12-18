@@ -1766,7 +1766,6 @@ function buildout(button){
 	} 
 
 	if (!cookieDates){
-		// console.log('No data, dude');
 		today = mm+'/'+dd+'/'+yyyy;
 		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		queryTo = yyyy+'-'+mm+'-'+dd;
@@ -1941,8 +1940,6 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		}
 		$('.kpi-actual').empty();
 		$('.kpi-gauge').empty();
-		//$('#chart-buttons').empty();
-		//Buttns switching
 
 		switch (thisCartButton){
 			case 'chart-weekly':
@@ -2158,16 +2155,10 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		$('#tooltip').remove();
 		
 		if(thisLocal.indexOf('kpi-1') > -1){
-			//thisMarquee = thisLocal.split('-availtrend')[0];
-			//thisMarquee = thisMarquee.split('-').join(' ');
-			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 		}else if(thisLocal.indexOf('kpi-3') > -1){
-			//thisMarquee = thisLocal.split('-perftrend')[0];
-			//thisMarquee = thisMarquee.split('-').join(' ');
-			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';

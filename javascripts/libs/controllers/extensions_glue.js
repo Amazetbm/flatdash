@@ -412,7 +412,6 @@ function initTagButtons(fromQuery, toQuery){
 			theTrend = theTrend.replace('toThis', trendTo);
 			availTar = thisDiv[jLoc].availTarget;
 			perfTar = thisDiv[jLoc].perfTarget;
-			//largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
 			largeDataNotes(celldataCall, availTar, perfTar, dialogID, longID, theTrend, notesdataCall);
 		});
 	});	
@@ -507,8 +506,6 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 			tempDateParsed = parseDate(tempParse);
 			tempdate = new Date(tempDateParsed);
 			tempEpoc = new Date(tempDateParsed).getTime();
-			//tempdate = new Date(jldata[i].date);
-			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -635,8 +632,6 @@ function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, tr
 			tempDateParsed = parseDate(tempParse);
 			tempdate = new Date(tempDateParsed);
 			tempEpoc = new Date(tempDateParsed).getTime();
-			//tempdate = new Date(jldata[i].date);
-			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -774,13 +769,11 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
 			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair, availTarPair);
-			//buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair, perTarPair);
-			//buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}

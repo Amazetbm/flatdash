@@ -5094,7 +5094,6 @@ function initTagButtons(fromQuery, toQuery){
 			theTrend = theTrend.replace('toThis', trendTo);
 			availTar = thisDiv[jLoc].availTarget;
 			perfTar = thisDiv[jLoc].perfTarget;
-			//largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
 			largeDataNotes(celldataCall, availTar, perfTar, dialogID, longID, theTrend, notesdataCall);
 		});
 	});	
@@ -6889,7 +6888,8 @@ function buildButtons(newTrend, trendDate, newTarget, funcID, bttnPress, avTarge
 $('#main-menu-buttons li a').click(function(){
 	var linkBttn = $(this).attr('id');
 	buildout(linkBttn);
-});;
+});
+;
 var adminConfig = "../assets/json/config.json";
 
 //Turn on he app

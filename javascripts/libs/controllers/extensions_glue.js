@@ -107,6 +107,7 @@ function parseDate(input) {
 function initApp(){
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
+	console.log('Initializing App. Building...');
 }
 
 function writedateCookie(queryFrom, queryTo){
@@ -411,7 +412,6 @@ function initTagButtons(fromQuery, toQuery){
 			theTrend = theTrend.replace('toThis', trendTo);
 			availTar = thisDiv[jLoc].availTarget;
 			perfTar = thisDiv[jLoc].perfTarget;
-			//largeData(celldataCall, availTar, perfTar, dialogID, longID, theTrend);
 			largeDataNotes(celldataCall, availTar, perfTar, dialogID, longID, theTrend, notesdataCall);
 		});
 	});	

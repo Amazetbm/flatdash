@@ -506,8 +506,6 @@ function largeData(dataChain, availTarget, perfTarget, dialogID, longID, trendCa
 			tempDateParsed = parseDate(tempParse);
 			tempdate = new Date(tempDateParsed);
 			tempEpoc = new Date(tempDateParsed).getTime();
-			//tempdate = new Date(jldata[i].date);
-			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -634,8 +632,6 @@ function largeDataNotes(dataChain, availTarget, perfTarget, dialogID, longID, tr
 			tempDateParsed = parseDate(tempParse);
 			tempdate = new Date(tempDateParsed);
 			tempEpoc = new Date(tempDateParsed).getTime();
-			//tempdate = new Date(jldata[i].date);
-			//tempEpoc = new Date(jldata[i].date).getTime();
 			tempdate.setDate(tempdate.getDate() + 1);
 			trendDate.push(tempdate);
 			availPair.push([tempEpoc, jldata[i].availability]);
@@ -773,13 +769,11 @@ function redoTheDataToo(dataChain, dialogID, longID, active, avTarg, perTarg, tr
 		if(funcID.indexOf('avail') > -1){
 			chartType = "Availibility";
 			reDoTheChartToo(TtrendVal, trendDate, TtrendAv, PtrendAv, avTar, funcID, barID, tTarget, pTarget, availPair, availTarPair);
-			//buildButtons(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}else if(funcID.indexOf('perf') > -1){
 			chartType = "Performance";
 			reDoTheChartToo(PtrendVal, trendDate, TtrendAv, PtrendAv, avPer, funcID, barID, tTarget, pTarget, perfPair, perTarPair);
-			//buildButtons(altPerf, trendDate, avPer, funcID, bttnAct, tTarget, pTarget);
 			loadPies(TtrendAv, PtrendAv, tTarget, pTarget);
 			kpiSwitch(altTrend, trendDate, avTar, funcID, bttnAct, tTarget, pTarget);
 		}
@@ -1358,7 +1352,6 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 	});
 	// now connect the two
 	$("#"+localDiagID).bind("plotselected", function (event, ranges) {
-
 		// do the zooming
 		$.each(plot.getXAxes(), function(_, axis) {
 			var opts = axis.options;
@@ -1370,7 +1363,6 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		plot.clearSelection();
 
 		// don't fire event on the overview to prevent eternal loop
-
 		overview.setSelection(ranges, true);
 	});
 
@@ -1765,7 +1757,6 @@ function buildout(button){
 	} 
 
 	if (!cookieDates){
-		// console.log('No data, dude');
 		today = mm+'/'+dd+'/'+yyyy;
 		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		queryTo = yyyy+'-'+mm+'-'+dd;
@@ -1819,8 +1810,7 @@ function buildout(button){
 			break;
 	}
 	
-	//Build table
-	
+	//Build table	
 	truncTableRow = tableRow.split(' ').join('');
 	if (thisBttn == 'menu-link-issues'){
 		tableContent = '<div class="col-md-'+ colSize +'"><div class="table-primary"> \
@@ -1844,8 +1834,7 @@ function buildout(button){
 		</div></div>';
 	}
 
-	$('#content-row-table').append(tableContent);
-	
+	$('#content-row-table').append(tableContent);	
 	selectedTab(truncTableRow, queryFrom, queryTo);
 	dateRanger(truncTableRow);
 }
@@ -1888,10 +1877,8 @@ function dateRanger(tabID){
     	var ddT = pretoThis.split('/')[1];
     	var yyyyT = pretoThis.split('/')[2];
     	fromThis = yyyyF+'-'+mmF+'-'+ddF;
-    	toThis = yyyyT+'-'+mmT+'-'+ddT;
-		
+    	toThis = yyyyT+'-'+mmT+'-'+ddT;		
     	writedateCookie(fromThis, toThis);
-
     	//Reformat date range for database query
     	$('#'+currentID+'-table tbody').empty();
     	selectedTab(currentID, fromThis, toThis);	
@@ -1906,10 +1893,7 @@ function dateRanger(tabID){
 function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('#chart-buttons li').click(function(){
 		var thisCartButton = $(this).attr('id');
-		//var startNum, stopNum;
-		//var thisTrend = Tval;
 		var thisDate = trendDate;
-		//var thisTarget = trendTarget;
 		var thisChart = funcID;
 		var thisSeq = $('#'+thisChart).attr('ctseq');
 		var confLoc = thisSeq.split(',')[0];
@@ -1917,7 +1901,6 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		confLoc = parseInt(confLoc);
 		jLoc = parseInt(jLoc);
 		var longChart;
-		//var currentStart = thisDate[0];
 		var fromThisTxt = $('#fromThis').text();
 		var toThisTxt =  $('#toThis').text();
 		var past = new Date(fromThisTxt);
@@ -1940,9 +1923,8 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		}
 		$('.kpi-actual').empty();
 		$('.kpi-gauge').empty();
-		//$('#chart-buttons').empty();
-		//Buttns switching
 
+		//Buttns switching
 		switch (thisCartButton){
 			case 'chart-weekly':
 				console.log('weekly');
@@ -1971,7 +1953,6 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 			case 'chart-daily':
 				console.log('daily');
 				notCurrent = new Date(parseDate(today));
-				//notCurrent.setDate(notCurrent.getDate()-29);
 				notCurrentText = new Date(parseDate(today));
 				notCurrentText.setDate(notCurrentText.getDate()-29);
 				thePast = new Date(notCurrent);
@@ -2157,16 +2138,10 @@ function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 		$('#tooltip').remove();
 		
 		if(thisLocal.indexOf('kpi-1') > -1){
-			//thisMarquee = thisLocal.split('-availtrend')[0];
-			//thisMarquee = thisMarquee.split('-').join(' ');
-			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' AVAILABILITY</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-avail-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-avail-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-avail-chart';
 			longID = thisLocal+'-long-chart';
 		}else if(thisLocal.indexOf('kpi-3') > -1){
-			//thisMarquee = thisLocal.split('-perftrend')[0];
-			//thisMarquee = thisMarquee.split('-').join(' ');
-			//thisMarquee = thisMarquee.toUpperCase();
 			chartDialog = $('<div class="noDialog"><div class="thisMarquee">'+thisMarquee+' PERFORMANCE</div><div class="closer"><button id="closeChart" class="btn btn-outline btn-xs btn-labeled btn-primary"><span class="btn-label icon fa fa-times-circle-o"></span>Close</button></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-diag"><div class="chart-date-row">Base date range: <span id="fromThis">'+pastMonth+'</span> - to - <span id="toThis">'+thisMonth+'</span></div><div class="kpi-row"><div id="kpi-1" class="kpi-box"><div id="kpi-avail-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Availability</div><div id="availActual" class="kpi-actual" availNum="">.</div><div id="availArrow" class="kpi-indicator fa" availTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="avail-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="kpi-3" class="kpi-box"><div id="kpi-perf-overlay"></div><div class="kpi-data-wrap"><div class="kpi-title">Performance</div><div id="perfActual" class="kpi-actual" perfNum="">.</div><div id="perfArrow" class="kpi-indicator fa" perfTrending=""></div><div class="target-label">Target</div><div class="kpi-target">.</div><div class="clear-this"></div></div><div class="kpi-gauge-wrap"><div id="perf-gauge"class="kpi-gauge">.</div><div class="clear-this"></div></div><div class="clear-this"></div></div><div class="clear-this"></div></div><div id="'+thisLocal+'-perf-chart" ctseq="'+thisSeq+'" class="biggerChart"></div><div id="'+thisLocal+'-long-chart" class="full-chart"></div><div class="full-box"><div id="'+thisLocal+'-perf-chart-slide" class="full-bar"></div></div><div class="chart-button-row" id="chart-buttons"></div></div>');
 			dialogID = thisLocal+'-perf-chart';
 			longID = thisLocal+'-long-chart';

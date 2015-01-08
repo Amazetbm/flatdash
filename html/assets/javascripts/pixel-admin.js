@@ -6403,26 +6403,6 @@ function loadPies(val, perf, avTarg, perTarg){
     }); 
 }
 
-function loadPies2(val, perf, avTarg, perTarg){
-	var actual = val;
-	var thePerf = perf;
-	var aTarget = avTarg;
-	var pTarget = perTarg;
-	aTarget = aTarget.toFixed(2);
-	pTarget = pTarget.toFixed(2);
-	var intTarget = parseInt(aTarget);
-	var pRedline = pTarget * 2;
-	var pMax = pTarget * 2.5;
-	pRedline = parseInt(pRedline);
-	pMax = parseInt(pMax);
-	if (actual < 90){
-		actual = 90;
-	}
-	
-	//Draw them out
-	
-}
-
 //Navigation
 function buildout(button){
 	var thisBttn = button;

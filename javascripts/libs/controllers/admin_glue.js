@@ -48,7 +48,6 @@ function buildoutAdmin(button){
 	} 
 
 	if (!cookieDates){
-		// console.log('No data, dude');
 		today = mm+'/'+dd+'/'+yyyy;
 		pastMonth = p_mm+'/'+p_dd+'/'+p_yyyy;
 		queryTo = yyyy+'-'+mm+'-'+dd;
@@ -321,7 +320,7 @@ function stuffNotesAdmin(dataID, theURI, fromQuery, toQuery){
 		}
 		sortIssues(currentID);
 	}).fail(function(){
-		console.log('error');
+		console.log('Connection error');
 	});
 	
 }

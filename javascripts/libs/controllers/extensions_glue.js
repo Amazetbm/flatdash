@@ -21,6 +21,7 @@ var perfTarget = ' 4.00ms';
 var availLine =[];
 var perfLine = [];
 
+//Date formatting
 Date.prototype.format = function(format) {
     var returnStr = '';
     var replace = Date.replaceChars;
@@ -36,6 +37,7 @@ Date.prototype.format = function(format) {
     return returnStr;
 };
 
+//More Date Formatting
 Date.replaceChars = {
     shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     longMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -104,6 +106,7 @@ function parseDate(input) {
   return new Date(parts[0], parts[1]-1, parts[2]);
 }
 
+// Init app
 function initApp(){
 	var initButton = 'menu-link-digitalMedia';
 	buildout(initButton);
@@ -154,6 +157,7 @@ function selectedTab(tabID, queryFrom, queryTo){
 	}
 }
 
+//Build out the tables.
 function buildTables(tableID, VarID, queryFrom, queryTo){
 	var currentID = tableID;
 	var currentTable = VarID;

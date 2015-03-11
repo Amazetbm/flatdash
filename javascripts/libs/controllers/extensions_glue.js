@@ -267,6 +267,7 @@ function makeItSortable(tableID){
 	$('#'+tableID).DataTable();
 }
 
+//Spark graph
 function loadSparkDyn(IDChain, chainData){
 	var localID = IDChain;
 	var localData = chainData;

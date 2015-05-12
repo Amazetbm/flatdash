@@ -4949,7 +4949,6 @@ function makeItSortable(tableID){
 	$('#'+tableID).DataTable();
 }
 
-//Spark graph
 function loadSparkDyn(IDChain, chainData){
 	var localID = IDChain;
 	var localData = chainData;
@@ -5922,7 +5921,7 @@ function reDoTheChartToo(TrendVal, trendDater, TtrendAv, PtrendAv, theTarget, fu
 		d[i][0] += 60 * 60 * 1000;
 	}
 
-	// helper for returning the weekends in a period
+	// helper for returning the weekends in a weekly period
 
 	function weekendAreas(axes) {
 

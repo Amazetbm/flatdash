@@ -6745,6 +6745,7 @@ function chartRanger(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	
 }
 
+// Switch between KPI 
 function kpiSwitch(Tval, trendDate, trendTarget, funcID, avTarg, perTarg){
 	$('.kpi-box').click(function(){
 		var theTrend = trendTarget;

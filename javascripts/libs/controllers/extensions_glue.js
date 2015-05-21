@@ -1,3 +1,10 @@
+/*
+* This script controls the fuctionality of the app.
+* Although it isn't MVC the app still be haves as a single 
+* page application.
+*/
+
+
 var dasConfig = "assets/json/config.json";
 var initVars;
 var tableVars;
@@ -321,6 +328,7 @@ function loadSparkDyn(IDChain, chainData){
     });		
 }
 
+// Initialize performance buttons
 function initTagButtons(fromQuery, toQuery){
 	var fromThis = fromQuery;
 	var toThis = toQuery;	
